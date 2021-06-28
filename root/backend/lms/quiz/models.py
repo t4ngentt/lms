@@ -16,7 +16,7 @@ class Quiz(models.Model):
         verbose_name = 'quiz'
         verbose_name_plural = 'quizes'
 
-class Quiz_For_Selected_Students(model.Model):
+class Quiz_For_Selected_Students(models.Model):
     quiz_id = models.BigAutoField(primary_key=True)
     total_marks = models.FloatField()
     total_questions = models.IntegerField()
