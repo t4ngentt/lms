@@ -6,7 +6,6 @@ from student.models import Student_Info
 
 class Assignment(models.Model):
     assignment_id= models.BigAutoField(primary_key=True)
-    grp_course = models.ForeignKey(Group_Course,on_delete=models.CASCADE,verbose_name='group_course_fk')
     file = models.FileField(upload_to='media')
     title = models.CharField(max_length=1000)
     description = models.TextField()
@@ -19,6 +18,14 @@ class Assignment(models.Model):
         db_table = 'ASSIGNMENT'
         verbose_name = 'assignment'
         verbose_name_plural = 'assignments'
+
+class Group_Assignment(models.Model):
+    assignment_id = models.ForeignKey(Assignment,on_delete=models.CASCADE, verbose_name='assignment_fk')
+    grp_course = models.ForeignKey(Group_Course,on_delete=models.CASCADE,verbose_name='group_course_fk')
+    class Meta:
+        db_table = 'GROUP_ASSIGNMENT'
+        verbose_name = 'group_assignment'
+        verbose_name_plural = 'group_assignments'
 
 class Assignment_submission(models.Model):
     assignment_submission_id = models.BigAutoField(primary_key=True)
@@ -39,8 +46,4 @@ class Assignment_marks(models.Model):
         db_table = 'ASSIGNMENT_MARKS'
         verbose_name = 'assignment_marks'
         verbose_name_plural = 'assignment_marks'
-
-
-    
-
 
