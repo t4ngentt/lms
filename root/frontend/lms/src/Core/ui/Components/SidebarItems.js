@@ -1,9 +1,12 @@
 import React from "react";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import { Link, NavLink} from "react-router-dom";
-import { makeStyles} from "@material-ui/core/styles";
+import {
+	ListItem,
+	ListItemIcon,
+	ListItemText,
+	Divider,
+} from "@material-ui/core";
+import { Link, NavLink } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
 // icons --->
 import PeopleIcon from "@material-ui/icons/People";
 import HomeIcon from "@material-ui/icons/Home";
@@ -11,6 +14,9 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import SchoolIcon from "@material-ui/icons/School";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import EventIcon from "@material-ui/icons/Event";
+import EventAvailableIcon from "@material-ui/icons/EventAvailable";
+import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
 
 const useStyles = makeStyles((theme) => ({
 	activeItem: {
@@ -28,13 +34,13 @@ function ListItems() {
 			<ListItem
 				button
 				key="Home"
-				component={NavLink}
+				// component={NavLink}
 				activeClassName={classes.activeItem}
-				to={
-					"/" +
-					JSON.parse(localStorage.getItem("jwt")).user.userRole +
-					"/dashboard"
-				}
+				// to={
+				// 	"/" +
+				// 	JSON.parse(localStorage.getItem("jwt")).user.userRole +
+				// 	"/dashboard"
+				// }
 			>
 				<ListItemIcon>
 					<HomeIcon />
@@ -43,13 +49,13 @@ function ListItems() {
 			</ListItem>
 			<ListItem
 				button
-				component={NavLink}
+				// component={NavLink}
 				activeClassName={classes.activeItem}
-				to={
-					"/" +
-					JSON.parse(localStorage.getItem("jwt")).user.userRole +
-					"/profile"
-				}
+				// to={
+				// 	"/" +
+				// 	JSON.parse(localStorage.getItem("jwt")).user.userRole +
+				// 	"/profile"
+				// }
 			>
 				<ListItemIcon>
 					<AccountBoxIcon />
@@ -58,13 +64,13 @@ function ListItems() {
 			</ListItem>
 			<ListItem
 				button
-				component={NavLink}
+				// component={NavLink}
 				activeClassName={classes.activeItem}
-				to={
-					"/" +
-					JSON.parse(localStorage.getItem("jwt")).user.userRole +
-					"/classroom"
-				}
+				// to={
+				// 	"/" +
+				// 	JSON.parse(localStorage.getItem("jwt")).user.userRole +
+				// 	"/classroom"
+				// }
 			>
 				<ListItemIcon>
 					<SchoolIcon />
@@ -73,13 +79,13 @@ function ListItems() {
 			</ListItem>
 			<ListItem
 				button
-				component={NavLink}
+				// component={NavLink}
 				activeClassName={classes.activeItem}
-				to={
-					"/" +
-					JSON.parse(localStorage.getItem("jwt")).user.userRole +
-					"/forums"
-				}
+				// to={
+				// 	"/" +
+				// 	JSON.parse(localStorage.getItem("jwt")).user.userRole +
+				// 	"/forums"
+				// }
 			>
 				<ListItemIcon>
 					<PeopleIcon />
@@ -88,25 +94,72 @@ function ListItems() {
 			</ListItem>
 			<ListItem
 				button
-				component={NavLink}
+				// component={NavLink}
 				activeClassName={classes.activeItem}
-				to={
-					"/" +
-					JSON.parse(localStorage.getItem("jwt")).user.userRole +
-					"/resources"
-				}
+				// to={
+				// 	"/" +
+				// 	JSON.parse(localStorage.getItem("jwt")).user.userRole +
+				// 	"/resources"
+				// }
 			>
 				<ListItemIcon>
 					<LibraryBooksIcon />
 				</ListItemIcon>
 				<ListItemText primary="Resources" />
 			</ListItem>
-			{/* <ListItem button component={Link} to="/" onClick={handleSignOut}>
+			<Divider />
+			<ListItem
+				button
+				// component={NavLink}
+				activeClassName={classes.activeItem}
+				// to={
+				// 	"/" +
+				// 	JSON.parse(localStorage.getItem("jwt")).user.userRole +
+				// 	"/calendar"
+				// }
+			>
+				<ListItemIcon>
+					<CalendarTodayIcon />
+				</ListItemIcon>
+				<ListItemText primary="Calendar" />
+			</ListItem>
+			<ListItem
+				button
+				// component={NavLink}
+				activeClassName={classes.activeItem}
+				// to={
+				// 	"/" +
+				// 	JSON.parse(localStorage.getItem("jwt")).user.userRole +
+				// 	"/events"
+				// }
+			>
+				<ListItemIcon>
+					<EventIcon />
+				</ListItemIcon>
+				<ListItemText primary="Events" />
+			</ListItem>
+			<ListItem
+				button
+				// component={NavLink}
+				activeClassName={classes.activeItem}
+				// to={
+				// 	"/" +
+				// 	JSON.parse(localStorage.getItem("jwt")).user.userRole +
+				// 	"/events"
+				// }
+			>
+				<ListItemIcon>
+					<EventAvailableIcon />
+				</ListItemIcon>
+				<ListItemText primary="Attendance" />
+			</ListItem>
+			<Divider />
+			<ListItem button component={Link} to="/">
 				<ListItemIcon>
 					<ExitToAppIcon />
 				</ListItemIcon>
 				<ListItemText primary="LogOut" />
-			</ListItem> */}
+			</ListItem>
 		</div>
 	);
 }

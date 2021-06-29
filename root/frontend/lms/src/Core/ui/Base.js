@@ -1,8 +1,23 @@
 import React from "react";
-
+import { makeStyles } from "@material-ui/core/styles";
 import Header from "../ui/Components/Header";
 import Sidebar from "../ui/Components/Sidebar";
-export default function Base() {
+
+const useStyles = makeStyles((theme) => ({
+	root: {
+		display: "flex",
+	},
+	toolbar: {
+		...theme.mixins.toolbar,
+	},
+	content: {
+		flexGrow: 1,
+		padding: theme.spacing(4),
+	},
+}));
+
+export default function Base({ role = "", children }) {
+	const classes = useStyles();
 	const [mobileOpen, setMobileOpen] = React.useState(false);
 
 	const handleDrawerToggle = () => {
@@ -12,13 +27,18 @@ export default function Base() {
 		setMobileOpen(false);
 	};
 	return (
-		<React.Fragment>
+		<div className={classes.root}>
 			<Header handleDrawerToggle={handleDrawerToggle} />
 			<Sidebar
 				handleDrawerToggle={handleDrawerToggle}
 				closeDrawer={closeDrawer}
 				isOpen={mobileOpen}
+				role={role}
 			/>
-		</React.Fragment>
+			<main className={classes.content}>
+				<div className={classes.toolbar} />
+				<div>{children}</div>
+			</main>
+		</div>
 	);
 }

@@ -4,19 +4,21 @@ const col1 = "#9733EE";
 const col2 = "#DA22FF";
 const col3 = "#F8F8FF";
 const col4 = "#FE5BD6";
-const col5 = "#f49d6e"
+const col5 = "#f49d6e";
+const col6 = "#000000"
 
 export default createMuiTheme({
 	palette: {
 		type : "light",
 		common: {
 			white: `${col3}`,
+			black : `${col6}`
 		},
 		primary: {
 			main: `${col1}`,
 		},
 		secondary: {
-			main: `${col2}`,
+			main: `${col5}`,
 		},
 	},
 });

@@ -18,7 +18,7 @@ import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles((theme) => ({
 	appBar: {
-		background: `linear-gradient(to right,${theme.palette.primary.main} , ${theme.palette.secondary.main})`,
+		background: `linear-gradient(to right,${theme.palette.primary.main} , ${theme.palette.primary.light})`,
 		zIndex: theme.zIndex.modal + 1,
 		boxShadow: "none",
 	},
@@ -63,7 +63,7 @@ export default function Header(props) {
 					</Typography>
 				</Button>
 				<IconButton className={classes.rightItems}>
-					<Badge badgeContent={4} color="error">
+					<Badge badgeContent={4} color="secondary">
 						<NotificationsIcon />
 					</Badge>
 				</IconButton>

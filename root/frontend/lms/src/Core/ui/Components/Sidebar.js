@@ -2,7 +2,15 @@ import React from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import ListItems from "./SidebarItems";
 //importing components from material ui--------------------------->
-import { Drawer, Hidden, List, CssBaseline } from "@material-ui/core";
+import {
+	Drawer,
+	Hidden,
+	List,
+	CssBaseline,
+	Avatar,
+	Typography,
+	Divider,
+} from "@material-ui/core";
 
 const drawerWidth = 220;
 
@@ -10,11 +18,29 @@ const useStyles = makeStyles((theme) => ({
 	root: {
 		display: "flex",
 	},
+	avatarDiv: {
+		display: "flex",
+		justifyContent: "center",
+		"& > *": {
+			margin: theme.spacing(3),
+		},
+	},
+	avatar: {
+		width: theme.spacing(8),
+		height: theme.spacing(8),
+		backgroundColor: theme.palette.primary.main,
+	},
 	drawer: {
 		[theme.breakpoints.up("sm")]: {
 			width: drawerWidth,
 			flexShrink: 0,
 		},
+	},
+	name: {
+		display: "flex",
+		justifyContent: "center",
+		marginTop: "-10px",
+		marginBottom: theme.spacing(3)
 	},
 	toolbar: theme.mixins.toolbar,
 	drawerPaper: {
@@ -45,7 +71,7 @@ export default function Sidebar(props) {
 						container={container}
 						variant="temporary"
 						anchor={theme.direction === "rtl" ? "right" : "left"}
-						open={(props.isOpen)}
+						open={props.isOpen}
 						onClose={props.handleDrawerToggle}
 						classes={{
 							paper: classes.drawerPaper,
@@ -56,8 +82,15 @@ export default function Sidebar(props) {
 					>
 						<div>
 							<div className={classes.toolbar} />
+							<div className={classes.avatarDiv}>
+								<Avatar className={classes.avatar}>L</Avatar>
+							</div>
+							<div className={classes.name}>
+								<Typography variant="h6">Lalit Rajput</Typography>
+							</div>
+							<Divider />
 							<List onClick={() => props.closeDrawer}>
-								<ListItems role={props.role} />
+								<ListItems />
 							</List>
 						</div>
 					</Drawer>
@@ -72,6 +105,13 @@ export default function Sidebar(props) {
 					>
 						<div>
 							<div className={classes.toolbar} />
+							<div className={classes.avatarDiv}>
+								<Avatar className={classes.avatar}>L</Avatar>
+							</div>
+							<div className={classes.name}>
+								<Typography variant="h6">Lalit Rajput</Typography>
+							</div>
+							<Divider />
 							<List>
 								<ListItems />
 							</List>
