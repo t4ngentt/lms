@@ -57,6 +57,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -133,10 +134,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# CORS_ALLOW_CREDENTIALS = True # to accept cookies via ajax request
-# CORS_ORIGIN_WHITELIST = [
-#     'http://localhost:3000' # the domain for front-end app(you can add more than 1) 
-# ]
+CORS_ALLOW_CREDENTIALS = True # to accept cookies via ajax request
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000' # the domain for front-end app(you can add more than 1) 
+]
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_PERMISSION_CLASSES': (
