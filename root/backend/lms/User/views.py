@@ -13,14 +13,17 @@ from django.http.response import JsonResponse
 
 def login_token(request):
     login_data=request.body
-    json_data = json.loads(login_data)[0]
-    user=CustomAuthenticationBackend.authenticate(CustomAuthenticationBackend,request,json_data['user_id'],json_data['password'])
+    print(login_data)
+    json_data = json.loads(login_data)
+    print(json_data)
+
+    user=CustomAuthenticationBackend.authenticate(CustomAuthenticationBackend,request,json_data['email'],json_data['password'])
     print("hi",user)
     if user is not None:
-        jwt_t= jwt.encode({'email': json_data['user_id']}, 'django-insecure-%oy1s23mp4z-%^ito$+60!5@2fm*qus5=$2c8i3!fte26j%l$n', algorithm='HS256',)
+        jwt_t= jwt.encode({'email': json_data['email']}, 'django-insecure-%oy1s23mp4z-%^ito$+60!5@2fm*qus5=$2c8i3!fte26j%l$n', algorithm='HS256',)
         print(jwt_t,user)
         return JsonResponse({
-        'token': jwt_t.decode("utf-8") ,
+        'token': jwt_t ,
         'user': UserSerializer(user, context={'request': request}).data
     })
     else:

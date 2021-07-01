@@ -15,21 +15,7 @@ export const signup = (user) => {
 };
 
 export const signin = (user) => {
-<<<<<<< Updated upstream
-	return fetch(`${API}/user/login`, {
-		method: "POST",
-		headers: {
-			Accept: "application/json",
-			"Content-Type": "application/json",
-		},
-		body: JSON.stringify(user),
-	})
-		.then((response) => {
-			return response.json();
-		})
-		.catch((err) => console.log(err));
-=======
-  return fetch(`${API}/user/login`, {
+  return fetch(`${API}/user/login/`, {
     method: "POST",
     headers: {
       Accept: "application/json",
@@ -41,7 +27,6 @@ export const signin = (user) => {
       return response.json();
     })
     .catch((err) => console.log(err));
->>>>>>> Stashed changes
 };
 
 // export const signout = (next) => {
