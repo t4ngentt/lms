@@ -1,28 +1,32 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import Group
 from .models import User
-# Register your models here.
 
-@admin.site.register(User)
-class UserAdmin(BaseUserAdmin):
+# Register your models here.
+admin.site.unregister(Group)
+@admin.register(User)
+class User_Admin(UserAdmin):
     
-    list_display = ('email','full_name','is_active','is_staff','is_admin','is_teacher','is_student')
-    list_filter = ('email','full_name','is_active','is_staff','is_admin','is_teacher','is_student')
-    search_fields = ('email','full_name','is_active','is_staff','is_admin','is_teacher','is_student')
-    ordering = ('is_admin','is_staff','is_teacher','is_student')
+    filter_horizontal=()
+    list_display = ('user_id','email','f_name','l_name','role','is_active','staff','admin',)
+    list_filter = ('email','f_name','l_name','user_id','is_active','staff','admin','role')
+    search_fields = ('email','f_name','l_name','user_id','is_active','staff','admin','role')
+    ordering = ('admin','staff','role')
     add_fieldsets = (
         (None,{
-            'fields':('email','full_name','password')
+            'fields':('user_id','email','f_name','l_name','password')
         }),
         ('Permissions',{
-            'fields' : ('is_active','is_staff','is_admin','is_teacher','is_student')
+            'fields' : ('is_active','staff','admin','role')
         })
     )
     fieldsets = (
         (None,{
-            'fields':('email','full_name','password')
+            'classes':('wide',),
+            'fields':('user_id','email','f_name','l_name','password')
         }),
         ('Permissions',{
-            'fields': ('is_active','is_staff','is_admin','is_teacher','is_student')
+            'fields': ('is_active','staff','admin','role')
         })
     )
