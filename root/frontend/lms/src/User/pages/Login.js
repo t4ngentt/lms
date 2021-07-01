@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { signin, authenticate, isAutheticated } from "../../Auth/helper/index";
-import {Redirect} from "react-router-dom"
+import { Redirect } from "react-router-dom";
 import {
 	Paper,
 	Typography,
@@ -51,9 +51,9 @@ const useStyles = makeStyles((theme) => ({
 	Logo: {
 		margin: theme.spacing(5),
 	},
-	formContainer : {
-		marginTop : theme.spacing(3) 
-	}
+	formContainer: {
+		marginTop: theme.spacing(3),
+	},
 }));
 
 export default function Login() {
@@ -73,11 +73,12 @@ export default function Login() {
 	const performRedirect = () => {
 		if (didRedirect) {
 			console.log(user);
-			if (user && user.role === 1) {
-				return <Redirect to="/teacher/dashboard" />;
-			} else if (user && user.role === 0) {
-				return <Redirect to="/student/dashboard" />;
-			}
+			<Redirect to="/student/dashboard" />;
+			// if (user && user.role === 1) {
+			// 	return <Redirect to="/teacher/dashboard" />;
+			// } else if (user && user.role === 0) {
+			// 	return <Redirect to="/student/dashboard" />;
+			// }
 		}
 	};
 	const onSubmit = (event) => {
