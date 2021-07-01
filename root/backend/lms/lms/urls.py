@@ -11,7 +11,7 @@ from User import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include(router.urls)),
+    path('api/',include('User.urls')),
     # path('auth/', include('rest_framework.urls')),
     
 ]
