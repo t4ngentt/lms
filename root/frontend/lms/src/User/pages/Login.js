@@ -73,12 +73,11 @@ export default function Login() {
 	const performRedirect = () => {
 		if (didRedirect) {
 			console.log(user);
-			<Redirect to="/student/dashboard" />;
-			// if (user && user.role === 1) {
-			// 	return <Redirect to="/teacher/dashboard" />;
-			// } else if (user && user.role === 0) {
-			// 	return <Redirect to="/student/dashboard" />;
-			// }
+			if (user && user.role === 1) {
+				return <Redirect to="/teacher/dashboard" />;
+			} else if (user && user.role === 0) {
+				return <Redirect to="/student/dashboard" />;
+			}
 		}
 	};
 	const onSubmit = (event) => {

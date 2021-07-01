@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import ListItems from "./SidebarItems";
+import {isAutheticated} from "../../../Auth/helper/index"
 //importing components from material ui--------------------------->
 import {
 	Drawer,
@@ -59,7 +60,7 @@ export default function Sidebar(props) {
 	const { window } = props;
 	const classes = useStyles();
 	const theme = useTheme();
-
+	const { user } = isAutheticated();
 	const container =
 		window !== undefined ? () => window().document.body : undefined;
 	return (
@@ -86,7 +87,7 @@ export default function Sidebar(props) {
 								<Avatar className={classes.avatar}>L</Avatar>
 							</div>
 							<div className={classes.name}>
-								<Typography variant="h6">Lalit Rajput</Typography>
+								<Typography variant="h6">{user.f_name} {user.l_name}</Typography>
 							</div>
 							<Divider />
 							<List onClick={() => props.closeDrawer}>
@@ -109,7 +110,7 @@ export default function Sidebar(props) {
 								<Avatar className={classes.avatar}>L</Avatar>
 							</div>
 							<div className={classes.name}>
-								<Typography variant="h6">Lalit Rajput</Typography>
+								<Typography variant="h6">{user.f_name} {user.l_name}</Typography>
 							</div>
 							<Divider />
 							<List>
