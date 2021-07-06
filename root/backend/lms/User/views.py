@@ -22,9 +22,12 @@ def login_token(request):
     if user is not None:
         jwt_t= jwt.encode({'email': json_data['email']}, 'django-insecure-%oy1s23mp4z-%^ito$+60!5@2fm*qus5=$2c8i3!fte26j%l$n', algorithm='HS256',)
         print(jwt_t,user)
+        user_data=UserSerializer(user, context={'request': request}).data
+        del user_data['password']
+        print(user_data)
         return JsonResponse({
         'token': jwt_t ,
-        'user': UserSerializer(user, context={'request': request}).data
+        'user': user_data
     })
     else:
         # return HttpResponse("Invalid Credentials")
