@@ -162,7 +162,7 @@ class Branch_Semester(models.Model):
         verbose_name = 'branch_sem'
         verbose_name_plural = 'branch_sems'
 
-class Group(models.Model):
+class group(models.Model):
     group_id = models.AutoField(primary_key=True)
     group_name = models.CharField(unique=True,max_length=200)
     no_of_students = models.IntegerField()
@@ -192,7 +192,7 @@ class Course(models.Model):
 
 class Group_Course(models.Model):
     group_course_id = models.AutoField(primary_key=True)
-    group = models.ForeignKey(Group,on_delete=models.CASCADE,verbose_name='group_fk')
+    group = models.ForeignKey(group,on_delete=models.CASCADE,verbose_name='group_fk')
     course = models.ForeignKey(Course,on_delete=models.CASCADE,verbose_name='course_fk')
     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
     branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
