@@ -5,7 +5,7 @@ from .serializers import UserSerializer
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from .CustomAuth import CustomAuthenticationBackend
-import json,jwt
+import json,jwt,datetime
 from django.http.response import JsonResponse
 
 def login_token(request):
@@ -16,7 +16,7 @@ def login_token(request):
     user=CustomAuthenticationBackend.authenticate(CustomAuthenticationBackend,request,json_data['email'],json_data['password'])
     print("hi",user)
     if user is not None:
-        jwt_t= jwt.encode({'email': json_data['email']}, 'django-insecure-%oy1s23mp4z-%^ito$+60!5@2fm*qus5=$2c8i3!fte26j%l$n', algorithm='HS256',)
+        jwt_t= jwt.encode({'email': json_data['email'],'exp':datetime.datetime.utcnow()+datetime.timedelta(minutes=60)}, 'django-insecure-%oy1s23mp4z-%^ito$+60!5@2fm*qus5=$2c8i3!fte26j%l$n', algorithm='HS256',)
         print(jwt_t,user)
         user_data=UserSerializer(user, context={'request': request}).data
         del user_data['password']
@@ -27,6 +27,20 @@ def login_token(request):
         })
     else:
         return JsonResponse({'msg':'Error'})
+
+
+def token_autheticate(request):
+    token= request.GET.get('token')
+    if not token:
+        return JsonResponse({'msg':'Unauthenticated'})
+    try:
+        payload = jwt.decode(token,'django-insecure-%oy1s23mp4z-%^ito$+60!5@2fm*qus5=$2c8i3!fte26j%l$n', algorithm=['HS256'])
+    except jwt.ExpiredSignatureError:
+        return JsonResponse({'msg':'Unauthenticated'})
+    user = User.objects.get(email=payload['email'])
+    user_data=UserSerializer(user, context={'request': request}).data
+    return JsonResponse({
+        'user': user_data })
 
 
 # class Login_Check(viewsets.ModelViewSet):
