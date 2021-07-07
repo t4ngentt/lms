@@ -30,11 +30,12 @@ def login_token(request):
 
 
 def token_autheticate(request):
-    token= request.headers['token']
+    token= request.headers['Authorization']
+    print(token)
     if not token:
         return JsonResponse({'msg':'Unauthenticated'})
     try:
-        payload = jwt.decode(token,'django-insecure-%oy1s23mp4z-%^ito$+60!5@2fm*qus5=$2c8i3!fte26j%l$n', algorithm=['HS256'])
+        payload = jwt.decode(token,'django-insecure-%oy1s23mp4z-%^ito$+60!5@2fm*qus5=$2c8i3!fte26j%l$n', algorithms=['HS256'])
     except jwt.ExpiredSignatureError:
         return JsonResponse({'msg':'Unauthenticated'})
     user = User.objects.get(email=payload['email'])
