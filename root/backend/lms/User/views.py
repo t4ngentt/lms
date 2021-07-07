@@ -15,14 +15,16 @@ def login_token(request):
     print(json_data)
     user=CustomAuthenticationBackend.authenticate(CustomAuthenticationBackend,request,json_data['email'],json_data['password'])
     print("hi",user)
-    if user is not None:
-        jwt_t= jwt.encode({'email': json_data['email'],'exp':datetime.datetime.utcnow()+datetime.timedelta(minutes=60)}, 'django-insecure-%oy1s23mp4z-%^ito$+60!5@2fm*qus5=$2c8i3!fte26j%l$n', algorithm='HS256',)
+    if 1:
+        jwt_t= jwt.encode({'email': json_data['email'],'exp':datetime.datetime.utcnow()+datetime.timedelta(minutes=60)}, 'django-insecure-%oy1s23mp4z-%^ito$+60!5@2fm*qus5=$2c8i3!fte26j%l$n', algorithm='HS256')
+        jwt_t = jwt_t.decode("utf-8")
         print(jwt_t,user)
+        # print(type(user))
         user_data=UserSerializer(user, context={'request': request}).data
         del user_data['password']
         print(user_data)
         return JsonResponse({
-        'token': jwt_t ,
+        'token': jwt_t,
         'user': user_data
         })
     else:
@@ -30,7 +32,9 @@ def login_token(request):
 
 
 def token_autheticate(request):
-    token= request.headers['Authorization']
+    data= request.headers['Authorization']
+    
+    token = str.replace(str(data), 'Bearer ', '')
     print(token)
     if not token:
         return JsonResponse({'msg':'Unauthenticated'})
