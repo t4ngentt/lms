@@ -1,3 +1,9 @@
-from django.contrib import admin
+# from django.contrib import admin
+# from .models import Teacher_Info,Skills,Teacher_Profile,Teacher_Course
 
-# Register your models here.
+# # Register your models here.
+
+# admin.register(Teacher_Info)
+# admin.register(Teacher_Profile)
+# admin.register(Teacher_Course)
+# admin.register(Skills)

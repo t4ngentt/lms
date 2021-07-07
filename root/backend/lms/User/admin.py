@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.auth import models
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
-from .models import User,Branch,Branch_Semester,School,group,Group_Course,Admin_info,Semester,Course
+from .models import User,Branch,Branch_Semester,School,user_group,Group_Course,Admin_info,Semester,Course
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 # Register your models here
 
@@ -114,7 +114,7 @@ class Branch_Semester(admin.ModelAdmin):
     raw_id_fields = ['school','branch','semester']
     ordering = ('branch_sem_id',)
 
-@admin.register(group)
+@admin.register(user_group)
 class group(admin.ModelAdmin):
     raw_id_fields = ['school','branch','semester']
     list_display = ('group_id','group_name','no_of_students')
