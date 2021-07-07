@@ -40,10 +40,12 @@ def token_autheticate(request):
         return JsonResponse({'msg':'Unauthenticated'})
     try:
         payload = jwt.decode(token,'django-insecure-%oy1s23mp4z-%^ito$+60!5@2fm*qus5=$2c8i3!fte26j%l$n', algorithms=['HS256'])
+        
     except jwt.ExpiredSignatureError:
         return JsonResponse({'msg':'Unauthenticated'})
     user = User.objects.get(email=payload['email'])
     user_data=UserSerializer(user, context={'request': request}).data
+    del user_data['password']
     return JsonResponse({
         'user': user_data })
 
