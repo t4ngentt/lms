@@ -30,7 +30,7 @@ def login_token(request):
 
 
 def token_autheticate(request):
-    token= request.GET.get('token')
+    token= request.headers['token']
     if not token:
         return JsonResponse({'msg':'Unauthenticated'})
     try:
