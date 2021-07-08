@@ -17,7 +17,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('user_id','email','f_name','l_name','role','is_active','staff','admin')
+        fields = ('user_id','email','f_name','l_name','role','is_active','staff','admin','branch')
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -45,7 +45,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('user_id','email','f_name','l_name','role','is_active','staff','admin',)
+        fields = ('user_id','email','f_name','l_name','role','is_active','staff','admin','branch')
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
@@ -59,13 +59,13 @@ class UserChangeForm(forms.ModelForm):
 class User_Admin(UserAdmin):
     
     filter_horizontal=()
-    list_display = ('user_id','email','f_name','l_name','role','is_active','staff','admin',)
-    list_filter = ('email','f_name','l_name','user_id','is_active','staff','admin','role')
-    search_fields = ('email','f_name','l_name','user_id','is_active','staff','admin','role')
+    list_display = ('user_id','email','f_name','l_name','role','is_active','staff','admin','branch')
+    list_filter = ('email','f_name','l_name','user_id','is_active','staff','admin','role','branch')
+    search_fields = ('email','f_name','l_name','user_id','is_active','staff','admin','role','branch')
     ordering = ('admin','staff','role')
     add_fieldsets = (
         (None,{
-            'fields':('user_id','email','f_name','l_name','password1','password2')
+            'fields':('user_id','email','branch','f_name','l_name','password1','password2')
         }),
         ('Permissions',{
             'fields' : ('is_active','staff','admin','role')
@@ -91,7 +91,7 @@ class School(admin.ModelAdmin):
 @admin.register(Branch)
 class Branch(admin.ModelAdmin):
     raw_id_fields = ['school']
-    list_display = ('branch_id','branch_name')
+    list_display = ('branch_id','branch_name','school')
     list_editable = ('branch_name',)
     ordering = ('branch_id',)
 

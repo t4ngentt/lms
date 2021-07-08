@@ -4,9 +4,27 @@ from django.contrib.auth.models import (
 )
 # from django.contrib.auth.models import PermissionsMixin
 
+class School(models.Model):
+    school_id = models.AutoField(primary_key=True)
+    school_name = models.CharField(unique=True,max_length=250)
+
+    class Meta:
+        db_table = 'SCHOOL'
+        verbose_name = 'School'
+        verbose_name_plural = 'Schools'
+
+class Branch(models.Model):
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
+    branch_id = models.AutoField(primary_key=True)
+    branch_name = models.CharField(unique=True,max_length=250)
+
+    class Meta:
+        db_table = 'BRANCH'
+        verbose_name = 'Branch'
+        verbose_name_plural = 'Branches'
 class UserManager(BaseUserManager):
 
-    def create_user(self,email,password,f_name,l_name,user_id,role,is_active=False):
+    def create_user(self,email,password,f_name,l_name,user_id,role,is_active=False,branch=None):
         
         if not email:
             raise ValueError("Users must have an email address")
@@ -29,10 +47,11 @@ class UserManager(BaseUserManager):
         user_obj.staff = False
         user_obj.admin=False
         user_obj.role = role
+        user_obj.branch=branch
         user_obj.save(using=self._db)
         return user_obj
 
-    def create_superuser(self,email,password,f_name,l_name,user_id,role):
+    def create_superuser(self,email,password,f_name,l_name,user_id,role,branch=None):
     
         if not email:
             raise ValueError("Users must have an email address")
@@ -55,24 +74,25 @@ class UserManager(BaseUserManager):
         user_obj.is_active = True
         user_obj.staff = True
         user_obj.admin = True
+        user_obj.branch = branch
         user_obj.save(using=self._db)
         return user_obj
 
 
 class User(AbstractBaseUser):
-    email = models.EmailField(primary_key=True,unique=True,verbose_name='Email Address')  
+    user_id = models.CharField(primary_key=True,max_length=100, verbose_name='user_id')  
     f_name = models.CharField(max_length=250,verbose_name='First Name')
     l_name = models.CharField(max_length=250,verbose_name='Last Name')
-    user_id = models.CharField(max_length=100,unique=True)
+    email = models.EmailField(unique=True, verbose_name="email")
     staff = models.BooleanField(default=False,verbose_name='Staff Member')
     is_active = models.BooleanField(default=False,verbose_name='Active User') # for login
     admin = models.BooleanField(default = False,verbose_name='Admin')  #Superuser
     role = models.IntegerField(verbose_name='Role of user',help_text='Teacher_role : 0 and Student_role : 1')
-
+    branch = models.ForeignKey(Branch, null=True, on_delete=models.CASCADE)
     objects = UserManager()
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['f_name','l_name','user_id','role']
+    USERNAME_FIELD = 'user_id'
+    REQUIRED_FIELDS = ['f_name','l_name','email','role']
 
     class Meta:
         db_table = 'USER'
@@ -111,24 +131,7 @@ class User(AbstractBaseUser):
         return self.admin
 
 
-class School(models.Model):
-    school_id = models.AutoField(primary_key=True)
-    school_name = models.CharField(unique=True,max_length=250)
 
-    class Meta:
-        db_table = 'SCHOOL'
-        verbose_name = 'School'
-        verbose_name_plural = 'Schools'
-
-class Branch(models.Model):
-    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
-    branch_id = models.AutoField(primary_key=True)
-    branch_name = models.CharField(unique=True,max_length=250)
-
-    class Meta:
-        db_table = 'BRANCH'
-        verbose_name = 'Branch'
-        verbose_name_plural = 'Branches'
 
 class Admin_info(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,verbose_name='Admin_User')
