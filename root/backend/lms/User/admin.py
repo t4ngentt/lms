@@ -59,6 +59,7 @@ class UserChangeForm(forms.ModelForm):
 class User_Admin(UserAdmin):
     
     filter_horizontal=()
+    raw_id_fields=['branch']
     list_display = ('user_id','email','f_name','l_name','role','is_active','staff','admin','branch')
     list_filter = ('email','f_name','l_name','user_id','is_active','staff','admin','role','branch')
     search_fields = ('email','f_name','l_name','user_id','is_active','staff','admin','role','branch')
@@ -74,7 +75,7 @@ class User_Admin(UserAdmin):
     fieldsets = (
         (None,{
             'classes':('wide',),
-            'fields':('user_id','email','f_name','l_name','password')
+            'fields':('user_id','branch','email','f_name','l_name','password')
         }),
         ('Permissions',{
             'fields': ('is_active','staff','admin','role')
@@ -91,7 +92,7 @@ class School(admin.ModelAdmin):
 @admin.register(Branch)
 class Branch(admin.ModelAdmin):
     raw_id_fields = ['school']
-    list_display = ('branch_id','branch_name','school')
+    list_display = ('school','branch_id','branch_name',)
     list_editable = ('branch_name',)
     ordering = ('branch_id',)
 
