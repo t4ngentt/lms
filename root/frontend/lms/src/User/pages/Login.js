@@ -12,7 +12,9 @@ import {
 	Box,
 	Button,
 	LinearProgress,
+	Snackbar,
 } from "@material-ui/core";
+import MuiAlert from "@material-ui/lab/Alert";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -96,7 +98,7 @@ export default function Login() {
 					});
 				}
 			})
-			.catch(console.log("signin request failed"));
+			.catch((error) => <div>Error</div>);
 	};
 	const loadingMessage = () => {
 		return (
@@ -114,7 +116,7 @@ export default function Login() {
 			{loadingMessage()}
 			<div className={classes.Logo}>
 				<Typography component="h1" variant="h4">
-					PROJECTCCP
+					MITAOE
 				</Typography>
 			</div>
 			<Grid container justify="center" alignItems="center">
