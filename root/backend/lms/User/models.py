@@ -22,6 +22,7 @@ class Branch(models.Model):
         db_table = 'BRANCH'
         verbose_name = 'Branch'
         verbose_name_plural = 'Branches'
+
 class UserManager(BaseUserManager):
 
     def create_user(self,email,password,f_name,l_name,user_id,role,is_active=False,branch=None):
@@ -51,7 +52,7 @@ class UserManager(BaseUserManager):
         user_obj.save(using=self._db)
         return user_obj
 
-    def create_superuser(self,email,password,f_name,l_name,user_id,role,branch=None):
+    def create_superuser(self,email,password,f_name,l_name,user_id,role=None,branch=None):
     
         if not email:
             raise ValueError("Users must have an email address")
@@ -87,12 +88,12 @@ class User(AbstractBaseUser):
     staff = models.BooleanField(default=False,verbose_name='Staff Member')
     is_active = models.BooleanField(default=False,verbose_name='Active User') # for login
     admin = models.BooleanField(default = False,verbose_name='Admin')  #Superuser
-    role = models.IntegerField(verbose_name='Role of user',help_text='Teacher_role : 0 and Student_role : 1')
-    branch = models.ForeignKey(Branch, null=True, on_delete=models.CASCADE)
+    role = models.IntegerField(verbose_name='Role of user',blank=True,null=True,help_text='Teacher_role : 0 and Student_role : 1')
+    branch = models.ForeignKey(Branch, blank=True,null=True, on_delete=models.CASCADE)
     objects = UserManager()
 
     USERNAME_FIELD = 'user_id'
-    REQUIRED_FIELDS = ['f_name','l_name','email','role']
+    REQUIRED_FIELDS = ['f_name','l_name','email']
 
     class Meta:
         db_table = 'USER'
@@ -129,9 +130,6 @@ class User(AbstractBaseUser):
     def is_admin(self):
         "Is the user a admin member?"
         return self.admin
-
-
-
 
 class Admin_info(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE,verbose_name='Admin_User')

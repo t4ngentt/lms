@@ -1,6 +1,6 @@
 # from root.backend.lms.User.models import Semester
-# from django.db import models
-# from User.models import User,Branch,Group,Semester,Course,School
+from django.db import models
+from User.models import User,Branch,user_group,Semester,Course,School
 # from quiz.models import Quiz,Quiz_Questions,Quiz_For_Selected_Students,Quiz_Questions_For_Selected
 
 # class Student_Info(models.Model):
@@ -15,41 +15,41 @@
 #         verbose_name = 'student_info'
 #         verbose_name_plural = 'student_infos'
 
-# class Student_Group(models.Model):
-#     student_group_id = models.BigAutoField(primary_key=True)
-#     student = models.ForeignKey(Student_Info,on_delete=models.CASCADE,verbose_name='student_info_fk')
-#     group = models.ForeignKey(Group,on_delete=models.CASCADE,verbose_name='group_fk')
-#     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
-#     branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
+class Student_Group(models.Model):
+    student_group_id = models.BigAutoField(primary_key=True)
+    student = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='User_fk')
+    group = models.ForeignKey(user_group,on_delete=models.CASCADE,verbose_name='group_fk')
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
     
-#     class Meta:
-#         db_table = 'STUDENT_GROUP'
-#         verbose_name = 'student_group'
-#         verbose_name_plural = 'student_groups'
+    class Meta:
+        db_table = 'STUDENT_GROUP'
+        verbose_name = 'student_group'
+        verbose_name_plural = 'student_groups'
 
-# class Student_Course(models.Model):
-#     student = models.ForeignKey(Student_Info,on_delete=models.CASCADE,verbose_name='student_info_fk')
-#     course = models.ForeignKey(Course,on_delete=models.CASCASE,verbose_name='course_fk')
-#     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
-#     branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
+class Student_Course(models.Model):
+    student = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='User_fk')
+    course = models.ForeignKey(Course,on_delete=models.CASCADE,verbose_name='course_fk')
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
     
-#     class Meta:
-#         db_table = 'STUDENT_COURSE'
-#         verbose_name = 'student_course_relation'
-#         verbose_name_plural = 'student_course_relations'
+    class Meta:
+        db_table = 'STUDENT_COURSE'
+        verbose_name = 'student_course_relation'
+        verbose_name_plural = 'student_course_relations'
 
-# class Student_Current_Info(models.Model):
+class Student_Current_Info(models.Model):
 
-#     student_group = models.ForeignKey(Student_Group,on_delete=models.CASCADE,verbose_name='student_group_fk')
-#     semester = models.ForeignKey(Semester,on_delete=models.CASCADE,verbose_name='semester_fk')
-#     roll_no = models.IntegerField()
-#     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
-#     branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
+    student_group = models.ForeignKey(Student_Group,on_delete=models.CASCADE,verbose_name='student_group_fk')
+    semester = models.ForeignKey(Semester,on_delete=models.CASCADE,verbose_name='semester_fk')
+    roll_no = models.IntegerField()
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
 
-#     class Meta:
-#         db_table = 'STUDENT_CURRENT_INFO'
-#         verbose_name = 'student_current_info'
-#         verbose_name_plural = 'student_current_infos'
+    class Meta:
+        db_table = 'STUDENT_CURRENT_INFO'
+        verbose_name = 'student_current_info'
+        verbose_name_plural = 'student_current_infos'
 
 # class Project(models.Model):
 #     project_id = models.BigAutoField(primary_key=True)
@@ -69,9 +69,9 @@
 #     dob = models.DateField()
 #     cgpa = models.FloatField()
 #     bio = models.TextField()
-#     avatar = models.ImageField()
+#     # avatar = models.ImageField()
 #     interests = models.TextField()
-#     resume = models.FileField()
+#     # resume = models.FileField()
 #     participations = models.TextField()
 #     social_media = models.URLField()
 #     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
@@ -105,10 +105,10 @@
 #         verbose_name_plural = 'student_documents'
 
 # class Student_Quiz(models.Model):
-#     student = models.ForeignKey(Student_Info,on_delete=models.CASCADE,verbose_name='student_info_fk')
+#     student = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='User_fk')
 #     quiz = models.ForeignKey(Quiz,on_delete=models.CASCADE,verbose_name='quiz_fk')
 #     submitted_time = models.DateTimeField(auto_now=True)
-#     marks = models.FloatField()
+#     marks = models.FloatField(default=0)
 #     is_attempted = models.BooleanField(default=False)
 #     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
 #     branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
@@ -119,17 +119,19 @@
 #         verbose_name_plural = 'student_quizes'
 
 # class Student_Quiz_Answers(models.Model):
-#     student = models.ForeignKey(Student_Info,on_delete=models.CASCADE,verbose_name='student_info_fk')
+#     student = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='User_fk')
 #     question = models.ForeignKey(Quiz_Questions,on_delete=models.CASCADE,verbose_name='quiz_question_fk')
+#     answer = models.CharField(max_length=400,blank=True,null=True)
 #     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
 #     branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
     
-
-#     # answer
-
+#     class Meta:
+#         db_table = 'STUDENET_QUIZ_ANSWER'
+#         verbose_name = 'student_quiz_answers'
+#         verbose_name_plural = 'student_quiz_answers'
 
 # class Student_Selected_Quiz(models.Model):
-#     student = models.ForeignKey(Student_Info,on_delete=models.CASCADE,verbose_name='student_info_fk')
+#     student = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='User_fk')
 #     quiz = models.ForeignKey(Quiz_For_Selected_Students,on_delete=models.CASCADE,verbose_name='quiz_fk')
 #     submitted_time = models.DateTimeField(auto_now=True)
 #     marks = models.FloatField()
