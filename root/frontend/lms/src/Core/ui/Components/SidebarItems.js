@@ -1,12 +1,16 @@
 import React from "react";
+import { useThemeUpdate, useThemeContext } from "../../CustomThemeContext";
 import {
 	ListItem,
 	ListItemIcon,
 	ListItemText,
 	Divider,
+	FormControlLabel,
+	Switch,
 } from "@material-ui/core";
 import { Link, NavLink } from "react-router-dom";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { signout } from "../../../Auth/helper/index";
 // icons --->
 import PeopleIcon from "@material-ui/icons/People";
 import HomeIcon from "@material-ui/icons/Home";
@@ -15,32 +19,46 @@ import SchoolIcon from "@material-ui/icons/School";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import EventIcon from "@material-ui/icons/Event";
+import CalendarTodayIcon from "@material-ui/icons/CalendarToday";
 import EventAvailableIcon from "@material-ui/icons/EventAvailable";
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
+
+const drawerWidth = 220;
 
 const useStyles = makeStyles((theme) => ({
 	activeItem: {
-		color: theme.palette.primary.dark,
+		color: theme.palette.primary.light,
+	},
+	logoutButton: {
+		width: drawerWidth,
+	},
+	darkModeSwitch: {
+		marginTop: "10px",
+		marginBottom: "10px",
 	},
 }));
 
 function ListItems() {
 	const classes = useStyles();
-	// const handleSignOut = () => {
-	// 	signout();
-	// };
+	const darkMode = useThemeContext();
+	const toggleTheme = useThemeUpdate();
+	const handleSignOut = () => {
+		signout();
+	};
+
 	return (
 		<div>
 			<ListItem
 				button
 				key="Home"
-				// component={NavLink}
+				component={NavLink}
 				activeClassName={classes.activeItem}
-				// to={
-				// 	"/" +
-				// 	JSON.parse(localStorage.getItem("jwt")).user.userRole +
-				// 	"/dashboard"
-				// }
+				to={
+					"/" +
+					(JSON.parse(localStorage.getItem("jwt")).user.role === 0
+						? "student"
+						: "teacher") +
+					"/dashboard"
+				}
 			>
 				<ListItemIcon>
 					<HomeIcon />
@@ -49,13 +67,15 @@ function ListItems() {
 			</ListItem>
 			<ListItem
 				button
-				// component={NavLink}
+				component={NavLink}
 				activeClassName={classes.activeItem}
-				// to={
-				// 	"/" +
-				// 	JSON.parse(localStorage.getItem("jwt")).user.userRole +
-				// 	"/profile"
-				// }
+				to={
+					"/" +
+					(JSON.parse(localStorage.getItem("jwt")).user.role === 0
+						? "student"
+						: "teacher") +
+					"/profile"
+				}
 			>
 				<ListItemIcon>
 					<AccountBoxIcon />
@@ -64,13 +84,15 @@ function ListItems() {
 			</ListItem>
 			<ListItem
 				button
-				// component={NavLink}
+				component={NavLink}
 				activeClassName={classes.activeItem}
-				// to={
-				// 	"/" +
-				// 	JSON.parse(localStorage.getItem("jwt")).user.userRole +
-				// 	"/classroom"
-				// }
+				to={
+					"/" +
+					(JSON.parse(localStorage.getItem("jwt")).user.role === 0
+						? "student"
+						: "teacher") +
+					"/classroom"
+				}
 			>
 				<ListItemIcon>
 					<SchoolIcon />
@@ -79,13 +101,15 @@ function ListItems() {
 			</ListItem>
 			<ListItem
 				button
-				// component={NavLink}
+				component={NavLink}
 				activeClassName={classes.activeItem}
-				// to={
-				// 	"/" +
-				// 	JSON.parse(localStorage.getItem("jwt")).user.userRole +
-				// 	"/forums"
-				// }
+				to={
+					"/" +
+					(JSON.parse(localStorage.getItem("jwt")).user.role === 0
+						? "student"
+						: "teacher") +
+					"/forums"
+				}
 			>
 				<ListItemIcon>
 					<PeopleIcon />
@@ -94,13 +118,15 @@ function ListItems() {
 			</ListItem>
 			<ListItem
 				button
-				// component={NavLink}
+				component={NavLink}
 				activeClassName={classes.activeItem}
-				// to={
-				// 	"/" +
-				// 	JSON.parse(localStorage.getItem("jwt")).user.userRole +
-				// 	"/resources"
-				// }
+				to={
+					"/" +
+					(JSON.parse(localStorage.getItem("jwt")).user.role === 0
+						? "student"
+						: "teacher") +
+					"/resources"
+				}
 			>
 				<ListItemIcon>
 					<LibraryBooksIcon />
@@ -110,13 +136,15 @@ function ListItems() {
 			<Divider />
 			<ListItem
 				button
-				// component={NavLink}
+				component={NavLink}
 				activeClassName={classes.activeItem}
-				// to={
-				// 	"/" +
-				// 	JSON.parse(localStorage.getItem("jwt")).user.userRole +
-				// 	"/calendar"
-				// }
+				to={
+					"/" +
+					(JSON.parse(localStorage.getItem("jwt")).user.role === 0
+						? "student"
+						: "teacher") +
+					"/calendar"
+				}
 			>
 				<ListItemIcon>
 					<CalendarTodayIcon />
@@ -125,13 +153,15 @@ function ListItems() {
 			</ListItem>
 			<ListItem
 				button
-				// component={NavLink}
+				component={NavLink}
 				activeClassName={classes.activeItem}
-				// to={
-				// 	"/" +
-				// 	JSON.parse(localStorage.getItem("jwt")).user.userRole +
-				// 	"/events"
-				// }
+				to={
+					"/" +
+					(JSON.parse(localStorage.getItem("jwt")).user.role === 0
+						? "student"
+						: "teacher") +
+					"/events"
+				}
 			>
 				<ListItemIcon>
 					<EventIcon />
@@ -140,13 +170,15 @@ function ListItems() {
 			</ListItem>
 			<ListItem
 				button
-				// component={NavLink}
+				component={NavLink}
 				activeClassName={classes.activeItem}
-				// to={
-				// 	"/" +
-				// 	JSON.parse(localStorage.getItem("jwt")).user.userRole +
-				// 	"/events"
-				// }
+				to={
+					"/" +
+					(JSON.parse(localStorage.getItem("jwt")).user.role === 0
+						? "student"
+						: "teacher") +
+					"/attendance"
+				}
 			>
 				<ListItemIcon>
 					<EventAvailableIcon />
@@ -154,12 +186,25 @@ function ListItems() {
 				<ListItemText primary="Attendance" />
 			</ListItem>
 			<Divider />
-			<ListItem button component={Link} to="/">
-				<ListItemIcon>
-					<ExitToAppIcon />
-				</ListItemIcon>
-				<ListItemText primary="LogOut" />
-			</ListItem>
+			<div className={classes.darkModeSwitch}>
+				<FormControlLabel
+					value="start"
+					control={<Switch color="primary" />}
+					label="Dark Mode"
+					labelPlacement="start"
+					checked={darkMode}
+					onChange={toggleTheme}
+				/>
+			</div>
+			<div className={classes.logoutButton}>
+				<Divider />
+				<ListItem button component={Link} to="/" onClick={handleSignOut}>
+					<ListItemIcon>
+						<ExitToAppIcon />
+					</ListItemIcon>
+					<ListItemText primary="LogOut" />
+				</ListItem>
+			</div>
 		</div>
 	);
 }

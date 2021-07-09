@@ -72,6 +72,11 @@ export default function Login() {
 	const handleChange = (name) => (event) => {
 		setValues({ ...values, error: false, [name]: event.target.value });
 	};
+	const handleKeyPress = (e) => {
+		if (e.keyCode === 13) {
+			onSubmit();
+		}
+	};
 	const performRedirect = () => {
 		if (didRedirect) {
 			console.log(user);
@@ -138,6 +143,7 @@ export default function Login() {
 								value={email}
 								onChange={handleChange("email")}
 								autoFocus
+								onKeyPress={handleKeyPress}
 							/>
 							<TextField
 								variant="outlined"
