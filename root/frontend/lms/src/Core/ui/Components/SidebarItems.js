@@ -9,7 +9,7 @@ import {
 	Switch,
 } from "@material-ui/core";
 import { Link, NavLink } from "react-router-dom";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { signout } from "../../../Auth/helper/index";
 // icons --->
 import PeopleIcon from "@material-ui/icons/People";
