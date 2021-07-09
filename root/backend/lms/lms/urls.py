@@ -12,6 +12,7 @@ from User import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include('User.urls')),
+    path('api/',include('student.urls'))
     # path('auth/', include('rest_framework.urls')),
     
 ]

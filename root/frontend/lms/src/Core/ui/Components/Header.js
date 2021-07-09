@@ -41,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
 			display: "none",
 		},
 	},
+	customBadge : {
+		backgroundColor : "white"
+	}
 }));
 
 export default function Header(props) {
@@ -58,12 +61,12 @@ export default function Header(props) {
 					<MenuIcon />
 				</IconButton>
 				<Button disableRipple className={classes.logoButton}>
-					<Typography variant="h6" className={classes.appLogo}>
-						ProjectCCP
+					<Typography variant="h5" className={classes.appLogo}>
+						MITAOE
 					</Typography>
 				</Button>
 				<IconButton className={classes.rightItems}>
-					<Badge badgeContent={4} color="secondary">
+					<Badge badgeContent={4} color="secondary" classname={classes.customBadge}>
 						<NotificationsIcon />
 					</Badge>
 				</IconButton>

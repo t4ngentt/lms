@@ -54,4 +54,7 @@ class Teacher_Course(models.Model):
         db_table = 'TEACHER_COURSE'
         verbose_name = 'teacher_course'
         verbose_name_plural = 'teacher_courses'
+
+    def __str__(self):
+        return f"{self.teacher_course_id}"
         

@@ -27,6 +27,9 @@ class Student_Group(models.Model):
         verbose_name = 'student_group'
         verbose_name_plural = 'student_groups'
 
+    def __str__(self):
+        return f"{self.student.user_id}"
+
 class Student_Course(models.Model):
     student = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='User_fk')
     course = models.ForeignKey(Course,on_delete=models.CASCADE,verbose_name='course_fk')
@@ -37,6 +40,9 @@ class Student_Course(models.Model):
         db_table = 'STUDENT_COURSE'
         verbose_name = 'student_course_relation'
         verbose_name_plural = 'student_course_relations'
+
+    def __str__(self):
+        return f"{self.student.user_id}"
 
 class Student_Current_Info(models.Model):
 
@@ -50,6 +56,9 @@ class Student_Current_Info(models.Model):
         db_table = 'STUDENT_CURRENT_INFO'
         verbose_name = 'student_current_info'
         verbose_name_plural = 'student_current_infos'
+
+    def __str__(self):
+        return f"{self.roll_no}"
 
 # class Project(models.Model):
 #     project_id = models.BigAutoField(primary_key=True)

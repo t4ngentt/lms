@@ -13,6 +13,9 @@ class School(models.Model):
         verbose_name = 'School'
         verbose_name_plural = 'Schools'
 
+    def __str__(self):
+        return f"{self.school_name}"
+
 class Branch(models.Model):
     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
     branch_id = models.AutoField(primary_key=True)
@@ -23,6 +26,8 @@ class Branch(models.Model):
         verbose_name = 'Branch'
         verbose_name_plural = 'Branches'
 
+    def __str__(self):
+        return f"{self.branch_name}"
 class UserManager(BaseUserManager):
 
     def create_user(self,email,password,f_name,l_name,user_id,role,is_active=False,branch=None):
@@ -109,7 +114,7 @@ class User(AbstractBaseUser):
         return self.email
 
     def __str__(self):
-        return self.email
+        return f"{self.email}"
 
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
@@ -131,15 +136,17 @@ class User(AbstractBaseUser):
         "Is the user a admin member?"
         return self.admin
 
-class Admin_info(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE,verbose_name='Admin_User')
-    admin_id = models.AutoField(primary_key=True)
-    admin_name = models.CharField(max_length=300)
+# class Admin_info(models.Model):
+#     user = models.OneToOneField(User,on_delete=models.CASCADE,verbose_name='Admin_User')
+#     admin_id = models.AutoField(primary_key=True)
+#     admin_name = models.CharField(max_length=300)
 
-    class Meta:
-        db_table = 'ADMIN'
-        verbose_name = 'Admin'
-        verbose_name_plural = 'Admins'
+#     class Meta:
+#         db_table = 'ADMIN'
+#         verbose_name = 'Admin'
+#         verbose_name_plural = 'Admins'
+
+    
 class Semester(models.Model):
     semester_id = models.AutoField(primary_key=True)
     semester_name = models.CharField(unique=True,max_length=250)
@@ -151,6 +158,9 @@ class Semester(models.Model):
         db_table = 'SEMESTER'
         verbose_name = 'Semester'
         verbose_name_plural = 'Semesters'
+    
+    def __str__(self):
+        return f"{self.semester_name}"
 
 class Branch_Semester(models.Model):
     branch_sem_id = models.AutoField(primary_key=True)
@@ -163,6 +173,9 @@ class Branch_Semester(models.Model):
         verbose_name = 'branch_sem'
         verbose_name_plural = 'branch_sems'
 
+    def __str__(self):
+        return f"{self.branch_sem_id}"
+
 class user_group(models.Model):
     group_id = models.AutoField(primary_key=True)
     group_name = models.CharField(unique=True,max_length=200)
@@ -170,12 +183,14 @@ class user_group(models.Model):
     semester = models.ForeignKey(Semester,on_delete=models.CASCADE,verbose_name='semester_fk')
     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
     branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
-    
 
     class Meta:
         db_table = 'GROUP'
         verbose_name = 'group'
         verbose_name_plural = 'groups'
+
+    def __str__(self):
+        return f"{self.group_name}"
 
 class Course(models.Model):
     course_id = models.AutoField(primary_key=True)
@@ -184,12 +199,14 @@ class Course(models.Model):
     semester = models.ForeignKey(Semester,on_delete=models.CASCADE,verbose_name='semester_fk')
     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
     branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
-    
 
     class Meta:
         db_table = 'COURSE'
         verbose_name = 'course'
         verbose_name_plural = 'courses'
+
+    def __str__(self):
+        return f"{self.course_name}"
 
 class Group_Course(models.Model):
     group_course_id = models.AutoField(primary_key=True)
@@ -202,5 +219,8 @@ class Group_Course(models.Model):
         db_table = 'GROUP_COURSE'
         verbose_name = 'group_course'
         verbose_name_plural = 'group_courses'
+
+    def __str__(self):
+        return f"{self.group_course_id}"
 
 
