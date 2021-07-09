@@ -12,6 +12,11 @@ class Student_Course_Serializer(serializers.ModelSerializer):
         model = Course
         fields = ['course_id','course_name']
 
+class Student_Course_Detail_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course
+        fields = "__all__"
+        
 class Student_Current_Info_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Student_Current_Info

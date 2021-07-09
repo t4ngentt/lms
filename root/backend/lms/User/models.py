@@ -93,7 +93,7 @@ class User(AbstractBaseUser):
     staff = models.BooleanField(default=False,verbose_name='Staff Member')
     is_active = models.BooleanField(default=False,verbose_name='Active User') # for login
     admin = models.BooleanField(default = False,verbose_name='Admin')  #Superuser
-    role = models.IntegerField(verbose_name='Role of user',blank=True,null=True,help_text='Teacher_role : 0 and Student_role : 1')
+    role = models.IntegerField(verbose_name='Role of user',blank=True,null=True,help_text='Teacher_role : 1 and Student_role : 0')
     branch = models.ForeignKey(Branch, blank=True,null=True, on_delete=models.CASCADE)
     objects = UserManager()
 

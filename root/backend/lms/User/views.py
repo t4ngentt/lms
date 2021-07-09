@@ -14,10 +14,8 @@ def login_token(request):
     json_data = json.loads(login_data)
     print(json_data)
     user=CustomAuthenticationBackend.authenticate(CustomAuthenticationBackend,request,json_data['email'],json_data['password'])
-    print("hi",user)
     if user is not None:
         jwt_t= jwt.encode({'email': json_data['email'],'exp':datetime.datetime.utcnow()+datetime.timedelta(minutes=60)}, 'django-insecure-%oy1s23mp4z-%^ito$+60!5@2fm*qus5=$2c8i3!fte26j%l$n', algorithm='HS256')
-        # jwt_t = jwt_t.decode("utf-8")
         print(jwt_t,user)
         user_data=UserSerializer(user, context={'request': request}).data
         del user_data['password']
@@ -30,9 +28,8 @@ def login_token(request):
         return JsonResponse({'msg':'Error'})
 
 
-def token_autheticate(request):
+def token_authenticate(request):
     data= request.headers['Authorization']
-    
     token = str.replace(str(data), 'Bearer ', '')
     print(token)
     if not token:
@@ -47,6 +44,22 @@ def token_autheticate(request):
     del user_data['password']
     return JsonResponse({
         'user': user_data })
+
+def token_authentication(request):
+    data= request.headers['Authorization']
+    token = str.replace(str(data), 'Bearer ', '')
+    print(token)
+    if not token:
+        return False
+    try:
+        payload = jwt.decode(token,'django-insecure-%oy1s23mp4z-%^ito$+60!5@2fm*qus5=$2c8i3!fte26j%l$n', algorithms=['HS256'])
+        
+    except jwt.ExpiredSignatureError:
+        return False
+    user = User.objects.get(email=payload['email'])
+    user_data=UserSerializer(user, context={'request': request}).data
+    del user_data['password']
+    return True
 
 
 # class Login_Check(viewsets.ModelViewSet):
