@@ -5,12 +5,12 @@ from User.models import Course,user_group
 class Student_Group_Serializer(serializers.ModelSerializer):
     class Meta:
         model = user_group
-        fields = ['group_id','group_name']
+        fields = "__all__"
 
 class Student_Course_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Course
-        fields = ['course_id','course_name']
+        fields = "__all__"
 
 class Student_Course_Detail_Serializer(serializers.ModelSerializer):
     class Meta:
