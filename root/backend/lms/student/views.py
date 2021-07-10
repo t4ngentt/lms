@@ -8,13 +8,15 @@ from .models import Student_Group,Student_Course
 from User.models import Course,user_group
 from User.views import token_authentication
 from django.db import connection
+import json
 cursor = connection.cursor()
 # Create your views here.
 
 class Student_Groups(APIView):
     def get(self,request,pk=None,format=None):
         # if token_authentication(request):
-            querylist=Student_Group.objects.filter(student=pk).values()
+            prn=(json.loads(request.body))['prn']
+            querylist=Student_Group.objects.filter(student=prn).values()
             group_fk=[]
             for j in querylist:
                 group_fk.append(j['group_id'])
