@@ -1,9 +1,12 @@
 # from django.shortcuts import render
 # from rest_framework.response import response
-from .models import User
+from .models import User, user_group
 from .serializers import UserSerializer
+from student.serializers import Student_Group_Serializer
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 from .CustomAuth import CustomAuthenticationBackend
 import json,jwt,datetime
 from django.http.response import JsonResponse
@@ -69,3 +72,9 @@ def token_authentication(request):
 #     # authentication_classes = [CustomAuthenticate]
 #     # print("no")
 #     # permission_classes = [IsAuthenticated]
+
+class Group_Detail(GenericAPIView,RetrieveModelMixin):
+    queryset = user_group.objects.all()
+    serializer_class = Student_Group_Serializer
+    def get(self,request,*args,**kwargs):
+        return self.retrieve(request,*args,**kwargs)

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Student_Group,Student_Course,Student_Current_Info
+from .models import Student_Group,Student_Course,Student_Current_Info, Student_Profile, Student_Project, Student_Quiz, Student_Result, Student_experience,Student_Quiz_Answers
 # Register your models here.
 
 
@@ -21,14 +21,14 @@ class Student_Current_Info(admin.ModelAdmin):
     raw_id_fields = ['student_group','semester','school','branch']
     list_display = ['student_group','semester','roll_no','school','branch']
     list_filter = ['student_group','semester','school','branch']
-# admin.register(Student_Profile)
-# admin.register(Student_Project)
-# admin.register(Student_Documents)
-# admin.register(Student_Quiz_Answers)
-# admin.register(Student_Quiz)
-# admin.register(Student_Selected_Quiz)
-# admin.register(Student_Selected_Quiz_Answers)
-# admin.register(Student_Result)
-# admin.register(Project)
+admin.site.register(Student_Profile)
+admin.site.register(Student_experience)
+# admin.site.register(Student_Documents)
+# admin.site.register(Student_Quiz_Answers)
+admin.site.register(Student_Quiz)
+# admin.site.register(Student_Selected_Quiz)
+admin.site.register(Student_Quiz_Answers)
+admin.site.register(Student_Result)
+admin.site.register(Student_Project)
 
 

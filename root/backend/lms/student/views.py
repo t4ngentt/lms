@@ -38,7 +38,5 @@ class Student_Group_Course(APIView):
 class Student_Course(GenericAPIView,RetrieveModelMixin):
     queryset=Course.objects.all()
     serializer_class = Student_Course_Detail_Serializer
-    
     def get(self,request,*args,**kwargs):
         return self.retrieve(request,*args,**kwargs)
-
