@@ -15,17 +15,19 @@ cursor = connection.cursor()
 
 class Student_Groups(APIView):
     def post(self, request, pk=None, format=None):
-        # if token_authentication(request):
-        print("hello")
-        prn = (json.loads(request.body))['prn']
-        print(prn)
-        querylist = Student_Group.objects.filter(student=prn).values()
-        group_fk = []
-        for j in querylist:
-            group_fk.append(j['group_id'])
-        queryset = user_group.objects.filter(group_id__in=group_fk)
-        serializer = Student_Group_Serializer(queryset, many=True)
-        return Response(serializer.data)
+        if token_authentication(request):
+            prn = (json.loads(request.body))['prn']
+            print(prn)
+            print("hello")
+            querylist = Student_Group.objects.filter(student=prn).values()
+            group_fk = []
+            for j in querylist:
+                group_fk.append(j['group_id'])
+            queryset = user_group.objects.filter(group_id__in=group_fk)
+            serializer = Student_Group_Serializer(queryset, many=True)
+            return Response(serializer.data)
+        else:
+            return Response({"msg": "Invalid Credetials"})
 
 
 class Student_Group_Course(APIView):
