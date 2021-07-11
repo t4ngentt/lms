@@ -27,7 +27,7 @@ class Student_Groups(APIView):
             serializer = Student_Group_Serializer(queryset, many=True)
             return Response(serializer.data)
         else:
-            return Response({"msg": "Invalid Credetials"})
+            return Response({"msg": "Invalid Token"})
 
 
 class Student_Group_Course(APIView):

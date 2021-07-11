@@ -8,7 +8,7 @@ export const classroomInfo = () => {
 		headers: {
 			Accept: "application/json",
 			"Content-Type": "application/json",
-			Authorization: `Bearer ${JSON.parse(localStorage.getItem("jwt")).token}`,
+			Authorization: `Bearer `,
 		},
 		body: JSON.stringify(data),
 	})

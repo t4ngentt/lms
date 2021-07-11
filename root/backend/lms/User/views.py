@@ -50,9 +50,10 @@ def token_authenticate(request):
 
 def token_authentication(request):
     data= request.headers['Authorization']
-    token = str.replace(str(data), 'Bearer ', '')
+    token = str.replace(str(data), 'Bearer', '')
     print(token)
-    if not data or not token:
+    if (data == '' or token == ''):
+        print("Data :",token)
         return False
     try:
         payload = jwt.decode(token,'django-insecure-%oy1s23mp4z-%^ito$+60!5@2fm*qus5=$2c8i3!fte26j%l$n', algorithms=['HS256'])
