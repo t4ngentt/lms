@@ -15,12 +15,26 @@ class Student_Group(admin.ModelAdmin):
     raw_id_fields = ['student','group','school','branch']
     list_display = ['student_group_id','student','group','school','branch']
     list_filter = ['group','school','branch']
+    def get_form(self, request, obj=None, **kwargs):
+        
+        self.exclude = ("school","branch", )
+        form = super(Student_Group, self).get_form(request, obj, **kwargs)
+        return form
+
+    def save_model(self, request, obj, form, change):
+        if not obj.school:
+            obj.school = obj.student.school
+        if not obj.branch:
+            obj.branch = obj.student.branch
+        obj.save()
+
 
 @admin.register(Student_Current_Info)
 class Student_Current_Info(admin.ModelAdmin):
     raw_id_fields = ['student_group','semester','school','branch']
     list_display = ['student_group','semester','roll_no','school','branch']
     list_filter = ['student_group','semester','school','branch']
+    
 admin.site.register(Student_Profile)
 admin.site.register(Student_experience)
 # admin.site.register(Student_Documents)

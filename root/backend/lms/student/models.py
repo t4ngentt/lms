@@ -19,8 +19,8 @@ class Student_Group(models.Model):
     student_group_id = models.BigAutoField(primary_key=True)
     student = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='User_fk')
     group = models.ForeignKey(user_group,on_delete=models.CASCADE,verbose_name='group_fk')
-    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
-    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk', blank=True, null=True)
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True, null=True)
     
     class Meta:
         db_table = 'STUDENT_GROUP'

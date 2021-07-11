@@ -95,6 +95,7 @@ class User(AbstractBaseUser):
     admin = models.BooleanField(default = False,verbose_name='Admin')  #Superuser
     role = models.IntegerField(verbose_name='Role of user',blank=True,null=True,help_text='Teacher_role : 1 and Student_role : 0')
     branch = models.ForeignKey(Branch, blank=True,null=True, on_delete=models.CASCADE)
+    school = models.ForeignKey(School,blank=True,null=True, on_delete=models.CASCADE )
     objects = UserManager()
 
     USERNAME_FIELD = 'user_id'
@@ -212,8 +213,8 @@ class Group_Course(models.Model):
     group_course_id = models.AutoField(primary_key=True)
     group = models.ForeignKey(user_group,on_delete=models.CASCADE,verbose_name='group_fk')
     course = models.ForeignKey(Course,on_delete=models.CASCADE,verbose_name='course_fk')
-    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
-    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
     
     class Meta:
         db_table = 'GROUP_COURSE'
