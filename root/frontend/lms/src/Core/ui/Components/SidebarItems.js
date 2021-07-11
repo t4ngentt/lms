@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 		color: theme.palette.primary.light,
 	},
 	logoutButton: {
-		width: drawerWidth,
+		width: drawerWidth - 20,
 	},
 	darkModeSwitch: {
 		marginTop: "10px",
@@ -196,15 +196,14 @@ function ListItems() {
 					onChange={toggleTheme}
 				/>
 			</div>
-			<div className={classes.logoutButton}>
-				<Divider />
-				<ListItem button component={Link} to="/" onClick={handleSignOut}>
-					<ListItemIcon>
-						<ExitToAppIcon />
-					</ListItemIcon>
-					<ListItemText primary="LogOut" />
-				</ListItem>
-			</div>
+
+			<Divider />
+			<ListItem button component={Link} to="/" onClick={handleSignOut} >
+				<ListItemIcon>
+					<ExitToAppIcon />
+				</ListItemIcon>
+				<ListItemText primary="LogOut" />
+			</ListItem>
 		</div>
 	);
 }

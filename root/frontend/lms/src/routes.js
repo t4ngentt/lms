@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -8,6 +8,7 @@ import Login from "./User/pages/Login";
 import Dashboard from "./User/pages/Dashboard";
 import Profile from "./User/pages/Profile";
 import Classroom from "./User/pages/Classroom";
+import Course from "./User/pages/Course";
 import Forums from "./User/pages/Forums";
 import Resources from "./User/pages/Resources";
 import Calendar from "./User/pages/Calendar";
@@ -39,6 +40,12 @@ const Routes = () => {
 						exact
 						strict
 						component={Classroom}
+					></Route>
+					<Route
+						path="/student/classroom/group/:group_id/course"
+						exact
+						strict
+						component={Course}
 					></Route>
 					<Route path="/student/forums" exact strict component={Forums}></Route>
 					<Route

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+
 import { makeStyles } from "@material-ui/core/styles";
 import {
 	Card,
@@ -10,11 +10,7 @@ import {
 
 const useStyles = makeStyles({
 	cardContainer: {
-		minWidth: "300px",
-		minHeight: "250px",
-		textAlign: "center",
-		display: "flex",
-		justifyContent: "center",
+		minHeight: "50px",
 	},
 	details: {
 		fontSize: 14,
@@ -24,31 +20,22 @@ const useStyles = makeStyles({
 	},
 });
 
-export default function ClassroomCard(props) {
+export default function CourseCard(props) {
 	const classes = useStyles();
 
 	return (
 		<Card className={classes.cardContainer}>
-			<CardActionArea
-				className={classes.cardContainer}
-				component={Link}
-				to={{
-					pathname: `/student/classroom/group/${props.group_id}/course`,
-					state: {
-						groupName: `${props.group_name}`,
-					},
-				}}
-			>
+			<CardActionArea className={classes.cardContainer}>
 				<CardContent>
 					<Typography variant="h5" component="h2">
-						{props.group_name}
+						{props.name}
 					</Typography>
 					<Typography
 						className={classes.details}
 						color="textSecondary"
 						gutterBottom
 					>
-						Total Students : {props.no_of_students}
+						{props.description}
 					</Typography>
 				</CardContent>
 			</CardActionArea>

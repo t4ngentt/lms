@@ -1,19 +1,36 @@
 import { API } from "../../backend";
-const token = JSON.parse(localStorage.getItem("jwt"));
 
-export const testapi = (user) => {
-	console.log(token.token);
-	return fetch(`${API}/user/token_autheticate/`, {
+export const classroomInfo = () => {
+	const data = { prn: JSON.parse(localStorage.getItem("jwt")).user.user_id };
+	console.log(data);
+	return fetch(`${API}/student/classroom/group`, {
+		method: "POST",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${JSON.parse(localStorage.getItem("jwt")).token}`,
+		},
+		body: JSON.stringify(data),
+	})
+		.then((res) => {
+			return res.json();
+		})
+		.catch((err) => console.log(err));
+};
+
+export const GroupInfo = (group_id) => {
+	return fetch(`${API}/student/classroom/group/${group_id}/course`, {
 		method: "GET",
 		headers: {
 			Accept: "application/json",
 			"Content-Type": "application/json",
-			Authorization: `Bearer ${token.token}`,
+			Authorization: `Bearer ${JSON.parse(localStorage.getItem("jwt")).token}`,
 		},
-		body: JSON.stringify(user),
 	})
-		.then((response) => {
-			return response.json();
+		.then((res) => {
+			return res.json();
 		})
-		.catch((err) => console.log(err));
+		.catch((err) => {
+			console.log(err);
+		});
 };

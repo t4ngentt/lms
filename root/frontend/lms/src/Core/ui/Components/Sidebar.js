@@ -13,8 +13,6 @@ import {
 	Divider,
 } from "@material-ui/core";
 
-import { Link } from "react-router-dom";
-
 const drawerWidth = 220;
 
 const useStyles = makeStyles((theme) => ({
