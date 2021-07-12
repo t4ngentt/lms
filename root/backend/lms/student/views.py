@@ -15,7 +15,7 @@ cursor = connection.cursor()
 
 class Student_Groups(APIView):
     def post(self, request, pk=None, format=None):
-        if token_authentication(request):
+        # if token_authentication(request):
             prn = (json.loads(request.body))['prn']
             print(prn)
             print("hello")
@@ -26,8 +26,8 @@ class Student_Groups(APIView):
             queryset = user_group.objects.filter(group_id__in=group_fk)
             serializer = Student_Group_Serializer(queryset, many=True)
             return Response(serializer.data)
-        else:
-            return Response({"msg": "Invalid Token"})
+        # else:
+        #     return Response({"msg": "Invalid Token"})
 
 
 class Student_Group_Course(APIView):

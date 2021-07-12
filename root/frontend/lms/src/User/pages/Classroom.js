@@ -15,9 +15,9 @@ const useStyles = makeStyles((theme) => ({
 		justifyContent: "center",
 		alignItems: "center",
 	},
-	navigation : {
-		marginBottom : "40px"
-	}
+	navigation: {
+		marginBottom: "40px",
+	},
 }));
 
 export default function Classroom() {
@@ -43,6 +43,7 @@ export default function Classroom() {
 
 	useEffect(() => {
 		onLoad();
+		console.log("Groups : ", groups);
 	}, []);
 
 	const NoGroups = () => {
@@ -84,7 +85,7 @@ export default function Classroom() {
 					})}
 				</Grid>
 			)}
-			{groups.length === 0 && NoGroups()}
+			{/* {groups.length === 0 && NoGroups()} */}
 		</Base>
 	);
 }

@@ -38,6 +38,10 @@ export default function Dashboard() {
 		}
 	};
 
+	useEffect(() => {
+		getTime();
+	}, []);
+
 	return (
 		<Base>
 			<div className={classes.Greeting}>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ClassroomNavigator from "../../Core/ui/Components/ClassroomNavigation";
 import { useParams, useLocation } from "react-router";
-import { GroupInfo } from "../helper/Student";
+import { GroupInfo, getGroupDetails } from "../helper/Student";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid } from "@material-ui/core";
@@ -39,17 +39,18 @@ export default function Course() {
 		// }
 	};
 	const setGroup = () => {
-		if (location.state.groupName) {
+		if (location.state) {
 			setGroupName(location.state.groupName);
-		}
-		else
-		{
-			
+		} else {
+			getGroupDetails(group_id).then((data) => {
+				setGroupName(data.group_name);
+			});
 		}
 	};
 
 	useEffect(() => {
 		onLoad();
+		setGroup();
 	}, []);
 
 	const noCourses = () => {
@@ -62,10 +63,7 @@ export default function Course() {
 				<Typography variant="h4">Courses</Typography>
 			</div>
 			<div className={classes.navigation}>
-				<ClassroomNavigator
-					group_name={location.state.groupName}
-					group_id={group_id}
-				/>
+				<ClassroomNavigator group_name={groupName} group_id={group_id} />
 			</div>
 			{courses && (
 				<Grid container spacing={5} justifyContent="center" alignItems="center">

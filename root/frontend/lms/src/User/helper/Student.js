@@ -8,7 +8,7 @@ export const classroomInfo = () => {
 		headers: {
 			Accept: "application/json",
 			"Content-Type": "application/json",
-			Authorization: `Bearer `,
+			Authorization: `Bearer ${JSON.parse(localStorage.getItem("jwt")).token}`,
 		},
 		body: JSON.stringify(data),
 	})
@@ -20,6 +20,23 @@ export const classroomInfo = () => {
 
 export const GroupInfo = (group_id) => {
 	return fetch(`${API}/student/classroom/group/${group_id}/course`, {
+		method: "GET",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${JSON.parse(localStorage.getItem("jwt")).token}`,
+		},
+	})
+		.then((res) => {
+			return res.json();
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+};
+
+export const getGroupDetails = (group_id) => {
+	return fetch(`${API}/groupDetails/${group_id}`, {
 		method: "GET",
 		headers: {
 			Accept: "application/json",
