@@ -107,13 +107,35 @@ class Semester(admin.ModelAdmin):
 class Branch_Semester(admin.ModelAdmin):
     raw_id_fields = ['school','branch','semester']
     ordering = ('branch_sem_id',)
+    def get_form(self, request, obj=None, **kwargs):
+        
+        self.exclude = ("school")
+        form = super(Branch_Semester, self).get_form(request, obj, **kwargs)
+        return form
+
+    def save_model(self, request, obj, form, change):
+        if not obj.school:
+            obj.school = obj.branch.school
+        
+        obj.save()
 
 @admin.register(user_group)
-class group(admin.ModelAdmin):
+class user_group(admin.ModelAdmin):
     raw_id_fields = ['school','branch','semester']
     list_display = ('group_id','group_name','no_of_students')
     list_editable = ('group_name','no_of_students')
     ordering = ('semester_id',)
+    def get_form(self, request, obj=None, **kwargs):
+        
+        self.exclude = ("school",)
+        form = super(user_group, self).get_form(request, obj, **kwargs)
+        return form
+
+    def save_model(self, request, obj, form, change):
+        if not obj.school:
+            obj.school = obj.branch.school
+        
+        obj.save()
 
 @admin.register(Course)
 class Course(admin.ModelAdmin):
@@ -121,6 +143,17 @@ class Course(admin.ModelAdmin):
     list_display = ('course_id','course_name','course_desc')
     list_editable = ('course_name',)
     ordering = ('course_id',)
+    def get_form(self, request, obj=None, **kwargs):
+        
+        self.exclude = ("school",)
+        form = super(Course, self).get_form(request, obj, **kwargs)
+        return form
+
+    def save_model(self, request, obj, form, change):
+        if not obj.school:
+            obj.school = obj.branch.school
+        
+        obj.save()
 
 @admin.register(Group_Course)
 class Group_Course(admin.ModelAdmin):

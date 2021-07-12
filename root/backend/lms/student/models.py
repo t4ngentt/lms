@@ -33,8 +33,8 @@ class Student_Group(models.Model):
 class Student_Course(models.Model):
     student = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='User_fk')
     course = models.ForeignKey(Course,on_delete=models.CASCADE,verbose_name='course_fk')
-    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
-    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
     
     class Meta:
         db_table = 'STUDENT_COURSE'
@@ -49,9 +49,9 @@ class Student_Current_Info(models.Model):
     student_group = models.ForeignKey(Student_Group,on_delete=models.CASCADE,verbose_name='student_group_fk')
     semester = models.ForeignKey(Semester,on_delete=models.CASCADE,verbose_name='semester_fk')
     roll_no = models.IntegerField()
-    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
-    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
-
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
+    
     class Meta:
         db_table = 'STUDENT_CURRENT_INFO'
         verbose_name = 'student_current_info'
@@ -73,8 +73,8 @@ class Student_Profile(models.Model):
     participations = models.TextField()
     social_media_links = models.TextField()
     interests = models.TextField()
-    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
-    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
     
     class Meta:
         db_table = 'STUDENT_PROFILE'
@@ -85,8 +85,8 @@ class Student_experience(models.Model):
     student=models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='student_fk')
     title= models.TextField()
     desc = models.TextField()
-    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
-    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
     
     class Meta:
         db_table = 'STUDENT_EXPERIENCE'
@@ -99,9 +99,9 @@ class Student_Project(models.Model):
     name = models.CharField(max_length=100)
     desc = models.TextField(blank=True)
     link = models.URLField(max_length=300,blank=True)
-    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
-    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
-
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
+    
     class Meta:
         db_table = 'STUDENT_PROJECT'
         verbose_name = 'student_project_relation'
@@ -128,9 +128,9 @@ class Student_Quiz(models.Model):
     submitted_time = models.DateTimeField(auto_now=True)
     marks = models.FloatField(default=0)
     attempt_count = models.IntegerField(default=0)
-    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
-    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
-
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
+    
     class Meta:
         db_table = 'STUDENET_QUIZ'
         verbose_name = 'student_quiz'
@@ -140,8 +140,8 @@ class Student_Quiz_Answers(models.Model):
     student = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='User_fk')
     question = models.ForeignKey(Quiz_Data,on_delete=models.CASCADE,verbose_name='quiz_data_fk')
     answer = models.CharField(max_length=400,blank=True,null=True)
-    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
-    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
     
     class Meta:
         db_table = 'STUDENET_QUIZ_ANSWER'
@@ -175,9 +175,9 @@ class Student_Result(models.Model):
     semester = models.ForeignKey(Semester,on_delete=models.CASCADE,verbose_name='semester_fk')
     sgpa = models.FloatField()
     cgpa = models.FloatField()
-    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
-    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
-
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
+    
     class Meta:
         db_table = 'STUDENT_RESULT'
         verbose_name = 'student_result'

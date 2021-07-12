@@ -27,8 +27,8 @@ class Teacher_Profile(models.Model):
     participations = models.TextField()
     social_media_links = models.TextField()
     interests = models.TextField()
-    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
-    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
     
     class Meta:
         db_table = 'TEACHER_PROFILE'
@@ -39,9 +39,9 @@ class Teacher_experience(models.Model):
     teacher=models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='student_fk')
     title= models.TextField()
     desc = models.TextField()
-    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
-    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
-
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
+    
     class Meta:
         db_table = 'TEACHER_EXPERIENCE'
         verbose_name = 'teacher_experience'
@@ -51,9 +51,9 @@ class Teacher_Course(models.Model):
     teacher_course_id = models.BigAutoField(primary_key=True)
     teacher = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='user_fk')
     group_course = models.ForeignKey(Group_Course,on_delete=models.CASCADE,verbose_name='group_course_fk')
-    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
-    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk') 
-
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
+    
     class Meta:
         db_table = 'TEACHER_COURSE'
         verbose_name = 'teacher_course'

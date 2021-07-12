@@ -151,8 +151,8 @@ class User(AbstractBaseUser):
 class Semester(models.Model):
     semester_id = models.AutoField(primary_key=True)
     semester_name = models.CharField(unique=True,max_length=250)
-    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
-    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
     
 
     class Meta:
@@ -165,10 +165,10 @@ class Semester(models.Model):
 
 class Branch_Semester(models.Model):
     branch_sem_id = models.AutoField(primary_key=True)
-    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
     semester = models.ForeignKey(Semester,on_delete=models.CASCADE,verbose_name='semester_fk')
-    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
-
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
+    
     class Meta:
         db_table = 'BRANCH_SEMESTER'
         verbose_name = 'branch_sem'
@@ -182,9 +182,9 @@ class user_group(models.Model):
     group_name = models.CharField(unique=True,max_length=200)
     no_of_students = models.IntegerField()
     semester = models.ForeignKey(Semester,on_delete=models.CASCADE,verbose_name='semester_fk')
-    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
-    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
-
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
+    
     class Meta:
         db_table = 'GROUP'
         verbose_name = 'group'
@@ -198,9 +198,9 @@ class Course(models.Model):
     course_name = models.CharField(unique=True,max_length=200)
     course_desc = models.TextField(blank=True)
     semester = models.ForeignKey(Semester,on_delete=models.CASCADE,verbose_name='semester_fk')
-    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
-    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
-
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
+    
     class Meta:
         db_table = 'COURSE'
         verbose_name = 'course'
