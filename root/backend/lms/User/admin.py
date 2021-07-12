@@ -60,13 +60,13 @@ class User_Admin(UserAdmin):
     
     filter_horizontal=()
     raw_id_fields=['branch']
-    list_display = ('user_id','email','f_name','l_name','role','is_active','staff','admin','branch')
-    list_filter = ('email','f_name','l_name','user_id','is_active','staff','admin','role','branch')
-    search_fields = ('email','f_name','l_name','user_id','is_active','staff','admin','role','branch')
+    list_display = ('user_id','email','f_name','l_name','role','is_active','staff','admin','branch','school')
+    list_filter = ('email','f_name','l_name','user_id','is_active','staff','admin','role','branch','school')
+    search_fields = ('email','f_name','l_name','user_id','is_active','staff','admin','role','branch','school')
     ordering = ('admin','staff','role')
     add_fieldsets = (
         (None,{
-            'fields':('user_id','email','branch','f_name','l_name','password1','password2')
+            'fields':('user_id','email','branch','f_name','l_name','password1','password2','school')
         }),
         ('Permissions',{
             'fields' : ('is_active','staff','admin','role')
@@ -75,12 +75,23 @@ class User_Admin(UserAdmin):
     fieldsets = (
         (None,{
             'classes':('wide',),
-            'fields':('user_id','branch','email','f_name','l_name','password')
+            'fields':('user_id','branch','email','f_name','l_name','password','school')
         }),
         ('Permissions',{
             'fields': ('is_active','staff','admin','role')
         })
     )
+    def get_form(self, request, obj=None, **kwargs):
+        
+        self.exclude = ("school")
+        form = super(User_Admin, self).get_form(request, obj, **kwargs)
+        return form
+
+    def save_model(self, request, obj, form, change):
+        if not obj.school:
+            obj.school = obj.branch.school
+        
+        obj.save()
 
 
 @admin.register(School)

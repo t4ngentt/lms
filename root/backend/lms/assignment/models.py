@@ -1,7 +1,7 @@
 from django.db import models
 from User.models import Group_Course
 from django.utils import timezone
-from User.models import User
+from User.models import User,School,Branch
 # Create your models here.
 
 class Assignment(models.Model):
@@ -23,6 +23,9 @@ class Group_Assignment(models.Model):
     teacher = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name="teacher_fk")
     grp_course = models.ForeignKey(Group_Course,on_delete=models.CASCADE,verbose_name='group_course_fk')
     assignment_id = models.ForeignKey(Assignment,on_delete=models.CASCADE, verbose_name='assignment_fk')
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
+    
     
     class Meta:
         db_table = 'GROUP_ASSIGNMENT'
@@ -33,6 +36,9 @@ class Assignment_submission(models.Model):
     assignment_submission_id = models.BigAutoField(primary_key=True)
     assignment_id = models.ForeignKey(Assignment,on_delete=models.CASCADE,verbose_name='assignment_fk')
     prn = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='prn_fk')
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
+    
     # file= models.FileField(upload_to='media')
 
     class Meta:
@@ -44,6 +50,9 @@ class Assignment_marks(models.Model):
     assignment_submission_id = models.ForeignKey(Assignment_submission,on_delete=models.CASCADE,verbose_name='assignment_submission_fk')
     marks= models.IntegerField(default=0)
     review = models.TextField()
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
+    
     
 
     class Meta:

@@ -23,7 +23,7 @@ class Quiz(models.Model):
 class Group_Quiz(models.Model):
     teacher = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name="teacher_fk")
     grp_course = models.ForeignKey(Group_Course,on_delete=models.CASCADE,verbose_name='group_course_fk')
-    quiz_id = models.ForeignKey(Quiz,on_delete=models.CASCADE, verbose_name='assignment_fk')
+    quiz_id = models.ForeignKey(Quiz,on_delete=models.CASCADE, verbose_name='quiz_fk')
     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
     branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
     
@@ -55,10 +55,7 @@ class Quiz_Data(models.Model):
     question_img = models.ImageField(blank=True,null=True)
     options = models.CharField(max_length=1000,null=True,blank=True)   #Array in PostgreSQL will be implemented
     answer = models.TextField()
-    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
-    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
     
-
     class Meta:
         db_table = 'QUIZ_Data'
         verbose_name = 'quiz_data'
