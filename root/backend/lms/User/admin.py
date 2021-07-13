@@ -88,8 +88,9 @@ class User_Admin(UserAdmin):
         return form
 
     def save_model(self, request, obj, form, change):
-        if not obj.school:
-            obj.school = obj.branch.school
+        if obj.branch:
+            if not obj.school:
+                obj.school = obj.branch.school
         
         obj.save()
 
@@ -109,8 +110,8 @@ class Branch(admin.ModelAdmin):
 
 @admin.register(Semester)
 class Semester(admin.ModelAdmin):
-    raw_id_fields = ['school','branch']
-    list_display = ('semester_id','semester_name','school','branch')
+
+    list_display = ('semester_id','semester_name',)
     list_editable = ('semester_name',)
     ordering = ('semester_id',)
 
@@ -133,7 +134,7 @@ class Branch_Semester(admin.ModelAdmin):
 @admin.register(user_group)
 class user_group(admin.ModelAdmin):
     raw_id_fields = ['school','branch','semester']
-    list_display = ('group_id','group_name','no_of_students')
+    list_display = ('group_id','group_name','no_of_students','school','branch','semester')
     list_editable = ('group_name','no_of_students')
     ordering = ('semester_id',)
     def get_form(self, request, obj=None, **kwargs):

@@ -154,8 +154,6 @@ class User(AbstractBaseUser):
 class Semester(models.Model):
     semester_id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     semester_name = models.CharField(unique=True,max_length=250)
-    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
-    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
     
 
     class Meta:
@@ -182,7 +180,7 @@ class Branch_Semester(models.Model):
 
 class user_group(models.Model):
     group_id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
-    group_name = models.CharField(unique=True,max_length=200)
+    group_name = models.CharField(max_length=200)
     no_of_students = models.IntegerField(default=None,blank=True,null=True)
     semester = models.ForeignKey(Semester,on_delete=models.CASCADE,verbose_name='semester_fk')
     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)

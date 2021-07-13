@@ -23,6 +23,7 @@ class Teacher_experience(admin.ModelAdmin):
             
             obj.branch = obj.teacher.branch
         obj.save()
+
 @admin.register(Teacher_Profile)
 class Teacher_Profile(admin.ModelAdmin):
 

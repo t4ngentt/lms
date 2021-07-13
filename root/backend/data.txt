@@ -1,0 +1,196 @@
+School:
+	SCET
+	SMCE
+	SCE
+	SEE
+	SHES
+
+Branch:
+	CS,IT- SCET
+	Mech, Civil - SMCE
+	Chem - SCE
+	Electrical, ENTC- SEE
+	FY - SHES
+
+
+Semester:
+	sem 1
+	sem 2
+	sem 3
+	sem 4
+	sem 5
+	sem 6
+	sem 7
+	sem 8
+
+Group:
+	A - fy
+	B -fy
+	C
+	C2
+	D
+	D2
+	D4
+	Java-1
+
+
+Course:
+	Applied Mechanics
+	SoN
+	CDE
+	DT
+	Japanese/German
+	CP
+
+	EEE
+	Physics
+	Maths2
+	EGR
+	Python
+	ETT
+
+	DS
+	DS-lab
+	CG
+	CG-lab
+	Java
+	EI
+	EI-lab
+
+	ADS
+	ADS-lab
+	COA
+	COA-lab
+	DBMS
+	DBMS-lab
+	Applied Maths
+	
+	
+	
+Group_course:
+	
+	A1 A- Applied Mechanics
+	A2 A- SoN
+	A3 A- CDE
+	A4 A- DT
+	A5 A- Japanese/German
+	A6 A- CP
+	
+	A7 A- EEE
+	A8 A- Physics
+	A9 A- Maths2
+	A10 A- EGR
+	A11 A- Python
+	A12 A- ETT
+
+	B1 B- Applied Mechanics
+	B2 B- SoN
+	B3 B- CDE
+	B4 B- DT
+	B5 B- Japanese/German
+	B6 B- CP
+	
+	B7 B- EEE
+	B8 B- Physics
+	B9 B- Maths2
+	B10 B- EGR
+	B11 B- Python
+	B12 B- ETT
+
+	C,D- DS
+	C,D- CG
+	Java-1 - Java
+	C,D- EI
+
+	C,D- ADS
+	C,D- COA
+	C,D- DBMS
+	C,D- Applied Maths
+	
+	C2,D2,D4- ADS lab
+	C2,D2,D4- COA lab
+	C2,D2,D4- DBMS-lab
+	C2,D2,D4- DS lab
+	C2,D2,D4- CG lab
+	C2,D2,D4- EI lab
+
+	
+	
+Branch_sem:
+
+	sem 1- FY
+	sem 2- FY
+	sem 3- IT,CS,Civil,Mech,Elec,ENTC,chem
+	sem 4- IT,CS,Civil,Mech,Elec,ENTC,chem
+	sem 5- IT,CS,Civil,Mech,Elec,ENTC,chem
+	sem 6- IT,CS,Civil,Mech,Elec,ENTC,chem
+	sem 7- IT,CS,Civil,Mech,Elec,ENTC,chem
+	sem 8- IT,CS,Civil,Mech,Elec,ENTC,chem
+
+
+user:
+
+Student:
+
+1 Sumit        
+2 Vaishnavi    
+3 Lalit        
+4 Nikhil       
+5 Vedantika   
+6 Praktan
+7 Shreyansh
+8 Sudarshan
+9 Radha
+10 Smriti
+
+Teacher:
+
+1 Ranjana Badre
+2 Diptee Ghusse
+3 Amit Sonavane
+4 Amar More
+5 Mayur Patil
+6 Rudragauda Patil
+
+Student Groups - 
+
+SG1  Sumit        D,D2, java-1
+SG2 Vaishnavi    C,C2, java-1
+SG3 Lalit        D,D2, java-1
+SG4 Nikhil       D,D4, java-1
+SG5 Vedantika    D,D4
+SG6 Praktan	 C,C2
+SG7 Shreyansh	 A,B, java-1
+SG8 Sudarshan	 A,B
+SG9 Radha	 A,B
+SG10 Smriti	 D,D2,java-1
+
+
+Student Current Info
+
+SG1 sem4 177
+SG2 sem4 217
+SG3 sem4 178
+SG4 sem4 208
+SG5 sem3 101
+SG6 sem3 102
+SG7 sem1 201
+SG8 sem1 202
+SG9 sem2 301
+SG10 sem3 216
+
+
+Teacher Course
+
+
+Ranjana Badre        C-DBMS, C2-DBMS lab, D4-DBMS lab
+Diptee Ghusse        D-DBMS, D2-DBMS lab
+Amit Sonavane        C-EI, D-EI, C2-EI lab
+Amar More            C-ADS, D-ADS, D2-ADS lab, D4-ADS lab
+Mayur Patil          A-Python, B-Python, A-CDE, B-CDE
+Rudragauda Patil     A-EEE, B-EEE, A-SoN, B-SoN
+
+
+
+
+	
