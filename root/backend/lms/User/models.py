@@ -1,11 +1,12 @@
 from django.db import models
+import uuid
 from django.contrib.auth.models import (
     AbstractBaseUser,BaseUserManager
 )
 # from django.contrib.auth.models import PermissionsMixin
 
 class School(models.Model):
-    school_id = models.AutoField(primary_key=True)
+    school_id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     school_name = models.CharField(unique=True,max_length=250)
 
     class Meta:
@@ -18,7 +19,7 @@ class School(models.Model):
 
 class Branch(models.Model):
     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
-    branch_id = models.AutoField(primary_key=True)
+    branch_id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     branch_name = models.CharField(unique=True,max_length=250)
 
     class Meta:
@@ -141,7 +142,7 @@ class User(AbstractBaseUser):
 
 # class Admin_info(models.Model):
 #     user = models.OneToOneField(User,on_delete=models.CASCADE,verbose_name='Admin_User')
-#     admin_id = models.AutoField(primary_key=True)
+#     admin_id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
 #     admin_name = models.CharField(max_length=300)
 
 #     class Meta:
@@ -151,7 +152,7 @@ class User(AbstractBaseUser):
 
     
 class Semester(models.Model):
-    semester_id = models.AutoField(primary_key=True)
+    semester_id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     semester_name = models.CharField(unique=True,max_length=250)
     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
     branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
@@ -166,7 +167,7 @@ class Semester(models.Model):
         return f"{self.semester_name}"
 
 class Branch_Semester(models.Model):
-    branch_sem_id = models.AutoField(primary_key=True)
+    branch_sem_id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     semester = models.ForeignKey(Semester,on_delete=models.CASCADE,verbose_name='semester_fk')
     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
     branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
@@ -180,9 +181,9 @@ class Branch_Semester(models.Model):
         return f"{self.branch_sem_id}"
 
 class user_group(models.Model):
-    group_id = models.AutoField(primary_key=True)
+    group_id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     group_name = models.CharField(unique=True,max_length=200)
-    no_of_students = models.IntegerField()
+    no_of_students = models.IntegerField(default=None,blank=True,null=True)
     semester = models.ForeignKey(Semester,on_delete=models.CASCADE,verbose_name='semester_fk')
     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
     branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
@@ -196,7 +197,7 @@ class user_group(models.Model):
         return f"{self.group_name}"
 
 class Course(models.Model):
-    course_id = models.AutoField(primary_key=True)
+    course_id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     course_name = models.CharField(unique=True,max_length=200)
     course_desc = models.TextField(blank=True)
     semester = models.ForeignKey(Semester,on_delete=models.CASCADE,verbose_name='semester_fk')
@@ -212,7 +213,7 @@ class Course(models.Model):
         return f"{self.course_name}"
 
 class Group_Course(models.Model):
-    group_course_id = models.AutoField(primary_key=True)
+    group_course_id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     group = models.ForeignKey(user_group,on_delete=models.CASCADE,verbose_name='group_fk')
     course = models.ForeignKey(Course,on_delete=models.CASCADE,verbose_name='course_fk')
     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)

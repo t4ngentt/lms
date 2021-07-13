@@ -5,6 +5,11 @@ from .models import Teacher_Course, Teacher_Profile, Teacher_experience
 
 @admin.register(Teacher_experience)
 class Teacher_experience(admin.ModelAdmin):
+    list_display = ['teacher','title','school','branch']
+    list_filter = ['school','branch']
+    raw_id_fields = ['teacher',]
+    search_fields = ['title','teacher']
+
     def get_form(self, request, obj=None, **kwargs):
         
         self.exclude = ("school","branch", )
@@ -20,6 +25,12 @@ class Teacher_experience(admin.ModelAdmin):
         obj.save()
 @admin.register(Teacher_Profile)
 class Teacher_Profile(admin.ModelAdmin):
+
+    list_display = ['teacher_id','username','dob','school','branch']
+    list_filter = ['school','branch']
+    raw_id_fields = ['teacher_id']
+    search_fields = ['username','dob']
+    ordering = ['dob']
     def get_form(self, request, obj=None, **kwargs):
         
         self.exclude = ("school","branch", )
@@ -35,6 +46,12 @@ class Teacher_Profile(admin.ModelAdmin):
         obj.save()
 @admin.register(Teacher_Course)
 class Teacher_Course(admin.ModelAdmin):
+
+    list_display = ['teacher_course_id','teacher','group_course','school','branch']
+    list_filter = ['school','branch']
+    raw_id_fields = ['teacher','group_course']
+    search_fields = ['teacher_course_id','teacher','group_course']
+    ordering = ['teacher']
     def get_form(self, request, obj=None, **kwargs):
         
         self.exclude = ("school","branch", )

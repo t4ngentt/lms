@@ -1,9 +1,17 @@
 from django.contrib import admin
 from .models import Assignment, Assignment_marks, Assignment_submission, Group_Assignment
 # Register your models here.
-admin.site.register(Assignment)
+@admin.register(Assignment)
+class Assignment(admin.ModelAdmin):
+    list_display = ['assignment_id','min_marks','max_marks','post_date','due_date']
+    search_fields = ['assignment_id','title']
 @admin.register(Group_Assignment)
 class Group_Assignment(admin.ModelAdmin):
+    list_display = ['teacher','grp_course','assignment_id_id','school','branch']
+    list_filter = ['school','branch',]
+    raw_id_fields = ['teacher','grp_course','assignment_id']
+    search_fields = ['teacher','grp_course']
+
     def get_form(self, request, obj=None, **kwargs):
         
         self.exclude = ("school","branch", )
@@ -19,11 +27,12 @@ class Group_Assignment(admin.ModelAdmin):
         obj.save()
     
 
-
-
-
 @admin.register(Assignment_submission)
 class Assignment_submission(admin.ModelAdmin):
+    list_display = ['assignment_submission_id','assignment_id','prn','school','branch']
+    list_filter = ['school','branch',]
+    raw_id_fields = ['prn','assignment_id']
+    search_fields = ['prn',]
     def get_form(self, request, obj=None, **kwargs):
         
         self.exclude = ("school","branch", )
@@ -40,6 +49,10 @@ class Assignment_submission(admin.ModelAdmin):
 
 @admin.register(Assignment_marks)
 class Assignment_marks(admin.ModelAdmin):
+    list_display = ['assignment_submission_id','marks','school','branch']
+    list_filter = ['school','branch',]
+    raw_id_fields = ['assignment_submission_id',]
+    search_fields = ['assignment_submission_id',]
     def get_form(self, request, obj=None, **kwargs):
         
         self.exclude = ("school","branch", )
