@@ -30,7 +30,7 @@ class Branch(models.Model):
         return f"{self.branch_name}"
 class UserManager(BaseUserManager):
 
-    def create_user(self,email,password,f_name,l_name,user_id,role,is_active=False,branch=None):
+    def create_user(self,email,password,f_name,l_name,user_id,role,is_active=False,branch=None,school=None):
         
         if not email:
             raise ValueError("Users must have an email address")
@@ -54,10 +54,11 @@ class UserManager(BaseUserManager):
         user_obj.admin=False
         user_obj.role = role
         user_obj.branch=branch
+        user_obj.school=school
         user_obj.save(using=self._db)
         return user_obj
 
-    def create_superuser(self,email,password,f_name,l_name,user_id,role=None,branch=None):
+    def create_superuser(self,email,password,f_name,l_name,user_id,role=None,branch=None,school=None):
     
         if not email:
             raise ValueError("Users must have an email address")
@@ -81,6 +82,7 @@ class UserManager(BaseUserManager):
         user_obj.staff = True
         user_obj.admin = True
         user_obj.branch = branch
+        user_obj.school=school
         user_obj.save(using=self._db)
         return user_obj
 

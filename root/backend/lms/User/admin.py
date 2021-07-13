@@ -17,7 +17,7 @@ class UserCreationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('user_id','email','f_name','l_name','role','is_active','staff','admin','branch')
+        fields = ('user_id','email','f_name','l_name','role','branch','is_active','staff','admin')
 
     def clean_password2(self):
         # Check that the two password entries match
@@ -45,7 +45,7 @@ class UserChangeForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('user_id','email','f_name','l_name','role','is_active','staff','admin','branch')
+        fields = ('user_id','email','f_name','l_name','role','branch','is_active','staff','admin')
 
     def clean_password(self):
         # Regardless of what the user provides, return the initial value.
@@ -59,14 +59,14 @@ class UserChangeForm(forms.ModelForm):
 class User_Admin(UserAdmin):
     
     filter_horizontal=()
-    raw_id_fields=['branch']
+    raw_id_fields=['branch','school']
     list_display = ('user_id','email','f_name','l_name','role','is_active','staff','admin','branch','school')
-    list_filter = ('email','f_name','l_name','user_id','is_active','staff','admin','role','branch','school')
-    search_fields = ('email','f_name','l_name','user_id','is_active','staff','admin','role','branch','school')
+    list_filter = ('role','branch','school')
+    search_fields = ('role','branch','school')
     ordering = ('admin','staff','role')
     add_fieldsets = (
         (None,{
-            'fields':('user_id','email','branch','f_name','l_name','password1','password2','school')
+            'fields':('user_id','email','f_name','l_name','branch','password1','password2')
         }),
         ('Permissions',{
             'fields' : ('is_active','staff','admin','role')
@@ -75,7 +75,7 @@ class User_Admin(UserAdmin):
     fieldsets = (
         (None,{
             'classes':('wide',),
-            'fields':('user_id','branch','email','f_name','l_name','password','school')
+            'fields':('user_id','email','f_name','l_name','branch','password')
         }),
         ('Permissions',{
             'fields': ('is_active','staff','admin','role')
