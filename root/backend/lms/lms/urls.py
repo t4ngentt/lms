@@ -2,7 +2,7 @@
 
 from django.contrib import admin
 from django.urls import path,include
-from User import views
+
 # from rest_framework.routers import DefaultRouter
 # router = DefaultRouter()
 
@@ -12,7 +12,8 @@ from User import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include('User.urls')),
-    path('api/student/',include('student.urls'))
+    path('api/student/',include('student.urls')),
+    path('api/teacher/',include('teacher.urls'))
     # path('auth/', include('rest_framework.urls')),
     
 ]
