@@ -144,16 +144,16 @@ Teacher:
 
 Student Groups - 
 
-SG1  Sumit        D,D2, java-1
-SG2 Vaishnavi    C,C2, java-1
-SG3 Lalit        D,D2, java-1
-SG4 Nikhil       D,D4, java-1
-SG5 Vedantika    D,D4
-SG6 Praktan	 C,C2
-SG7 Shreyansh	 A,B, java-1
-SG8 Sudarshan	 A,B
-SG9 Radha	 A,B
-SG10 Smriti	 D,D2,java-1
+ Sumit        D,D2, java-1
+ Vaishnavi    C,C2, java-1
+ Lalit        D,D2, java-1
+ Nikhil       D,D4, java-1
+ Vedantika    D,D4
+ Praktan	 C,C2
+ Shreyansh	 A,B, java-1
+ Sudarshan	 A,B
+ Radha	 A,B
+ Smriti	 D,D2,java-1
 
 
 Student Current Info
