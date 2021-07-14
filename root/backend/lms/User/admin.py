@@ -117,11 +117,12 @@ class Semester(admin.ModelAdmin):
 
 @admin.register(Branch_Semester)
 class Branch_Semester(admin.ModelAdmin):
-    raw_id_fields = ['school','branch','semester']
+    # raw_id_fields = ['school','branch','semester']
+    list_display = ['semester','school','branch']
     ordering = ('branch_sem_id',)
     def get_form(self, request, obj=None, **kwargs):
         
-        self.exclude = ("school")
+        self.exclude = ("school",)
         form = super(Branch_Semester, self).get_form(request, obj, **kwargs)
         return form
 
@@ -169,9 +170,9 @@ class Course(admin.ModelAdmin):
 
 @admin.register(Group_Course)
 class Group_Course(admin.ModelAdmin):
-    raw_id_fields = ('group','course','school','branch')
+    raw_id_fields = ('group','course',)
     ordering = ('group_course_id',)
-
+    list_display =('group','course','school','branch')
     def get_form(self, request, obj=None, **kwargs):
         
         self.exclude = ("school","branch", )

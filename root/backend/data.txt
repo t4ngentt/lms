@@ -72,30 +72,23 @@ Group_course:
 	A1 A- Applied Mechanics
 	A2 A- SoN
 	A3 A- CDE
-	A4 A- DT
-	A5 A- Japanese/German
 	A6 A- CP
 	
 	A7 A- EEE
 	A8 A- Physics
-	A9 A- Maths2
 	A10 A- EGR
 	A11 A- Python
-	A12 A- ETT
 
 	B1 B- Applied Mechanics
 	B2 B- SoN
 	B3 B- CDE
-	B4 B- DT
-	B5 B- Japanese/German
 	B6 B- CP
 	
 	B7 B- EEE
 	B8 B- Physics
-	B9 B- Maths2
 	B10 B- EGR
 	B11 B- Python
-	B12 B- ETT
+	
 
 	C,D- DS
 	C,D- CG
@@ -109,11 +102,8 @@ Group_course:
 	
 	C2,D2,D4- ADS lab
 	C2,D2,D4- COA lab
-	C2,D2,D4- DBMS-lab
 	C2,D2,D4- DS lab
 	C2,D2,D4- CG lab
-	C2,D2,D4- EI lab
-
 	
 	
 Branch_sem:
