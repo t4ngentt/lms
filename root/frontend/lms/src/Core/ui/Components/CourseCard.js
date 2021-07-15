@@ -30,7 +30,7 @@ export default function CourseCard(props) {
 				className={classes.cardContainer}
 				component={Link}
 				to={{
-					pathname: `/${userRole}/classroom/group/${props.group_id}/course/${props.course_id}`,
+					pathname: `/${userRole}/classroom/group/${props.group_id}/course/${props.course_id}/assignment`,
 					state: {
 						groupName: props.group_name,
 						courseName: props.course_name,

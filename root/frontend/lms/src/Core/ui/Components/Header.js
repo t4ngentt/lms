@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 //importing components from material ui----------------------------->
 import {
 	AppBar,
@@ -10,6 +11,7 @@ import {
 } from "@material-ui/core";
 
 //importing Icons from material ui---------------------------->
+import SettingsIcon from "@material-ui/icons/Settings";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MenuIcon from "@material-ui/icons/Menu";
 
@@ -41,9 +43,9 @@ const useStyles = makeStyles((theme) => ({
 			display: "none",
 		},
 	},
-	customBadge : {
-		backgroundColor : "white"
-	}
+	customBadge: {
+		backgroundColor: "white",
+	},
 }));
 
 export default function Header(props) {
@@ -65,11 +67,20 @@ export default function Header(props) {
 						MITAOE
 					</Typography>
 				</Button>
-				<IconButton className={classes.rightItems}>
-					<Badge badgeContent={4} color="secondary" classname={classes.customBadge}>
-						<NotificationsIcon />
-					</Badge>
-				</IconButton>
+				<div className={classes.rightItems}>
+					<IconButton component={Link} to={`/student/settings`}>
+						<SettingsIcon />
+					</IconButton>
+					<IconButton>
+						<Badge
+							badgeContent={4}
+							color="secondary"
+							classname={classes.customBadge}
+						>
+							<NotificationsIcon />
+						</Badge>
+					</IconButton>
+				</div>
 			</Toolbar>
 		</AppBar>
 	);
