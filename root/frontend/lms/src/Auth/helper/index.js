@@ -68,3 +68,12 @@ export const isAutheticated = () => {
 export const getUser = () => {
 	return JSON.parse(localStorage.getItem("jwt"));
 };
+
+
+export const getUserRole = () => {
+	if (JSON.parse(localStorage.getItem("jwt")).user.role === 0) {
+		return "student";
+	} else if (JSON.parse(localStorage.getItem("jwt")).user.role === 1) {
+		return "teacher";
+	}
+};

@@ -8,7 +8,9 @@ import Login from "./User/pages/Login";
 import Dashboard from "./User/pages/Dashboard";
 import Profile from "./User/pages/Profile";
 import Classroom from "./User/pages/Classroom";
+import GroupCourses from "./User/pages/GroupCourses";
 import Course from "./User/pages/Course";
+import Assignment from "./User/pages/Assignment";
 import Forums from "./User/pages/Forums";
 import Resources from "./User/pages/Resources";
 import Calendar from "./User/pages/Calendar";
@@ -45,8 +47,20 @@ const Routes = () => {
 						path="/student/classroom/group/:group_id/course"
 						exact
 						strict
+						component={GroupCourses}
+					></Route>
+					<Route
+						path="/student/classroom/group/:group_id/course/:course_id"
+						exact
+						strict
 						component={Course}
 					></Route>
+					{/* <Route
+						path="/student/classroom/group/:group_id/course/:course_id/assignment"
+						exact
+						strict
+						component={Assignment}
+					></Route> */}
 					<Route path="/student/forums" exact strict component={Forums}></Route>
 					<Route
 						path="/student/resources"

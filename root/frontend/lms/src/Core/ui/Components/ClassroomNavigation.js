@@ -19,9 +19,13 @@ export default function ClassroomNavigator(props) {
 					{props.group_name}
 				</Link>
 			)}
-			{props.courses && <Link component={RouterLink}>Courses</Link>}
-			{props.courseName && (
-				<Typography color="textPrimary">CourseName</Typography>
+			{props.course_name && (
+				<Link
+					component={RouterLink}
+					to={`/student/classroom/group/${props.group_id}/course/${props.course_id}/assignment`}
+				>
+					{props.course_name}
+				</Link>
 			)}
 		</Breadcrumbs>
 	);
