@@ -62,7 +62,12 @@ export default function Header(props) {
 				>
 					<MenuIcon />
 				</IconButton>
-				<Button disableRipple className={classes.logoButton}>
+				<Button
+					disableRipple
+					className={classes.logoButton}
+					component={Link}
+					to={`/student/dashboard`}
+				>
 					<Typography variant="h5" className={classes.appLogo}>
 						MITAOE
 					</Typography>
