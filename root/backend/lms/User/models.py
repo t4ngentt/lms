@@ -224,6 +224,6 @@ class Group_Course(models.Model):
         verbose_name_plural = 'group_courses'
 
     def __str__(self):
-        return f"{self.group_course_id}"
+        return f"{self.group} {self.course}"
 
 

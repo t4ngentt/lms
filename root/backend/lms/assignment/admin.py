@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import Assignment, Assignment_marks, Assignment_submission, Group_Assignment
+from teacher.models import Teacher_Course
 # Register your models here.
 @admin.register(Assignment)
 class Assignment(admin.ModelAdmin):
@@ -14,16 +15,19 @@ class Group_Assignment(admin.ModelAdmin):
 
     def get_form(self, request, obj=None, **kwargs):
         
-        self.exclude = ("school","branch", )
+        self.exclude = ("school","branch","teacher")
         form = super(Group_Assignment, self).get_form(request, obj, **kwargs)
         return form
 
     def save_model(self, request, obj, form, change):
+        teacher_course_obj = Teacher_Course.objects.get(group_course_id=obj.grp_course.group_course_id)
+        obj.teacher=teacher_course_obj.teacher
         if not obj.school:
             obj.school = obj.teacher.school
         if not obj.branch:
             
             obj.branch = obj.teacher.branch
+        
         obj.save()
     
 
