@@ -5,6 +5,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 from .models import User,Branch,Branch_Semester,School,user_group,Group_Course,Semester,Course
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from import_export.admin import ImportExportModelAdmin
 # Register your models here
 
 admin.site.unregister(Group)
@@ -56,7 +57,7 @@ class UserChangeForm(forms.ModelForm):
 
 
 @admin.register(User)
-class User_Admin(UserAdmin):
+class User_Admin(ImportExportModelAdmin,UserAdmin):
     
     filter_horizontal=()
     raw_id_fields=['branch','school']

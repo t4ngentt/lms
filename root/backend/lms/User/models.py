@@ -3,6 +3,7 @@ import uuid
 from django.contrib.auth.models import (
     AbstractBaseUser,BaseUserManager
 )
+
 # from django.contrib.auth.models import PermissionsMixin
 
 class School(models.Model):
@@ -101,8 +102,8 @@ class User(AbstractBaseUser):
     school = models.ForeignKey(School,blank=True,null=True, on_delete=models.CASCADE )
     objects = UserManager()
 
-    USERNAME_FIELD = 'user_id'
-    REQUIRED_FIELDS = ['f_name','l_name','email']
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['f_name','l_name','user_id']
 
     class Meta:
         db_table = 'USER'

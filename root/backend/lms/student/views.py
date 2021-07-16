@@ -1,3 +1,4 @@
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from User.models import Group_Course
 from .serializers import Student_Course_Detail_Serializer, Student_Group_Serializer, Student_Course_Serializer
@@ -6,16 +7,19 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
 from .models import Student_Group, Student_Course
 from User.models import Course, user_group
-from User.views import token_authentication
+# from User.views import token_authentication
 from django.db import connection
 import json
-cursor = connection.cursor()
+from rest_framework_simplejwt.authentication import JWTAuthentication
+
 # Create your views here.
 
 
 class Student_Groups(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
     def post(self, request, pk=None, format=None):
-        # if token_authentication(request):
+            
             prn = (json.loads(request.body))['prn']
             print(prn)
             print("hello")
