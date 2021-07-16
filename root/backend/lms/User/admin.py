@@ -173,7 +173,7 @@ class Course(admin.ModelAdmin):
 class Group_Course(admin.ModelAdmin):
     raw_id_fields = ('group','course',)
     ordering = ('group_course_id',)
-    list_display =('group','course','school','branch')
+    list_display =('group_course_id','group','course','school','branch')
     def get_form(self, request, obj=None, **kwargs):
         
         self.exclude = ("school","branch", )

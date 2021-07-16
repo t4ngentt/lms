@@ -8,7 +8,7 @@ urlpatterns = [
     path('groupDetails/<int:pk>',views.Group_Detail.as_view(),name="grp_detail"),
     # path('home/',views.view_users),
     # path('index/', views.index, name="index")
-    path('gettoken/',views.MyTokenObtainPairView.as_view(),name="token"),
+    path('user/login/',views.MyTokenObtainPairView.as_view(),name="token"),
     path('verifytoken/',TokenVerifyView.as_view(),name="verify"),
     path('refreshtoken/',TokenRefreshView.as_view(),name="refresh")
 ]

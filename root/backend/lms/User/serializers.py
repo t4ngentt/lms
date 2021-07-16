@@ -9,9 +9,12 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
             'email':'',
             'password':attrs.get("password")
         }
+        print(attrs)
         user_obj = User.objects.filter(email=attrs.get("email")).first() or User.objects.filter(user_id=attrs.get("email")).first()
+        print(user_obj)
         if user_obj:
             credentials['email'] = user_obj.email
+        print(credentials)
         data = super().validate(credentials)
         refresh = self.get_token(self.user)
         data['refresh'] = str(refresh)

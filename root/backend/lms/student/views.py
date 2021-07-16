@@ -16,8 +16,6 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 
 class Student_Groups(APIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
     def post(self, request, pk=None, format=None):
             
             prn = (json.loads(request.body))['prn']

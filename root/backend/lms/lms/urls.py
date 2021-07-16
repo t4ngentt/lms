@@ -13,7 +13,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include('User.urls')),
     path('api/student/',include('student.urls')),
-    path('api/teacher/',include('teacher.urls'))
+    path('api/teacher/',include('teacher.urls')),
+    path('api/',include('assignment.urls'))
     # path('auth/', include('rest_framework.urls')),
     
 ]
