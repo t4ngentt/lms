@@ -1,11 +1,19 @@
 from rest_framework import serializers
 from User.models import User
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-import json
+from User.models import User
+from django.db.models import Q
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
-        data = super().validate(attrs)
+        credentials={
+            'username':'',
+            'password':attrs.get("password")
+        }
+        user_obj = User.objects.get(Q(email=attrs.get("username")) | Q(user_id=attrs.get("username")))
+        if user_obj:
+            credentials['username'] = attrs.get("username")
+        data = super().validate(credentials)
         refresh = self.get_token(self.user)
         data['refresh'] = str(refresh)
         data['access'] = str(refresh.access_token)
