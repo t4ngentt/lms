@@ -8,12 +8,16 @@ import Login from "./User/pages/Login";
 import Dashboard from "./User/pages/Dashboard";
 import Profile from "./User/pages/Profile";
 import Classroom from "./User/pages/Classroom";
-import Course from "./User/pages/Course";
+import GroupCourses from "./User/pages/GroupCourses";
+import CourseAssignment from "./User/pages/CourseAssignment";
+import CourseQuiz from "./User/pages/CourseQuiz";
+import CourseResource from "./User/pages/CourseResource";
 import Forums from "./User/pages/Forums";
 import Resources from "./User/pages/Resources";
 import Calendar from "./User/pages/Calendar";
 import Events from "./User/pages/Events";
 import Attendance from "./User/pages/Attendance";
+import Settings from "./User/pages/Settings";
 import { CustomThemeContext } from "./Core/CustomThemeContext";
 const Routes = () => {
 	return (
@@ -45,7 +49,31 @@ const Routes = () => {
 						path="/student/classroom/group/:group_id/course"
 						exact
 						strict
+						component={GroupCourses}
+					></Route>
+					{/* <Route
+						path="/student/classroom/group/:group_id/course/:course_id"
+						exact
+						strict
 						component={Course}
+					></Route> */}
+					<Route
+						path="/student/classroom/group/:group_id/course/:course_id/assignment"
+						exact
+						strict
+						component={CourseAssignment}
+					></Route>
+					<Route
+						path="/student/classroom/group/:group_id/course/:course_id/quiz"
+						exact
+						strict
+						component={CourseQuiz}
+					></Route>
+					<Route
+						path="/student/classroom/group/:group_id/course/:course_id/resource"
+						exact
+						strict
+						component={CourseResource}
 					></Route>
 					<Route path="/student/forums" exact strict component={Forums}></Route>
 					<Route
@@ -66,6 +94,12 @@ const Routes = () => {
 						exact
 						strict
 						component={Attendance}
+					></Route>
+					<Route
+						path="/student/settings"
+						exact
+						strict
+						component={Settings}
 					></Route>
 
 					{/* Teacher Specific Routes---------------------------> */}
