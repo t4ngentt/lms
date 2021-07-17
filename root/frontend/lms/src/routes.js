@@ -3,7 +3,9 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 
-//importing pages--------------------------->
+import { StudentRoute, TeacherRoute } from "./Auth/helper/PrivateRoutes";
+import { CustomThemeContext } from "./Core/CustomThemeContext";
+//importing Student Pages ------------------------------------------->
 import Login from "./User/pages/Login";
 import Dashboard from "./User/pages/Dashboard";
 import Profile from "./User/pages/Profile";
@@ -18,7 +20,11 @@ import Calendar from "./User/pages/Calendar";
 import Events from "./User/pages/Events";
 import Attendance from "./User/pages/Attendance";
 import Settings from "./User/pages/Settings";
-import { CustomThemeContext } from "./Core/CustomThemeContext";
+import PageNotFound from "./User/pages/Common/PageNotFound";
+
+//importing Teacher Pages ---------------------------------------------->
+import TeacherClassroom from "./User/pages/Teacher/TeacherClassroom";
+
 const Routes = () => {
 	return (
 		<CustomThemeContext>
@@ -26,121 +32,136 @@ const Routes = () => {
 			<BrowserRouter>
 				<Switch>
 					<Route path="/" exact strict component={Login}></Route>
-					{/* Student Specific Routes-----------------------> */}
-					<Route
+					{/* Student Specific Routes--------------------------------------------------------> */}
+					<StudentRoute
 						path="/student/dashboard"
 						exact
 						strict
 						component={Dashboard}
-					></Route>
-					<Route
+					></StudentRoute>
+					<StudentRoute
 						path="/student/profile"
 						exact
 						strict
 						component={Profile}
-					></Route>
-					<Route
+					></StudentRoute>
+					<StudentRoute
 						path="/student/classroom"
 						exact
 						strict
 						component={Classroom}
-					></Route>
-					<Route
+					></StudentRoute>
+					<StudentRoute
 						path="/student/classroom/group/:group_id/course"
 						exact
 						strict
 						component={GroupCourses}
-					></Route>
-					{/* <Route
-						path="/student/classroom/group/:group_id/course/:course_id"
-						exact
-						strict
-						component={Course}
-					></Route> */}
-					<Route
+					></StudentRoute>
+					<StudentRoute
 						path="/student/classroom/group/:group_id/course/:course_id/assignment"
 						exact
 						strict
 						component={CourseAssignment}
-					></Route>
-					<Route
+					></StudentRoute>
+					<StudentRoute
 						path="/student/classroom/group/:group_id/course/:course_id/quiz"
 						exact
 						strict
 						component={CourseQuiz}
-					></Route>
-					<Route
+					></StudentRoute>
+					<StudentRoute
 						path="/student/classroom/group/:group_id/course/:course_id/resource"
 						exact
 						strict
 						component={CourseResource}
-					></Route>
-					<Route path="/student/forums" exact strict component={Forums}></Route>
-					<Route
+					></StudentRoute>
+					<StudentRoute
+						path="/student/forums"
+						exact
+						strict
+						component={Forums}
+					></StudentRoute>
+					<StudentRoute
 						path="/student/resources"
 						exact
 						strict
 						component={Resources}
-					></Route>
-					<Route
+					></StudentRoute>
+					<StudentRoute
 						path="/student/calendar"
 						exact
 						strict
 						component={Calendar}
-					></Route>
-					<Route path="/student/events" exact strict component={Events}></Route>
-					<Route
+					></StudentRoute>
+					<StudentRoute
+						path="/student/events"
+						exact
+						strict
+						component={Events}
+					></StudentRoute>
+					<StudentRoute
 						path="/student/attendance"
 						exact
 						strict
 						component={Attendance}
-					></Route>
-					<Route
+					></StudentRoute>
+					<StudentRoute
 						path="/student/settings"
 						exact
 						strict
 						component={Settings}
-					></Route>
+					></StudentRoute>
 
-					{/* Teacher Specific Routes---------------------------> */}
-					<Route
+					{/* Teacher Specific Routes--------------------------------------------------------> */}
+					<TeacherRoute
 						path="/teacher/dashboard"
 						exact
 						strict
 						component={Dashboard}
-					></Route>
-					<Route
+					></TeacherRoute>
+					<TeacherRoute
 						path="/teacher/profile"
 						exact
 						strict
 						component={Profile}
-					></Route>
-					<Route
+					></TeacherRoute>
+					<TeacherRoute
 						path="/teacher/classroom"
 						exact
 						strict
-						component={Classroom}
-					></Route>
-					<Route path="/teacher/forums" exact strict component={Forums}></Route>
-					<Route
+						component={TeacherClassroom}
+					></TeacherRoute>
+					<TeacherRoute
+						path="/teacher/forums"
+						exact
+						strict
+						component={Forums}
+					></TeacherRoute>
+					<TeacherRoute
 						path="/teacher/resources"
 						exact
 						strict
 						component={Resources}
-					></Route>
-					<Route
+					></TeacherRoute>
+					<TeacherRoute
 						path="/teacher/calendar"
 						exact
 						strict
 						component={Calendar}
-					></Route>
-					<Route path="/teacher/events" exact strict component={Events}></Route>
-					<Route
+					></TeacherRoute>
+					<TeacherRoute
+						path="/teacher/events"
+						exact
+						strict
+						component={Events}
+					></TeacherRoute>
+					<TeacherRoute
 						path="/teacher/attendance"
 						exact
 						strict
 						component={Attendance}
-					></Route>
+					></TeacherRoute>
+					<Route to="*" component={PageNotFound}></Route>
 				</Switch>
 			</BrowserRouter>
 		</CustomThemeContext>
