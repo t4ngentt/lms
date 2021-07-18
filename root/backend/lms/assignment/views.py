@@ -1,5 +1,6 @@
 from copy import Error
 import datetime
+import os
 from django.http.response import JsonResponse
 from django.shortcuts import render
 from rest_framework.response import Response
@@ -20,11 +21,11 @@ class Student_Assignment_Names(APIView):
         grp_course_obj=Group_Course.objects.get(group_id=group_pk,course_id=course_pk)
         querylist = Group_Assignment.objects.filter(grp_course_id=grp_course_obj.group_course_id).values()
         assignment_fk = []
-        print(querylist)
         for j in querylist:
             assignment_fk.append(j['assignment_id_id'])
         queryset = Assignment.objects.filter(assignment_id__in=assignment_fk)
         serializer_class = Assignment_Serializer(queryset, many=True)
+
         return Response(serializer_class.data)
     
 # class Create_Assignment(CreateAPIView):
@@ -71,4 +72,8 @@ class Teacher_Assignment_Names(APIView):
             assignment_fk.append(j['assignment_id_id'])
         queryset = Assignment.objects.filter(assignment_id__in=assignment_fk)
         serializer_class = Assignment_Serializer(queryset, many=True)
+        # dir=str(os.path.join(BASE_DIR,"0120190202"))
+        # os.makedirs(dir)
+        # dir=str(os.path.join(dir,"Assignments"))
+        # os.makedirs(dir)
         return Response(serializer_class.data)

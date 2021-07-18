@@ -35,3 +35,14 @@ class Teacher_Course_Names(APIView):
             serializer = Teacher_Course_Serializer(queryset, many=True)
             return Response(serializer.data)
 
+class Group_course_api(APIView):
+    def get(request,self, pk=None):
+            j = Group_Course.objects.get(group_course_id=pk)
+
+            x=user_group.objects.get(group_id=j.group_id)
+            j.group_id=x.group_name
+            y=Course.objects.get(course_id=j.course_id)
+            j.course_id=y.course_name
+            serializer = Teacher_Course_Serializer(j)
+            return Response(serializer.data)
+
