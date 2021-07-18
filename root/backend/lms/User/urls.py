@@ -1,6 +1,7 @@
 from django.urls import path,include
 from django.views.decorators.csrf import csrf_exempt
 from . import views
+from teacher.views import Group_course_api
 from rest_framework_simplejwt.views import TokenObtainPairView,TokenRefreshView,TokenVerifyView
 urlpatterns = [
     # path('user/login/',csrf_exempt(views.login_token),name="login"),
@@ -10,5 +11,7 @@ urlpatterns = [
     # path('index/', views.index, name="index")
     path('user/login/',views.MyTokenObtainPairView.as_view(),name="token"),
     path('verifytoken/',TokenVerifyView.as_view(),name="verify"),
-    path('refreshtoken/',TokenRefreshView.as_view(),name="refresh")
+    path('refreshtoken/',TokenRefreshView.as_view(),name="refresh"),
+    path('group_course_details/<str:pk>/',Group_course_api.as_view(),name="group_course_detail")
+   
 ]
