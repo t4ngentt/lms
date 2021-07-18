@@ -12,7 +12,7 @@ class Assignment(models.Model):
     description = models.TextField(default=None,blank=True,null=True)
     min_marks = models.IntegerField(default=None,blank=True,null=True)
     max_marks = models.IntegerField(default=None,blank=True,null=True)
-    post_date= models.DateTimeField(default=timezone.now,blank=True,null=True)
+    post_date= models.DateTimeField(default=timezone.now)
     due_date= models.DateTimeField(default=None,blank=True,null=True)
 
     class Meta:

@@ -1,3 +1,4 @@
+import datetime
 from django.http.response import JsonResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -40,9 +41,6 @@ def Create_Assignment(request):
             data = request.POST
             files = request.FILES.getlist('f1')
             print(files)
-            for i in data:
-                if i is None or '':
-                    return JsonResponse({"You Entered invalid data"})
             assignment_object = Assignment(title = data['title'],description = data['description'],min_marks = data['min_marks'],max_marks = data['max_marks'],post_date = data['post_date'],due_date = data['due_date'])
             assignment_object.save()
             grp_obj = Group_Course.objects.get(group_course_id = data['grp_course_id'])
@@ -64,16 +62,25 @@ def submit_assignment(request):
 
     try:
         if request.method == 'POST':
-            serializer_class = Assignment_Submission(data=request.POST)
-            if serializer_class.is_valid():
-                files = request.FILES.getlist('f1')
-                fs = FileSystemStorage(location=str(os.path.join(BASE_DIR,"media")))
-                for i in files:
-                    fs.save(i.name,i)      
-                serializer_class.save()
-                return Response({"msg":"File submitted successfully !"})
+            assignment_id = request.POST['assignment_id']
+            due_date = Assignment.objects.get(assignment_id=assignment_id).due_date
+            if due_date.replace(tzinfo = None) < datetime.datetime.now():
+                print(due_date,datetime.datetime.now())
+                return Response({"msg":"Overdue"})
             else:
-                return Response({"msg":"Invalid data sent !"})
+                serializer_class = Assignment_Submission(data=request.POST)
+                if serializer_class.is_valid():
+                    files = request.FILES.getlist('f1')
+                    assignment_folder = str(os.path.join(BASE_DIR,"studentdata",request.POST['prn'],"assignments",request.POST['assignment_id']))
+                    if not os.path.isdir(assignment_folder):
+                        os.makedirs(assignment_folder,mode=0o666)
+                    fs = FileSystemStorage(location=assignment_folder)
+                    for i in files:
+                        fs.save(i.name,i)      
+                    serializer_class.save()
+                    return Response({"msg":"File submitted successfully !"})
+                else:
+                    return Response({"msg":"Invalid data sent !"})
         else:
             return Response({"msg":"Wrong request sent !"})
     except Exception as e:
