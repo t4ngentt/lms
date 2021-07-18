@@ -16,8 +16,9 @@ from pathlib import Path
 from lms.settings import BASE_DIR
 import os
 class Assignment_Names(APIView):
-    def get(self, request, pk=None, format=None):
-        querylist = Group_Assignment.objects.filter(grp_course_id=pk).values()
+    def get(self, request, group_pk=None, course_pk=None, format=None):
+        grp_course_obj=Group_Course.objects.get(group_id=group_pk,course_id=course_pk)
+        querylist = Group_Assignment.objects.filter(grp_course_id=grp_course_obj.group_course_id).values()
         assignment_fk = []
         print(querylist)
         for j in querylist:
