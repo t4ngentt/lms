@@ -22,7 +22,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         # Add extra responses here
         data['email'] = self.user.email
-        data['prn'] = self.user.user_id
+        data['user_id'] = self.user.user_id
         data['f_name'] = self.user.f_name
         data['l_name'] = self.user.l_name
         data['role'] = self.user.role
