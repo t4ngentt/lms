@@ -15,7 +15,7 @@ from django.core.files.storage import FileSystemStorage
 from pathlib import Path
 from lms.settings import BASE_DIR
 import os
-class Assignment_Names(APIView):
+class Student_Assignment_Names(APIView):
     def get(self, request, group_pk=None, course_pk=None, format=None):
         grp_course_obj=Group_Course.objects.get(group_id=group_pk,course_id=course_pk)
         querylist = Group_Assignment.objects.filter(grp_course_id=grp_course_obj.group_course_id).values()
@@ -40,7 +40,6 @@ from django.views.decorators.csrf import csrf_exempt
 def Create_Assignment(request):
     try:
         if request.method == 'POST':
-            print("HII")
             data = request.POST
             files = request.FILES.getlist('f1')
             print(files)
@@ -61,3 +60,15 @@ def Create_Assignment(request):
         print(e)
         return JsonResponse({"Error":str(e)})
         
+
+class Teacher_Assignment_Names(APIView):
+    def get(self, request, pk=None, format=None):
+        
+        querylist = Group_Assignment.objects.filter(grp_course_id=pk).values()
+        assignment_fk = []
+        print(querylist)
+        for j in querylist:
+            assignment_fk.append(j['assignment_id_id'])
+        queryset = Assignment.objects.filter(assignment_id__in=assignment_fk)
+        serializer_class = Assignment_Serializer(queryset, many=True)
+        return Response(serializer_class.data)
