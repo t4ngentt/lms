@@ -1,13 +1,20 @@
+from copy import Error
+import datetime
+from django.http.response import JsonResponse
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from User.models import Group_Course
 from rest_framework.generics import CreateAPIView
 from .models import Group_Assignment,Assignment,Assignment_submission,Assignment_marks
 # Create your views here.
 from .serializers import Assignment_Serializer
 import json
-
-
+from django.views.decorators.csrf import csrf_protect
+from django.core.files.storage import FileSystemStorage
+from pathlib import Path
+from lms.settings import BASE_DIR
+import os
 class Assignment_Names(APIView):
     def get(self, request, pk=None, format=None):
         querylist = Group_Assignment.objects.filter(grp_course_id=pk).values()
@@ -25,3 +32,31 @@ class Assignment_Names(APIView):
 #     def create(self, request, *args, **kwargs):
 #         x=Group_Assignment()
 #         return Response(status=204)
+
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
+def Create_Assignment(request):
+    try:
+        if request.method == 'POST':
+            print("HII")
+            data = request.POST
+            files = request.FILES.getlist('f1')
+            print(files)
+            for i in data:
+                if i is None:
+                    return JsonResponse({"You Entered invalid data"})
+            assignment_object = Assignment(title = data['title'],description = data['description'],min_marks = data['min_marks'],max_marks = data['max_marks'],post_date = data['post_date'],due_date = data['due_date'])
+            assignment_object.save()
+            grp_obj = Group_Course.objects.get(group_course_id = data['grp_course_id'])
+            Group_Assignment(grp_course = grp_obj,assignment_id = assignment_object).save()
+            fs = FileSystemStorage(location=str(os.path.join(BASE_DIR,"media")))
+            fileurl = []
+            for i in files:
+                file = fs.save(i.name,i)
+                fileurl.append(fs.url(file))
+            return JsonResponse({"msg":"Assignment Created Successfully ! ","file_url":str(fileurl)})
+    except Exception as e:
+        print(e)
+        return JsonResponse({"Error":str(e)})
+        

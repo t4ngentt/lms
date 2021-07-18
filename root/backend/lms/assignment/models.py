@@ -24,7 +24,7 @@ class Assignment(models.Model):
         return f"{self.title}"
 
 class Group_Assignment(models.Model):
-    teacher = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name="teacher_fk")
+    teacher = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name="teacher_fk",blank=True,null=True)
     grp_course = models.ForeignKey(Group_Course,on_delete=models.CASCADE,verbose_name='group_course_fk')
     assignment_id = models.ForeignKey(Assignment,on_delete=models.CASCADE, verbose_name='assignment_fk')
     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
