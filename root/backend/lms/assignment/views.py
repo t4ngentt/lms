@@ -1,18 +1,13 @@
-from copy import Error
-import datetime
 from django.http.response import JsonResponse
-from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from User.models import Group_Course
-from rest_framework.generics import CreateAPIView
-from .models import Group_Assignment,Assignment,Assignment_submission,Assignment_marks
-# Create your views here.
-from .serializers import Assignment_Serializer
-import json
-from django.views.decorators.csrf import csrf_protect
+from rest_framework.generics import GenericAPIView
+from rest_framework.decorators import api_view
+from .models import Group_Assignment,Assignment
+from .serializers import Assignment_Serializer, Assignment_Submission
 from django.core.files.storage import FileSystemStorage
-from pathlib import Path
+from django.views.decorators.csrf import csrf_exempt
 from lms.settings import BASE_DIR
 import os
 class Student_Assignment_Names(APIView):
@@ -26,41 +21,6 @@ class Student_Assignment_Names(APIView):
         queryset = Assignment.objects.filter(assignment_id__in=assignment_fk)
         serializer_class = Assignment_Serializer(queryset, many=True)
         return Response(serializer_class.data)
-    
-# class Create_Assignment(CreateAPIView):
-#     queryset = Assignment.objects.all()
-#     serializer_class = Assignment_Serializer
-#     def create(self, request, *args, **kwargs):
-#         x=Group_Assignment()
-#         return Response(status=204)
-
-from django.views.decorators.csrf import csrf_exempt
-
-@csrf_exempt
-def Create_Assignment(request):
-    try:
-        if request.method == 'POST':
-            data = request.POST
-            files = request.FILES.getlist('f1')
-            print(files)
-            for i in data:
-                if i is None:
-                    return JsonResponse({"You Entered invalid data"})
-            assignment_object = Assignment(title = data['title'],description = data['description'],min_marks = data['min_marks'],max_marks = data['max_marks'],post_date = data['post_date'],due_date = data['due_date'])
-            assignment_object.save()
-            grp_obj = Group_Course.objects.get(group_course_id = data['grp_course_id'])
-            Group_Assignment(grp_course = grp_obj,assignment_id = assignment_object).save()
-            fs = FileSystemStorage(location=str(os.path.join(BASE_DIR,"media")))
-            fileurl = []
-            for i in files:
-                file = fs.save(i.name,i)
-                fileurl.append(fs.url(file))
-            return JsonResponse({"msg":"Assignment Created Successfully ! ","file_url":str(fileurl)})
-    except Exception as e:
-        print(e)
-        return JsonResponse({"Error":str(e)})
-        
-
 class Teacher_Assignment_Names(APIView):
     def get(self, request, pk=None, format=None):
         
@@ -72,3 +32,50 @@ class Teacher_Assignment_Names(APIView):
         queryset = Assignment.objects.filter(assignment_id__in=assignment_fk)
         serializer_class = Assignment_Serializer(queryset, many=True)
         return Response(serializer_class.data)
+
+@csrf_exempt
+def Create_Assignment(request):
+    try:
+        if request.method == 'POST':
+            data = request.POST
+            files = request.FILES.getlist('f1')
+            print(files)
+            for i in data:
+                if i is None or '':
+                    return JsonResponse({"You Entered invalid data"})
+            assignment_object = Assignment(title = data['title'],description = data['description'],min_marks = data['min_marks'],max_marks = data['max_marks'],post_date = data['post_date'],due_date = data['due_date'])
+            assignment_object.save()
+            grp_obj = Group_Course.objects.get(group_course_id = data['grp_course_id'])
+            Group_Assignment(grp_course = grp_obj,assignment_id = assignment_object).save()
+            fs = FileSystemStorage(location=str(os.path.join(BASE_DIR,"media")))
+            fileurl = []
+            for i in files:
+                file = fs.save(i.name,i)
+                fileurl.append(fs.url(file))
+            return JsonResponse({"msg":"Assignment Created Successfully ! ","file_url":str(fileurl)})
+        else:
+            return JsonResponse({"msg":"Wrong request sent !"})
+    except Exception as e:
+        print(e)
+        return JsonResponse({"Error":str(e)})
+        
+@api_view(["POST",])
+def submit_assignment(request):
+
+    try:
+        if request.method == 'POST':
+            serializer_class = Assignment_Submission(data=request.POST)
+            if serializer_class.is_valid():
+                files = request.FILES.getlist('f1')
+                fs = FileSystemStorage(location=str(os.path.join(BASE_DIR,"media")))
+                for i in files:
+                    fs.save(i.name,i)      
+                serializer_class.save()
+                return Response({"msg":"File submitted successfully !"})
+            else:
+                return Response({"msg":"Invalid data sent !"})
+        else:
+            return Response({"msg":"Wrong request sent !"})
+    except Exception as e:
+        return Response({"Error":str(e)})
+

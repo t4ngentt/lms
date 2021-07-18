@@ -6,3 +6,8 @@ class Assignment_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Assignment
         fields = "__all__"
+
+class Assignment_Submission(serializers.ModelSerializer):
+    class Meta:
+        model = Assignment_submission
+        fields = "__all__"
