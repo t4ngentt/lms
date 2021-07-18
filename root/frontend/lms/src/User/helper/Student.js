@@ -1,19 +1,27 @@
 import { API } from "../../backend";
-
+import { refreshAccess, getUser } from "../../Auth/helper/index";
 export const classroomInfo = () => {
-	const data = { prn: JSON.parse(localStorage.getItem("jwt")).user.user_id };
+	const data = { prn: JSON.parse(localStorage.getItem("jwt")).user.prn };
 	console.log(data);
 	return fetch(`${API}/student/classroom/group`, {
 		method: "POST",
 		headers: {
 			Accept: "application/json",
 			"Content-Type": "application/json",
-			Authorization: `Bearer ${JSON.parse(localStorage.getItem("jwt")).token}`,
+			Authorization: `Bearer ${
+				JSON.parse(localStorage.getItem("jwt")).user.access
+			}`,
 		},
 		body: JSON.stringify(data),
 	})
-		.then((res) => {
-			return res.json();
+		.then(async (res) => {
+			if (res.status === 401) {
+				await refreshAccess();
+				console.log(res.status);
+				window.location.reload(true);
+			} else {
+				return res.json();
+			}
 		})
 		.catch((err) => console.log(err));
 };
@@ -24,11 +32,19 @@ export const GroupInfo = (group_id) => {
 		headers: {
 			Accept: "application/json",
 			"Content-Type": "application/json",
-			Authorization: `Bearer ${JSON.parse(localStorage.getItem("jwt")).token}`,
+			Authorization: `Bearer ${
+				JSON.parse(localStorage.getItem("jwt")).user.access
+			}`,
 		},
 	})
-		.then((res) => {
-			return res.json();
+		.then(async (res) => {
+			if (res.status === 401) {
+				await refreshAccess();
+				console.log(res.status);
+				window.location.reload(true);
+			} else {
+				return res.json();
+			}
 		})
 		.catch((err) => {
 			console.log(err);
@@ -41,11 +57,19 @@ export const getGroupDetails = (group_id) => {
 		headers: {
 			Accept: "application/json",
 			"Content-Type": "application/json",
-			Authorization: `Bearer ${JSON.parse(localStorage.getItem("jwt")).token}`,
+			Authorization: `Bearer ${
+				JSON.parse(localStorage.getItem("jwt")).user.access
+			}`,
 		},
 	})
-		.then((res) => {
-			return res.json();
+		.then(async (res) => {
+			if (res.status === 401) {
+				await refreshAccess();
+				console.log(res.status);
+				window.location.reload(true);
+			} else {
+				return res.json();
+			}
 		})
 		.catch((err) => {
 			console.log(err);

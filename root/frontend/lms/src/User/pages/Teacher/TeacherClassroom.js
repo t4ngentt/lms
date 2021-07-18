@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ClassroomNavigator from "../../../Core/ui/Components/ClassroomNavigation";
 
+import { TeacherClassroomInfo } from "../../helper/Teacher";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid } from "@material-ui/core";
@@ -18,9 +19,13 @@ const useStyles = makeStyles((theme) => ({
 export default function TeacherClassroom() {
 	const classes = useStyles();
 	const [courses, setCourses] = useState([]);
-	const onLoad = () => {
-		if (JSON.parse(localStorage.getItem("jwt")).user.role === 1) {
-		}
+	const onLoad = async () => {
+		await TeacherClassroomInfo()
+			.then((data) => {
+				console.log("Setting Courses ", data);
+				setCourses(data);
+			})
+			.catch(console.log("signin request failed"));
 	};
 
 	useEffect(() => {
@@ -39,22 +44,22 @@ export default function TeacherClassroom() {
 			<div className={classes.navigation}>
 				<ClassroomNavigator />
 			</div>
-			{courses && (
+			{courses !== undefined && (
 				<Grid container spacing={5} justifyContent="center" alignItems="center">
 					{courses.map((course, index) => {
 						return (
 							<Grid item lg={12} md={12} sm={12} xs={12}>
 								<CourseCard
-									course_id={course.course_id}
-									course_name={course.course_name}
-									description={course.course_desc}
+									group_course_id={course.group_course_id}
+									group_name={course.group_id}
+									course_name={course.course_id}
 								/>
 							</Grid>
 						);
 					})}
 				</Grid>
 			)}
-			{courses.length === 0 && noCourses()}
+			{courses === undefined && noCourses()}
 		</Base>
 	);
 }

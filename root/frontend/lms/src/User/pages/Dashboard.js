@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Dashboard() {
-	const { user } = isAutheticated();
+	const {user} = isAutheticated();
 	const classes = useStyles();
 	const theme = useTheme();
 	const matches = useMediaQuery(theme.breakpoints.down("md"));

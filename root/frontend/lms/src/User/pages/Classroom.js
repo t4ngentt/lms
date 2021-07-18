@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ClassroomNavigator from "../../Core/ui/Components/ClassroomNavigation";
+
 import { classroomInfo } from "../helper/Student";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -23,22 +24,13 @@ const useStyles = makeStyles((theme) => ({
 export default function Classroom() {
 	const classes = useStyles();
 	const [groups, setGroups] = useState([]);
-	const onLoad = () => {
-		if (JSON.parse(localStorage.getItem("jwt")).user.role === 0) {
-			classroomInfo()
-				.then((data) => {
-					console.log("Setting Courses ", data);
-					setGroups(data);
-				})
-				.catch(console.log("signin request failed"));
-		}
-		// else if (JSON.parse(localStorage.getItem("jwt")).user.role === 1) {
-		// 	TeacherClassroomInfo()
-		// 		.then((data) => {
-		// 			setCourses(data);
-		// 		})
-		// 		.catch(console.log("signin request failed"));
-		// }
+	const onLoad = async () => {
+		await classroomInfo()
+			.then((data) => {
+				console.log("Setting Courses ", data);
+				setGroups(data);
+			})
+			.catch(console.log("signin request failed"));
 	};
 
 	useEffect(() => {
@@ -70,22 +62,24 @@ export default function Classroom() {
 			<div className={classes.navigation}>
 				<ClassroomNavigator />
 			</div>
-			{groups && (
+
+			{groups !== undefined && (
 				<Grid container spacing={5} justifyContent="center" alignItems="center">
-					{groups.map((group, index) => {
-						return (
-							<Grid item>
-								<ClassroomCard
-									group_id={group.group_id}
-									group_name={group.group_name}
-									no_of_students={group.no_of_students}
-								/>
-							</Grid>
-						);
-					})}
+					{groups &&
+						groups.map((group, index) => {
+							return (
+								<Grid item>
+									<ClassroomCard
+										group_id={group.group_id}
+										group_name={group.group_name}
+										no_of_students={group.no_of_students}
+									/>
+								</Grid>
+							);
+						})}
 				</Grid>
 			)}
-			{/* {groups.length === 0 && NoGroups()} */}
+			{groups === undefined && NoGroups()}
 		</Base>
 	);
 }

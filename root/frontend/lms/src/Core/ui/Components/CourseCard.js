@@ -46,6 +46,7 @@ export default function CourseCard(props) {
 						color="textSecondary"
 						gutterBottom
 					>
+						{props.group_name}
 						{props.description}
 					</Typography>
 				</CardContent>

@@ -18,25 +18,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Course() {
 	const classes = useStyles();
-	const location = useLocation();
+	const location = useLocation(); 
 	const { group_id } = useParams();
 	const [groupName, setGroupName] = useState();
 	const [courses, setCourses] = useState([]);
-	const onLoad = () => {
-		if (JSON.parse(localStorage.getItem("jwt")).user.role === 0) {
-			GroupInfo(group_id)
-				.then((data) => {
-					setCourses(data);
-				})
-				.catch(console.log("signin request failed"));
-		}
-		// else if (JSON.parse(localStorage.getItem("jwt")).user.role === 1) {
-		// 	TeacherClassroomInfo()
-		// 		.then((data) => {
-		// 			setCourses(data);
-		// 		})
-		// 		.catch(console.log("signin request failed"));
-		// }
+	const onLoad = async() => {
+		await GroupInfo(group_id)
+			.then((data) => {
+				setCourses(data);
+			})
+			.catch(console.log("signin request failed"));
 	};
 	const setGroup = () => {
 		if (location.state) {
