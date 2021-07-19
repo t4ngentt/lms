@@ -1,7 +1,7 @@
 from django.db import models
 from User.models import Group_Course
 from django.utils import timezone
-from User.models import User,School,Branch
+from User.models import User,School,Branch,Course_Unit
 import uuid
 # Create your models here.
 
@@ -26,6 +26,7 @@ class Assignment(models.Model):
 class Group_Assignment(models.Model):
     teacher = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name="teacher_fk",blank=True,null=True)
     grp_course = models.ForeignKey(Group_Course,on_delete=models.CASCADE,verbose_name='group_course_fk')
+    course_unit = models.ForeignKey(Course_Unit,on_delete=models.CASCADE,verbose_name='course_unit_fk')
     assignment_id = models.ForeignKey(Assignment,on_delete=models.CASCADE, verbose_name='assignment_fk')
     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
     branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)

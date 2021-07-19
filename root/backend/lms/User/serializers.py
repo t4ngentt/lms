@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from User.models import User
+from User.models import User,Course_Unit
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 import json
 
@@ -35,3 +35,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = '__all__'
 
+class Course_Unit_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Course_Unit
+        fields = '__all__'

@@ -1,6 +1,7 @@
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from User.models import Group_Course
+from User.models import Group_Course,Course_Unit
+from User.serializers import Course_Unit_Serializer
 from .serializers import Student_Course_Detail_Serializer, Student_Group_Serializer, Student_Course_Serializer
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView
@@ -49,3 +50,11 @@ class Student_Course(GenericAPIView, RetrieveModelMixin):
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
+
+
+
+class Student_Course_Unit_Api(APIView):
+    def get(self, request, pk=None, format=None):
+        queryset = Course_Unit.objects.filter(course_id=pk).values()
+        serializer = Course_Unit_Serializer(queryset, many=True)
+        return Response(serializer.data)

@@ -227,3 +227,19 @@ class Group_Course(models.Model):
         return f"{self.group} {self.course}"
 
 
+class Course_Unit(models.Model):
+    course_unit_id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
+    course_id = models.ForeignKey(Course,on_delete=models.CASCADE,verbose_name='course_fk',blank=True,null=True)
+    name = models.CharField(max_length=500,null=True,blank=True,verbose_name="Unit Name")
+    desc = models.TextField(null=True,blank=True,verbose_name="Unit Description")
+    school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
+    branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
+    
+    class Meta:
+        db_table = 'COURSE_UNIT'
+        verbose_name = 'course unit'
+        verbose_name_plural = 'course units'
+
+    def _str_(self):
+        return f"{self.name}"
+

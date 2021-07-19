@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.auth import models
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
-from .models import User,Branch,Branch_Semester,School,user_group,Group_Course,Semester,Course
+from .models import Course_Unit, User,Branch,Branch_Semester,School,user_group,Group_Course,Semester,Course
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from import_export.admin import ImportExportModelAdmin
 # Register your models here
@@ -188,6 +188,25 @@ class Group_Course(admin.ModelAdmin):
             obj.branch = obj.course.branch
         obj.save()
 
-    
+
+@admin.register(Course_Unit)
+class Course_Unit(admin.ModelAdmin):
+    raw_id_fields = ('course_id',)
+    ordering = ('course_id',)
+    list_display =['course_unit_id','course_id','name','desc','school','branch']
+    search_fields = ['course_unit_id','name']
+    def get_form(self, request, obj=None, **kwargs):
+        
+        self.exclude = ("school","branch", )
+        form = super(Course_Unit, self).get_form(request, obj, **kwargs)
+        return form
+
+    def save_model(self, request, obj, form, change):
+        if not obj.school:
+            obj.school = obj.course_id.school
+        if not obj.branch:
+            
+            obj.branch = obj.course_id.branch
+        obj.save()
 
 

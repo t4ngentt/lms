@@ -1,7 +1,8 @@
 from django.shortcuts import render
 # from pandas.core.frame import DataFrame
 from rest_framework.response import Response
-from User.models import Group_Course
+from User.models import Group_Course,Course_Unit
+from User.serializers import Course_Unit_Serializer
 from .serializers import Teacher_Course_Serializer
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView
@@ -46,3 +47,9 @@ class Group_course_api(APIView):
             serializer = Teacher_Course_Serializer(j)
             return Response(serializer.data)
 
+class Teacher_Course_Unit_Api(APIView):
+    def get(self, request, pk=None, format=None):
+        obj= Group_Course.objects.get(group_course_id=pk)
+        queryset = Course_Unit.objects.filter(course_id=obj.course_id).values()
+        serializer = Course_Unit_Serializer(queryset, many=True)
+        return Response(serializer.data)

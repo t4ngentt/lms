@@ -1,3 +1,4 @@
+from .serializers import Course_Unit_Serializer
 from django.urls import path,include
 from django.views.decorators.csrf import csrf_exempt
 from . import views
@@ -12,6 +13,5 @@ urlpatterns = [
     path('user/login/',views.MyTokenObtainPairView.as_view(),name="token"),
     path('verifytoken/',TokenVerifyView.as_view(),name="verify"),
     path('refreshtoken/',TokenRefreshView.as_view(),name="refresh"),
-    path('group_course_details/<str:pk>/',Group_course_api.as_view(),name="group_course_detail")
-   
+    path('group_course_details/<str:pk>/',Group_course_api.as_view(),name="group_course_detail"),
 ]
