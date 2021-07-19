@@ -1,5 +1,5 @@
 import { API } from "../../backend";
-import { refreshAccess, getUser } from "../../Auth/helper/index";
+import { refreshAccess } from "../../Auth/helper/index";
 export const classroomInfo = () => {
 	const data = { prn: JSON.parse(localStorage.getItem("jwt")).user.prn };
 	console.log(data);
@@ -74,4 +74,30 @@ export const getGroupDetails = (group_id) => {
 		.catch((err) => {
 			console.log(err);
 		});
+};
+
+export const StudentCourseAssignments = (group_id, course_id) => {
+	return fetch(
+		`${API}/classroom/group/course/${group_id}/${course_id}/assignments/`,
+		{
+			method: "GET",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${
+					JSON.parse(localStorage.getItem("jwt")).user.access
+				}`,
+			},
+		}
+	)
+		.then(async (res) => {
+			if (res.status === 401) {
+				await refreshAccess();
+				console.log(res.status);
+				window.location.reload(true);
+			} else {
+				return res.json();
+			}
+		})
+		.catch((err) => console.log(err));
 };

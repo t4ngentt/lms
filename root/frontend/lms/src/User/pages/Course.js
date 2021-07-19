@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { getUser } from "../../Auth/helper/index";
 import Base from "../../Core/ui/Base";
 import { getGroupDetails } from "../helper/Student";
+import { getGroupCourseDetails } from "../helper/Teacher";
 import ClassroomNavigator from "../../Core/ui/Components/ClassroomNavigation";
 import { useParams, useLocation } from "react-router";
 
@@ -19,20 +21,34 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Course(props) {
+	const { user } = getUser();
 	const classes = useStyles();
 	const location = useLocation();
-	const { group_id, course_id } = useParams();
+	const { group_id, course_id, group_course_id } = useParams();
 	const [courseName, setCourseName] = useState();
 	const [groupName, setGroupName] = useState();
 	const [activeTab, setActiveTab] = useState(0);
 	const setGroup = () => {
-		if (location.state) {
-			setCourseName(location.state.courseName);
-			setGroupName(location.state.groupName);
-		} else {
-			getGroupDetails(group_id).then((data) => {
-				setCourseName(data.group_name);
-			});
+		if (user.role === 0) {
+			if (location.state) {
+				setCourseName(location.state.courseName);
+				setGroupName(location.state.groupName);
+			} else {
+				getGroupDetails(group_id).then((data) => {
+					setCourseName(data.group_name);
+				});
+			}
+		} else if (user.role === 1) {
+			if (location.state) {
+				setCourseName(location.state.courseName);
+				setGroupName(location.state.groupName);
+			} else {
+				getGroupCourseDetails(group_course_id).then((data) => {
+					console.log("GROUP_COURSE_DETAILS", data);
+					setCourseName(data.course_id);
+					setGroupName(data.group_id);
+				});
+			}
 		}
 	};
 
@@ -78,6 +94,7 @@ export default function Course(props) {
 							course_name={courseName}
 							group_id={group_id}
 							course_id={course_id}
+							group_course_id={group_course_id}
 						/>
 					</div>
 				</Grid>

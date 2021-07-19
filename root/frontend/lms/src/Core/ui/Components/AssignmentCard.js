@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import {
 	Card,
@@ -25,10 +25,19 @@ export default function AssignmentCard(props) {
 
 	return (
 		<Card className={classes.cardContainer}>
-			<CardActionArea className={classes.cardContainer}>
+			<CardActionArea
+				className={classes.cardContainer}
+				component={Link}
+				to={{
+					pathname: ``,
+					state: {
+						groupName: `${props.group_name}`,
+					},
+				}}
+			>
 				<CardContent>
 					<Typography variant="h5" component="h2">
-						{props.name}
+						{props.title}
 					</Typography>
 					<Typography
 						className={classes.details}
@@ -36,6 +45,13 @@ export default function AssignmentCard(props) {
 						gutterBottom
 					>
 						{props.description}
+					</Typography>
+					<Typography
+						className={classes.details}
+						color="textSecondary"
+						gutterBottom
+					>
+						{props.dueDate}
 					</Typography>
 				</CardContent>
 			</CardActionArea>

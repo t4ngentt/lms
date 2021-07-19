@@ -132,6 +132,12 @@ const Routes = () => {
 						component={TeacherClassroom}
 					></TeacherRoute>
 					<TeacherRoute
+						path="/teacher/classroom/course/:group_course_id/assignment"
+						exact
+						strict
+						component={CourseAssignment}
+					></TeacherRoute>
+					<TeacherRoute
 						path="/teacher/forums"
 						exact
 						strict
