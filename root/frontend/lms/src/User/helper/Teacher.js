@@ -1,7 +1,10 @@
 import { API } from "../../backend";
+import { format } from "date-fns";
 import { refreshAccess, getUser } from "../../Auth/helper/index";
 export const TeacherClassroomInfo = () => {
-	const data = { teacher_id: JSON.parse(localStorage.getItem("jwt")).user.prn };
+	const data = {
+		teacher_id: JSON.parse(localStorage.getItem("jwt")).user.user_id,
+	};
 	console.log(data);
 	return fetch(`${API}/teacher/classroom/courses`, {
 		method: "POST",
@@ -68,11 +71,68 @@ export const getGroupCourseDetails = (group_course_id) => {
 				console.log(res.status);
 				window.location.reload(true);
 			} else {
-				console.log(res)
+				console.log(res);
 				return res.json();
 			}
 		})
 		.catch((err) => {
 			console.log(err);
 		});
+};
+
+export const TeacherCreateAssignment = (group_course_id, user) => {
+	let formData = new FormData();
+	console.log("USER :", user);
+	formData.append("f1", user.files);
+	formData.append("title", user.title);
+	formData.append("description", user.description);
+	formData.append("min_marks", user.minMarks);
+	formData.append("max_marks", user.maxMarks);
+	formData.append("post_date", user.postDate);
+	formData.append("due_date", user.dueDate);
+	formData.append("grp_course_id", group_course_id);
+	console.log("FORMDATA :", formData);
+	return fetch(`${API}/classroom/group/course/create_assignment/`, {
+		method: "POST",
+		headers: {
+			Accept: "application/json",
+			Authorization: `Bearer ${
+				JSON.parse(localStorage.getItem("jwt")).user.access
+			}`,
+		},
+		body: formData,
+	})
+		.then(async (res) => {
+			if (res.status === 401) {
+				await refreshAccess();
+				console.log(res.status);
+				window.location.reload(true);
+			} else {
+				return res.json();
+			}
+		})
+		.catch((err) => console.log(err));
+};
+
+export const TeacherCourseRescources = (group_course_id) => {
+	return fetch(`${API}/classroom/group_course/${group_course_id}/units`, {
+		method: "GET",
+		headers: {
+			Accept: "application/json",
+			"Content-Type": "application/json",
+			Authorization: `Bearer ${
+				JSON.parse(localStorage.getItem("jwt")).user.access
+			}`,
+		},
+	})
+		.then(async (res) => {
+			if (res.status === 401) {
+				await refreshAccess();
+				console.log(res.status);
+				window.location.reload(true);
+			} else {
+				return res.json();
+			}
+		})
+		.catch((err) => console.log(err));
 };

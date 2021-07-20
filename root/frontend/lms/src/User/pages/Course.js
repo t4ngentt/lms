@@ -109,6 +109,22 @@ export default function Course(props) {
 								<Button
 									component={Link}
 									to={{
+										pathname: `/student/classroom/group/${group_id}/course/${course_id}/resource`,
+										state: {
+											groupName: groupName,
+											courseName: courseName,
+										},
+									}}
+									onClick={() => {
+										setActiveTab(2);
+									}}
+									color={activeTab === 2 ? "primary" : "inherit"}
+								>
+									Resources
+								</Button>
+								<Button
+									component={Link}
+									to={{
 										pathname: `/student/classroom/group/${group_id}/course/${course_id}/assignment`,
 										state: {
 											groupName: groupName,
@@ -137,22 +153,6 @@ export default function Course(props) {
 									color={activeTab === 1 ? "primary" : "inherit"}
 								>
 									Quizzes
-								</Button>
-								<Button
-									component={Link}
-									to={{
-										pathname: `/student/classroom/group/${group_id}/course/${course_id}/resource`,
-										state: {
-											groupName: groupName,
-											courseName: courseName,
-										},
-									}}
-									onClick={() => {
-										setActiveTab(2);
-									}}
-									color={activeTab === 2 ? "primary" : "inherit"}
-								>
-									Resources
 								</Button>
 							</ButtonGroup>
 						</Grid>

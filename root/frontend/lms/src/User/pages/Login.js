@@ -13,7 +13,11 @@ import {
 	Button,
 	LinearProgress,
 	Snackbar,
+	InputAdornment,
+	IconButton,
 } from "@material-ui/core";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import VisibilityOffIcon from "@material-ui/icons/VisibilityOff";
 import MuiAlert from "@material-ui/lab/Alert";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -60,6 +64,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Login() {
 	const classes = useStyles();
+	const [showPassword, setShowPassword] = useState(false);
 	const [values, setValues] = useState({
 		email: "",
 		password: "",
@@ -77,6 +82,18 @@ export default function Login() {
 			onSubmit();
 		}
 	};
+	const [snackOpen, setSnackOpen] = React.useState(false);
+
+	const handleClose = (event, reason) => {
+		if (reason === "clickaway") {
+			return;
+		}
+
+		setSnackOpen(false);
+	};
+	const handleClickShowPassword = () => {
+		setShowPassword((prev) => !prev);
+	};
 	const performRedirect = () => {
 		if (didRedirect) {
 			console.log(user);
@@ -92,8 +109,9 @@ export default function Login() {
 		setValues({ ...values, error: false, loading: true });
 		signin({ email, password })
 			.then((data) => {
-				if (data.error) {
-					setValues({ ...values, error: data.error, loading: false });
+				if (data.detail) {
+					setValues({ ...values, error: data.detail, loading: false });
+					setSnackOpen(true);
 				} else {
 					authenticate(data, () => {
 						setValues({
@@ -116,9 +134,30 @@ export default function Login() {
 			)
 		);
 	};
+	function Alert(props) {
+		return <MuiAlert elevation={6} variant="filled" {...props} />;
+	}
+	const errorMessage = () => {
+		return (
+			error && (
+				<Snackbar
+					anchorOrigin={{ vertical: "top", horizontal: "bottom" }}
+					open={snackOpen}
+					autoHideDuration={3000}
+					onClose={handleClose}
+				>
+					<Alert onClose={handleClose} severity="error">
+						{error}
+					</Alert>
+				</Snackbar>
+			)
+		);
+	};
 	return (
 		<React.Fragment>
+			{errorMessage()}
 			{loadingMessage()}
+
 			<div className={classes.Logo}>
 				<Typography component="h1" variant="h4">
 					MITAOE
@@ -152,11 +191,28 @@ export default function Login() {
 								fullWidth
 								name="password"
 								label="Password"
-								type="password"
+								type={showPassword ? "text" : "password"}
 								id="password"
 								value={password}
 								onChange={handleChange("password")}
 								autoComplete="current-password"
+								InputProps={{
+									endAdornment: (
+										<InputAdornment position="end">
+											<IconButton
+												aria-label="toggle password visibility"
+												onClick={handleClickShowPassword}
+												edge="end"
+											>
+												{showPassword ? (
+													<VisibilityIcon />
+												) : (
+													<VisibilityOffIcon />
+												)}
+											</IconButton>
+										</InputAdornment>
+									),
+								}}
 							/>
 							<FormControlLabel
 								control={<Checkbox value="remember" color="primary" />}
