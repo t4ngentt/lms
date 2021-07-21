@@ -26,6 +26,14 @@ class Student_Assignment_Names(APIView):
         serializer_class = Assignment_Serializer(queryset, many=True)
 
         return Response(serializer_class.data)
+
+
+class Assignment_Details(APIView):
+    def get(self, request, pk=None, format=None):
+        queryset=Assignment.objects.get(assignment_id=pk)
+        serializer_class = Assignment_Serializer(queryset)
+        return Response(serializer_class.data)
+
 class Teacher_Assignment_Names(APIView):
     def get(self, request, pk=None, format=None):
         
