@@ -6,14 +6,43 @@ import { StudentCourseAssignments } from "../helper/Student";
 import { TeacherCourseAssignments } from "../helper/Teacher";
 import Course from "../pages/Course";
 import AssignmentCard from "../../Core/ui/Components/AssignmentCard";
+import CreateAssignment from "../../Core/ui/Components/CreateAssignment";
 import NotFound from "../pages/Common/NotFound";
-import { Typography, Grid } from "@material-ui/core";
+import { Grid, Tooltip, Fab } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
 	noAssignments: {},
-});
+	fab: {
+		position: "fixed",
+		bottom: theme.spacing(5),
+		right: theme.spacing(4),
+	},
+}));
 export default function CourseAssignment() {
 	const classes = useStyles();
+	const [open, setOpen] = useState(false);
+	const [snackOpen, setSnackOpen] = React.useState(false);
+	const handleClickOpen = () => {
+		setOpen(true);
+	};
+	const handleSnackClick = () => {
+		setSnackOpen(true);
+	};
+	const handleCloseClick = () => {
+		setOpen(false);
+	};
+	const handleSnackClose = (event, reason) => {
+		if (reason === "clickaway") {
+			return;
+		}
+		setSnackOpen(false);
+	};
+
+	const handleClose = () => {
+		setOpen(false);
+		handleSnackClick();
+	};
 	const { user } = getUser();
 	const { group_id, course_id, group_course_id } = useParams();
 	const [assignments, setAssignments] = useState([]);
@@ -57,6 +86,28 @@ export default function CourseAssignment() {
 			{(assignments === undefined || assignments.length === 0) && (
 				<NotFound title="No Assignments" />
 			)}
+			{user.role === 1 && (
+				<Tooltip title="Create New Assignment" placement="top">
+					<Fab
+						aria-label="Add"
+						className={classes.fab}
+						color="primary"
+						onClick={handleClickOpen}
+					>
+						<AddIcon />
+					</Fab>
+				</Tooltip>
+			)}
+			<CreateAssignment
+				open={open}
+				snackOpen={snackOpen}
+				setOpen={setOpen}
+				handleClickOpen={handleClickOpen}
+				handleSnackClick={handleSnackClick}
+				handleCloseClick={handleCloseClick}
+				handleSnackClose={handleSnackClose}
+				handleClose={handleClose}
+			/>
 		</Course>
 	);
 }
