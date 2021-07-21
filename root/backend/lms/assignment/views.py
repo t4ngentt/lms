@@ -1,6 +1,7 @@
 from copy import Error
 import datetime
 import os
+from django.db.models import Q
 from django.http.response import JsonResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -20,7 +21,8 @@ class Student_Assignment_Names(APIView):
         assignment_fk = []
         for j in querylist:
             assignment_fk.append(j['assignment_id_id'])
-        queryset = Assignment.objects.filter(assignment_id__in=assignment_fk)
+        queryset = Assignment.objects.filter(Q(visibility = 'Visible') | Q(visibility = 'Submitable'),assignment_id__in=assignment_fk)
+        print(queryset)
         serializer_class = Assignment_Serializer(queryset, many=True)
 
         return Response(serializer_class.data)

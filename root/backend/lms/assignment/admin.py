@@ -4,11 +4,11 @@ from teacher.models import Teacher_Course
 # Register your models here.
 @admin.register(Assignment)
 class Assignment(admin.ModelAdmin):
-    list_display = ['title','assignment_id','min_marks','max_marks','post_date','due_date']
+    list_display = ['title','assignment_id','min_marks','max_marks','post_date','due_date','visibility']
     search_fields = ['assignment_id','title']
 @admin.register(Group_Assignment)
 class Group_Assignment(admin.ModelAdmin):
-    list_display = ['teacher','grp_course','assignment_id_id','school','branch']
+    list_display = ['teacher','grp_course','assignment_id','course_unit','school','branch']
     list_filter = ['school','branch',]
     raw_id_fields = ['teacher','grp_course','assignment_id']
     search_fields = ['teacher','grp_course']

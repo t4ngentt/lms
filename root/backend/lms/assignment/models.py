@@ -1,11 +1,14 @@
 from django.db import models
+from django.db.models.enums import Choices
 from User.models import Group_Course
 from django.utils import timezone
 from User.models import User,School,Branch,Course_Unit
 import uuid
 # Create your models here.
 
+
 class Assignment(models.Model):
+    Choices = [('Hidden','Hidden'),('Visible','Visible'),('Submitable','Submitable')]
     assignment_id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     #Files will be submitted in backend seperate folder
     title = models.CharField(max_length=1000,default=None,blank=True,null=True)
@@ -14,6 +17,7 @@ class Assignment(models.Model):
     max_marks = models.IntegerField(default=None,blank=True,null=True)
     post_date= models.DateTimeField(default=timezone.now)
     due_date= models.DateTimeField(default=None,blank=True,null=True)
+    visibility = models.CharField(choices=Choices,default=Choices[0],blank=True,null=True,max_length=100)
 
     class Meta:
         db_table = 'ASSIGNMENT'

@@ -1,8 +1,5 @@
 {
-    "cSpell.ignoreWords": [
-        "sqlparse"
-    ],
-    "cSpell.words": [
-        "browserslist"
-    ]
+  "cSpell.ignoreWords": ["sqlparse"],
+  "cSpell.words": ["browserslist"],
+  "liveServer.settings.port": 5501
 }

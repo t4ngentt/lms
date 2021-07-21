@@ -1,3 +1,4 @@
+from User.models import Course_Unit
 import uuid
 from django.contrib.admin import options
 from django.db import models
@@ -28,6 +29,7 @@ class Quiz(models.Model):
 class Group_Quiz(models.Model):
     teacher = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name="teacher_fk")
     grp_course = models.ForeignKey(Group_Course,on_delete=models.CASCADE,verbose_name='group_course_fk')
+    course_unit = models.ForeignKey(Course_Unit,on_delete=models.CASCADE,verbose_name='course_unit_fk',default=None,null=True,blank=True)
     quiz_id = models.ForeignKey(Quiz,on_delete=models.CASCADE, verbose_name='quiz_fk')
     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
     branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)

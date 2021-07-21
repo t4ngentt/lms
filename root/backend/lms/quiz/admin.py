@@ -14,7 +14,7 @@ class Quiz_Data(admin.ModelAdmin):
 
 @admin.register(Group_Quiz)
 class Group_Quiz(admin.ModelAdmin):
-    list_display = ['teacher','grp_course','quiz_id','school','branch']
+    list_display = ['teacher','grp_course','course_unit','quiz_id','school','branch']
     list_filter = ['school','branch',]
     raw_id_fields = ['teacher','grp_course','quiz_id']
     search_fields = ['teacher','grp_course']

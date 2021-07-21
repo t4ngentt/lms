@@ -240,6 +240,6 @@ class Course_Unit(models.Model):
         verbose_name = 'course unit'
         verbose_name_plural = 'course units'
 
-    def _str_(self):
+    def __str__(self):
         return f"{self.name}"
 
