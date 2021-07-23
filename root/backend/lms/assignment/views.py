@@ -54,9 +54,10 @@ def Create_Assignment(request):
             data = request.POST
             files = request.FILES.getlist('f1')
             print(files)
-            assignment_object = Assignment(title = data['title'],description = data['description'],min_marks = data['min_marks'],max_marks = data['max_marks'],post_date = data['post_date'],due_date = data['due_date'])
+            assignment_object = Assignment(title = data['title'],description = data['description'],min_marks = data['min_marks'],max_marks = data['max_marks'],post_date = data['post_date'],due_date = data['due_date'],visibility=request.POST.get('visibility',None))
             assignment_object.save()
-            assignment_visibility_scheduler(data['post_date'],assignment_object.assignment_id)
+            if data['visibility'] != 'Submitable':
+                assignment_visibility_scheduler(data['post_date'],assignment_object.assignment_id)  
             grp_obj = Group_Course.objects.get(group_course_id = data['grp_course_id'])
             Group_Assignment(grp_course = grp_obj,assignment_id = assignment_object).save()
             fs = FileSystemStorage(location=str(os.path.join(BASE_DIR,"media")))

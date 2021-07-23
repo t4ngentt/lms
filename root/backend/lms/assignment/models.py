@@ -8,7 +8,10 @@ import uuid
 
 
 class Assignment(models.Model):
-    Choices = [('Hidden','Hidden'),('Visible','Visible'),('Submitable','Submitable')]
+    HIDDEN = 'Hidden'
+    VISIBLE = 'Visible'
+    SUBMITABLE = 'Submitable'
+    Choices = [(HIDDEN,'Hidden'),(VISIBLE,'Visible'),(SUBMITABLE,'Submitable')]
     assignment_id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     #Files will be submitted in backend seperate folder
     title = models.CharField(max_length=1000,default=None,blank=True,null=True)
@@ -17,7 +20,7 @@ class Assignment(models.Model):
     max_marks = models.IntegerField(default=None,blank=True,null=True)
     post_date= models.DateTimeField(default=timezone.now)
     due_date= models.DateTimeField(default=None,blank=True,null=True)
-    visibility = models.CharField(choices=Choices,default=Choices[0],blank=True,null=True,max_length=100)
+    visibility = models.CharField(choices=Choices,default=HIDDEN,max_length=100,null=True,blank=True)
 
     class Meta:
         db_table = 'ASSIGNMENT'
@@ -30,7 +33,7 @@ class Assignment(models.Model):
 class Group_Assignment(models.Model):
     teacher = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name="teacher_fk",blank=True,null=True)
     grp_course = models.ForeignKey(Group_Course,on_delete=models.CASCADE,verbose_name='group_course_fk')
-    course_unit = models.ForeignKey(Course_Unit,on_delete=models.CASCADE,verbose_name='course_unit_fk')
+    course_unit = models.ForeignKey(Course_Unit,on_delete=models.CASCADE,verbose_name='course_unit_fk',null=True,blank=True)
     assignment_id = models.ForeignKey(Assignment,on_delete=models.CASCADE, verbose_name='assignment_fk')
     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
     branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)

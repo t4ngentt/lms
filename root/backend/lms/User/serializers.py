@@ -39,3 +39,4 @@ class Course_Unit_Serializer(serializers.ModelSerializer):
     class Meta:
         model = Course_Unit
         fields = '__all__'
+
