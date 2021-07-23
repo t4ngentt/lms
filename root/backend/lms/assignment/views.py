@@ -1,6 +1,7 @@
 from copy import Error
 import datetime
 import os
+from .scheduler import assignment_visibility_scheduler
 from django.db.models import Q
 from django.http.response import JsonResponse
 from rest_framework.response import Response
@@ -55,6 +56,7 @@ def Create_Assignment(request):
             print(files)
             assignment_object = Assignment(title = data['title'],description = data['description'],min_marks = data['min_marks'],max_marks = data['max_marks'],post_date = data['post_date'],due_date = data['due_date'])
             assignment_object.save()
+            assignment_visibility_scheduler(data['post_date'],assignment_object.assignment_id)
             grp_obj = Group_Course.objects.get(group_course_id = data['grp_course_id'])
             Group_Assignment(grp_course = grp_obj,assignment_id = assignment_object).save()
             fs = FileSystemStorage(location=str(os.path.join(BASE_DIR,"media")))
@@ -69,6 +71,9 @@ def Create_Assignment(request):
         print(e)
         return JsonResponse({"Error":str(e)})
         
+
+
+
 @api_view(["POST",])
 def submit_assignment(request):
 
