@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getUser } from "../../Auth/helper/index";
-import Base from "../../Core/ui/Base";
-import { getGroupDetails } from "../helper/Student";
-import { getGroupCourseDetails } from "../helper/Teacher";
-import ClassroomNavigator from "../../Core/ui/Components/ClassroomNavigation";
+import { getUser } from "../../../Auth/helper/index";
+import Base from "../../../Core/ui/Base";
+import { getGroupDetails } from "../../helper/Student";
+import { getGroupCourseDetails } from "../../helper/Teacher";
+import ClassroomNavigator from "../../../Core/ui/Components/ClassroomNavigation";
 import { useParams, useLocation } from "react-router";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -54,21 +54,26 @@ export default function Course(props) {
 
 	const handleTabChange = () => {
 		if (
-			window.location.pathname ===
-				`/student/classroom/group/${group_id}/course/${course_id}/assignment` &&
+			(window.location.pathname ===
+				`/student/classroom/group/${group_id}/course/${course_id}/assignment` ||
+				window.location.pathname ===
+					`/teacher/classroom/course/${group_course_id}/assignment`) &&
 			activeTab !== 0
 		) {
-			console.log("Changing color");
 			setActiveTab(0);
 		} else if (
-			window.location.pathname ===
-				`/student/classroom/group/${group_id}/course/${course_id}/quiz` &&
+			(window.location.pathname ===
+				`/student/classroom/group/${group_id}/course/${course_id}/quiz` ||
+				window.location.pathname ===
+					`/teacher/classroom/course/${group_course_id}/quiz`) &&
 			activeTab !== 1
 		) {
 			setActiveTab(1);
 		} else if (
-			window.location.pathname ===
-				`/student/classroom/group/${group_id}/course/${course_id}/resource` &&
+			(window.location.pathname ===
+				`/student/classroom/group/${group_id}/course/${course_id}/resource` ||
+				window.location.pathname ===
+					`/teacher/classroom/course/${group_course_id}/resource`) &&
 			activeTab !== 2
 		) {
 			setActiveTab(2);
@@ -76,7 +81,6 @@ export default function Course(props) {
 	};
 
 	useEffect(() => {
-		// onLoad();
 		setGroup();
 		handleTabChange();
 	}, []);
@@ -108,13 +112,19 @@ export default function Course(props) {
 							>
 								<Button
 									component={Link}
-									to={{
-										pathname: `/student/classroom/group/${group_id}/course/${course_id}/resource`,
-										state: {
-											groupName: groupName,
-											courseName: courseName,
-										},
-									}}
+									to={
+										user.role === 0
+											? {
+													pathname: `/student/classroom/group/${group_id}/course/${course_id}/resource`,
+													state: {
+														groupName: groupName,
+														courseName: courseName,
+													},
+											  }
+											: {
+													pathname: `/teacher/classroom/course/${group_course_id}/resource`,
+											  }
+									}
 									onClick={() => {
 										setActiveTab(2);
 									}}
@@ -124,13 +134,19 @@ export default function Course(props) {
 								</Button>
 								<Button
 									component={Link}
-									to={{
-										pathname: `/student/classroom/group/${group_id}/course/${course_id}/assignment`,
-										state: {
-											groupName: groupName,
-											courseName: courseName,
-										},
-									}}
+									to={
+										user.role === 0
+											? {
+													pathname: `/student/classroom/group/${group_id}/course/${course_id}/assignment`,
+													state: {
+														groupName: groupName,
+														courseName: courseName,
+													},
+											  }
+											: {
+													pathname: `/teacher/classroom/course/${group_course_id}/assignment`,
+											  }
+									}
 									onClick={() => {
 										setActiveTab(0);
 									}}
@@ -140,13 +156,19 @@ export default function Course(props) {
 								</Button>
 								<Button
 									component={Link}
-									to={{
-										pathname: `/student/classroom/group/${group_id}/course/${course_id}/quiz`,
-										state: {
-											groupName: groupName,
-											courseName: courseName,
-										},
-									}}
+									to={
+										user.role === 0
+											? {
+													pathname: `/student/classroom/group/${group_id}/course/${course_id}/quiz`,
+													state: {
+														groupName: groupName,
+														courseName: courseName,
+													},
+											  }
+											: {
+													pathname: `/teacher/classroom/course/${group_course_id}/quiz`,
+											  }
+									}
 									onClick={() => {
 										setActiveTab(1);
 									}}

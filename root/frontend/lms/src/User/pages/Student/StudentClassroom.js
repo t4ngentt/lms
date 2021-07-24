@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import ClassroomNavigator from "../../Core/ui/Components/ClassroomNavigation";
+import ClassroomNavigator from "../../../Core/ui/Components/ClassroomNavigation";
 
-import { classroomInfo } from "../helper/Student";
+import { classroomInfo } from "../../helper/Student";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Grid } from "@material-ui/core";
-import Base from "../../Core/ui/Base";
-import ClassroomCard from "../../Core/ui/Components/ClassroomCard";
+import Base from "../../../Core/ui/Base";
+import ClassroomCard from "../../../Core/ui/Components/ClassroomCard";
 const useStyles = makeStyles((theme) => ({
 	Greeting: {
 		marginBottom: "20px",

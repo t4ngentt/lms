@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router";
-import { getUser } from "../../Auth/helper/index";
-import { StudentCourseResources } from "../helper/Student";
-import { TeacherCourseRescources } from "../helper/Teacher";
-import NotFound from "../pages/Common/NotFound";
-import Course from "../pages/Course";
-import UnitCard from "../../Core/ui/Components/UnitCard";
+import { getUser } from "../../../Auth/helper/index";
+import { StudentCourseResources } from "../../helper/Student";
+import { TeacherCourseRescources } from "../../helper/Teacher";
+import NotFound from "./NotFound";
+import Course from "../Common/Course";
+import UnitCard from "../../../Core/ui/Components/UnitCard";
 import { Grid } from "@material-ui/core";
 
 export default function CourseResource() {
@@ -18,13 +18,13 @@ export default function CourseResource() {
 				.then((data) => {
 					setUnits(data);
 				})
-				.catch(console.log("Settings Assignments Failed"));
+				.catch(console.log("Settings Units Failed"));
 		} else if (user.role === 1) {
 			await TeacherCourseRescources(group_course_id)
 				.then((data) => {
 					setUnits(data);
 				})
-				.catch(console.log("Settings Assignments Failed"));
+				.catch(console.log("Settings Units Failed"));
 		}
 	};
 	useEffect(() => {

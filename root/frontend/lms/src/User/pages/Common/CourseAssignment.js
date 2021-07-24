@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { getUser } from "../../Auth/helper/index";
+import { getUser } from "../../../Auth/helper/index";
 import { useParams, useLocation } from "react-router";
 import { makeStyles } from "@material-ui/core/styles";
-import { StudentCourseAssignments } from "../helper/Student";
-import { TeacherCourseAssignments } from "../helper/Teacher";
-import Course from "../pages/Course";
-import AssignmentCard from "../../Core/ui/Components/AssignmentCard";
-import CreateAssignment from "../../Core/ui/Components/CreateAssignment";
-import NotFound from "../pages/Common/NotFound";
+import { StudentCourseAssignments } from "../../helper/Student";
+import { TeacherCourseAssignments } from "../../helper/Teacher";
+import Course from "../Common/Course";
+import AssignmentCard from "../../../Core/ui/Components/AssignmentCard";
+import CreateAssignment from "../../../Core/ui/Components/CreateAssignment";
+import NotFound from "./NotFound";
 import { Grid, Tooltip, Fab } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 

@@ -1,7 +1,7 @@
 import React from "react";
 
-import Course from "../pages/Course";
-import AssignmentCard from "../../Core/ui/Components/AssignmentCard";
+import Course from "../Common/Course";
+import AssignmentCard from "../../../Core/ui/Components/AssignmentCard";
 
 export default function CourseQuiz() {
 	return (

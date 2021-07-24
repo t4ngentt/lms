@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Typography, Grid, Paper, useMediaQuery } from "@material-ui/core";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import Base from "../../Core/ui/Base";
-import { isAutheticated } from "../../Auth/helper/index";
+import Base from "../../../Core/ui/Base";
+import { isAutheticated } from "../../../Auth/helper/index";
 const useStyles = makeStyles((theme) => ({
 	root: {
 		flexGrow: 1,

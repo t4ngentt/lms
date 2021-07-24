@@ -103,7 +103,7 @@ export const StudentCourseAssignments = (group_id, course_id) => {
 };
 
 export const StudentCourseResources = (group_id, course_id) => {
-	return fetch(`${API}/classroom/course/${course_id}/units`, {
+	return fetch(`${API}/student/classroom/course/${course_id}/units`, {
 		method: "GET",
 		headers: {
 			Accept: "application/json",

@@ -115,16 +115,19 @@ export const TeacherCreateAssignment = (group_course_id, user) => {
 };
 
 export const TeacherCourseRescources = (group_course_id) => {
-	return fetch(`${API}/classroom/group_course/${group_course_id}/units`, {
-		method: "GET",
-		headers: {
-			Accept: "application/json",
-			"Content-Type": "application/json",
-			Authorization: `Bearer ${
-				JSON.parse(localStorage.getItem("jwt")).user.access
-			}`,
-		},
-	})
+	return fetch(
+		`${API}/teacher/classroom/group_course/${group_course_id}/units`,
+		{
+			method: "GET",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${
+					JSON.parse(localStorage.getItem("jwt")).user.access
+				}`,
+			},
+		}
+	)
 		.then(async (res) => {
 			if (res.status === 401) {
 				await refreshAccess();

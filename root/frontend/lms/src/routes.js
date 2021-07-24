@@ -5,24 +5,26 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 
 import { StudentRoute, TeacherRoute } from "./Auth/helper/PrivateRoutes";
 import { CustomThemeContext } from "./Core/CustomThemeContext";
-//importing Student Pages ------------------------------------------->
-import Login from "./User/pages/Login";
-import Dashboard from "./User/pages/Dashboard";
-import Profile from "./User/pages/Profile";
-import Classroom from "./User/pages/Classroom";
-import GroupCourses from "./User/pages/GroupCourses";
-import CourseAssignment from "./User/pages/CourseAssignment";
-import CourseQuiz from "./User/pages/CourseQuiz";
-import CourseResource from "./User/pages/CourseResource";
-import Forums from "./User/pages/Forums";
-import Resources from "./User/pages/Resources";
-import Calendar from "./User/pages/Calendar";
-import Events from "./User/pages/Events";
-import Attendance from "./User/pages/Attendance";
-import Settings from "./User/pages/Settings";
+//?importing Common Pages ------------------------------------------->
+import Login from "./User/pages/Common/Login";
+import Dashboard from "./User/pages/Common/Dashboard";
+import Profile from "./User/pages/Common/Profile";
+import GroupCourses from "./User/pages/Common/GroupCourses";
+import CourseAssignment from "./User/pages/Common/CourseAssignment";
+import CourseQuiz from "./User/pages/Common/CourseQuiz";
+import CourseResource from "./User/pages/Common/CourseResource";
+import Forums from "./User/pages/Common/Forums";
+import Resources from "./User/pages/Common/Resources";
+import Calendar from "./User/pages/Common/Calendar";
+import Events from "./User/pages/Common/Events";
+import Attendance from "./User/pages/Common/Attendance";
+import Settings from "./User/pages/Common/Settings";
 import PageNotFound from "./User/pages/Common/PageNotFound";
 
-//importing Teacher Pages ---------------------------------------------->
+//?importing Student Pages----------------------------------------------->
+import StudentClassroom from "./User/pages/Student/StudentClassroom";
+
+//?importing Teacher Pages ---------------------------------------------->
 import TeacherClassroom from "./User/pages/Teacher/TeacherClassroom";
 
 const Routes = () => {
@@ -49,7 +51,7 @@ const Routes = () => {
 						path="/student/classroom"
 						exact
 						strict
-						component={Classroom}
+						component={StudentClassroom}
 					></StudentRoute>
 					<StudentRoute
 						path="/student/classroom/group/:group_id/course"
