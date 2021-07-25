@@ -124,3 +124,30 @@ export const StudentCourseResources = (group_id, course_id) => {
 		})
 		.catch((err) => console.log(err));
 };
+
+export const StudentSubmitAssignment = (files, assignment_id) => {
+	let formData = new FormData();
+	formData.append("f1", files);
+	formData.append("prn", JSON.parse(localStorage.getItem("jwt")).user.user_id);
+	formData.append("assignment_id", assignment_id);
+	return fetch(`${API}/classroom/group/course/submit_assignment/`, {
+		method: "POST",
+		headers: {
+			Accept: "application/json",
+			Authorization: `Bearer ${
+				JSON.parse(localStorage.getItem("jwt")).user.access
+			}`,
+		},
+		body: formData,
+	})
+		.then(async (res) => {
+			if (res.status === 401) {
+				await refreshAccess();
+				console.log(res.status);
+				window.location.reload(true);
+			} else {
+				return res.json();
+			}
+		})
+		.catch((err) => console.log(err));
+};

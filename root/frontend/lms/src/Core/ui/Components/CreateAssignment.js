@@ -86,6 +86,7 @@ export default function CreateAssignment(props) {
 		postDate: format(new Date(), "yyyy-LL-dd HH:mm:ss"),
 		maxMarks: 20,
 		minMarks: 0,
+		redirect : false
 	});
 
 	const { title, name, description, dueDate, maxMarks, minMarks, postDate } =
