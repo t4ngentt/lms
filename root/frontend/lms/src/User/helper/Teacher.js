@@ -80,16 +80,17 @@ export const getGroupCourseDetails = (group_course_id) => {
 		});
 };
 
-export const TeacherCreateAssignment = (group_course_id, user) => {
+export const CreateAssignment = (group_course_id, user) => {
 	let formData = new FormData();
 	console.log("USER :", user);
 	formData.append("f1", user.files);
 	formData.append("title", user.title);
 	formData.append("description", user.description);
+	formData.append("visibility", user.visibility);
 	formData.append("min_marks", user.minMarks);
 	formData.append("max_marks", user.maxMarks);
-	formData.append("post_date", user.postDate);
-	formData.append("due_date", user.dueDate);
+	formData.append("post_date", format(user.postDate, "yyyy-LL-dd HH:mm:ss"));
+	formData.append("due_date", format(user.dueDate, "yyyy-LL-dd HH:mm:ss"));
 	formData.append("grp_course_id", group_course_id);
 	console.log("FORMDATA :", formData);
 	return fetch(`${API}/classroom/group/course/create_assignment/`, {

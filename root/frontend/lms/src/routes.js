@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import CssBaseline from "@material-ui/core/CssBaseline";
 
 import { StudentRoute, TeacherRoute } from "./Auth/helper/PrivateRoutes";
 import { CustomThemeContext } from "./Core/CustomThemeContext";
+import MessagePopup from "./Core/ui/Components/MessagePopup";
 //?importing Common Pages ------------------------------------------->
 import Login from "./User/pages/Common/Login";
 import Dashboard from "./User/pages/Common/Dashboard";
 import Profile from "./User/pages/Common/Profile";
 import GroupCourses from "./User/pages/Common/GroupCourses";
 import CourseAssignment from "./User/pages/Common/CourseAssignment";
+
 import CourseQuiz from "./User/pages/Common/CourseQuiz";
 import CourseResource from "./User/pages/Common/CourseResource";
 import Forums from "./User/pages/Common/Forums";
@@ -23,11 +25,18 @@ import PageNotFound from "./User/pages/Common/PageNotFound";
 
 //?importing Student Pages----------------------------------------------->
 import StudentClassroom from "./User/pages/Student/StudentClassroom";
-
+import AssignmentPage from "./User/pages/Student/AssignmentPage";
 //?importing Teacher Pages ---------------------------------------------->
 import TeacherClassroom from "./User/pages/Teacher/TeacherClassroom";
+import TeacherCreateAssignment from "./User/pages/Teacher/TeacherCreateAssignment";
+import TeacherViewSubmissions from "./User/pages/Teacher/TeacherViewSubmissions";
 
 const Routes = () => {
+	const [popup, setPopup] = useState({
+		open: false,
+		severity: "",
+		message: "",
+	});
 	return (
 		<CustomThemeContext>
 			<CssBaseline />
@@ -65,6 +74,13 @@ const Routes = () => {
 						strict
 						component={CourseAssignment}
 					></StudentRoute>
+					<StudentRoute
+						path="/student/classroom/group/:group_id/course/:course_id/assignment/:assignment_id"
+						exact
+						strict
+						component={AssignmentPage}
+					></StudentRoute>
+
 					<StudentRoute
 						path="/student/classroom/group/:group_id/course/:course_id/quiz"
 						exact
@@ -144,6 +160,24 @@ const Routes = () => {
 						exact
 						strict
 						component={CourseAssignment}
+					></TeacherRoute>
+					<TeacherRoute
+						path="/teacher/classroom/course/:group_course_id/assignment/:assignment_id"
+						exact
+						strict
+						component={AssignmentPage}
+					></TeacherRoute>
+					<TeacherRoute
+						path="/teacher/classroom/course/:group_course_id/assignment/:assignment_id/viewSubmissions"
+						exact
+						strict
+						component={TeacherViewSubmissions}
+					></TeacherRoute>
+					<TeacherRoute
+						path="/teacher/classroom/course/:group_course_id/create_assignment"
+						exact
+						strict
+						component={TeacherCreateAssignment}
 					></TeacherRoute>
 					<TeacherRoute
 						path="/teacher/classroom/course/:group_course_id/quiz"
