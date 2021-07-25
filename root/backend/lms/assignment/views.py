@@ -60,12 +60,13 @@ def Create_Assignment(request):
                 assignment_visibility_scheduler(data['post_date'],assignment_object.assignment_id)  
             grp_obj = Group_Course.objects.get(group_course_id = data['grp_course_id'])
             Group_Assignment(grp_course = grp_obj,assignment_id = assignment_object).save()
-            fs = FileSystemStorage(location=str(os.path.join(BASE_DIR,"media")))
-            fileurl = []
+            assignment_folder = str(os.path.join(BASE_DIR,"assignments",assignment_object.assignment_id))
+            if not os.path.isdir(assignment_folder):
+                os.makedirs(assignment_folder,mode=0o666)
+            fs = FileSystemStorage(location=assignment_folder)
             for i in files:
-                file = fs.save(i.name,i)
-                fileurl.append(fs.url(file))
-            return JsonResponse({"msg":"Assignment Created Successfully ! ","file_url":str(fileurl)})
+                fs.save(i.name,i) 
+            return JsonResponse({"msg":"Assignment Created Successfully ! "})
         else:
             return JsonResponse({"msg":"Wrong request sent !"})
     except Exception as e:
@@ -123,18 +124,6 @@ class Teacher_Assignment_Names(APIView):
 class assignment_submitted_students(APIView):
     def get(request,self, pk=None):
         queryset = Assignment_submission.objects.filter(assignment_id=pk)
-        
-        for i in queryset:
-            print(type(i))
-            folder_path =str(BASE_DIR)+'\\studentdata\\0120190202\\assignments\\f6edf695-c46c-471c-92b1-99b010ff105b'
-            assignments = os.listdir(folder_path)
-            submission_file_path=[]
-            for j in assignments:
-                submission_file_path.append(folder_path+"\\"+j)
-            i.file_path=submission_file_path
-            i.name= i.prn.f_name+" "+i.prn.l_name
-
-        
         serializer_class = Assignment_Submission_Serializer(queryset, many=True)
         return Response(serializer_class.data)
         
