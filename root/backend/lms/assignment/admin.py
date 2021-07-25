@@ -33,7 +33,7 @@ class Group_Assignment(admin.ModelAdmin):
 
 @admin.register(Assignment_submission)
 class Assignment_submission(admin.ModelAdmin):
-    list_display = ['assignment_submission_id','assignment_id','prn','school','branch']
+    list_display = ['assignment_submission_id','assignment_id','prn','submit_time','school','branch']
     list_filter = ['school','branch',]
     raw_id_fields = ['prn','assignment_id']
     search_fields = ['prn',]

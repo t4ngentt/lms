@@ -48,6 +48,7 @@ class Assignment_submission(models.Model):
     assignment_submission_id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     assignment_id = models.ForeignKey(Assignment,on_delete=models.CASCADE,verbose_name='assignment_fk')
     prn = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='prn_fk')
+    submit_time = models.DateTimeField(auto_now = True)
     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
     branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
     
@@ -57,6 +58,7 @@ class Assignment_submission(models.Model):
         db_table = 'ASSIGNMENT_SUBMISSION'
         verbose_name = 'assignment_submission'
         verbose_name_plural = 'assignment_submissions'
+        
 
     def __str__(self):
         return f"{self.prn}"

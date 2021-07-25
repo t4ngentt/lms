@@ -7,4 +7,6 @@ urlpatterns = [
     path('classroom/group_course/<str:pk>/assignments/',views.Teacher_Assignment_Names.as_view(),name="Assignment_names"),
     path('classroom/group/course/submit_assignment/',views.submit_assignment,name="submit_assignment"),
     path('assignment/<str:pk>/',views.Assignment_Details.as_view(),name="assignment_details"),
+    path('assignment/<str:pk>/assignment_submitted_students',views.assignment_submitted_students.as_view(),name="assignment_submitted_students"),
+    
         ]

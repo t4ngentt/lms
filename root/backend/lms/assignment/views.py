@@ -6,11 +6,11 @@ from django.db.models import Q
 from django.http.response import JsonResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from User.models import Group_Course
+from User.models import Group_Course,User
 from rest_framework.generics import GenericAPIView
 from rest_framework.decorators import api_view
-from .models import Group_Assignment,Assignment
-from .serializers import Assignment_Serializer, Assignment_Submission
+from .models import Assignment_submission, Group_Assignment,Assignment
+from .serializers import Assignment_Serializer, Assignment_Submission_Serializer
 from django.core.files.storage import FileSystemStorage
 from django.views.decorators.csrf import csrf_exempt
 from lms.settings import BASE_DIR
@@ -86,7 +86,7 @@ def submit_assignment(request):
                 print(due_date,datetime.datetime.now())
                 return Response({"msg":"Overdue"})
             else:
-                serializer_class = Assignment_Submission(data=request.POST)
+                serializer_class = Assignment_Submission_Serializer(data=request.POST)
                 if serializer_class.is_valid():
                     files = request.FILES.getlist('f1')
                     assignment_folder = str(os.path.join(BASE_DIR,"studentdata",request.POST['prn'],"assignments",request.POST['assignment_id']))
@@ -119,3 +119,24 @@ class Teacher_Assignment_Names(APIView):
         # dir=str(os.path.join(dir,"Assignments"))
         # os.makedirs(dir)
         return Response(serializer_class.data)
+
+class assignment_submitted_students(APIView):
+    def get(request,self, pk=None):
+        queryset = Assignment_submission.objects.filter(assignment_id=pk)
+        
+        for i in queryset:
+            print(type(i))
+            folder_path =str(BASE_DIR)+'\\studentdata\\0120190202\\assignments\\f6edf695-c46c-471c-92b1-99b010ff105b'
+            assignments = os.listdir(folder_path)
+            submission_file_path=[]
+            for j in assignments:
+                submission_file_path.append(folder_path+"\\"+j)
+            i.file_path=submission_file_path
+            i.name= i.prn.f_name+" "+i.prn.l_name
+
+        
+        serializer_class = Assignment_Submission_Serializer(queryset, many=True)
+        return Response(serializer_class.data)
+        
+
+

@@ -7,9 +7,25 @@ class Assignment_Serializer(serializers.ModelSerializer):
         model = Assignment
         fields = "__all__"
 
-class Assignment_Submission(serializers.ModelSerializer):
+class Assignment_Submission_Serializer(serializers.ModelSerializer):
+    name = serializers.ReadOnlyField
+    file_path = serializers.ReadOnlyField
     class Meta:
         model = Assignment_submission
-        fields = "__all__"
+        fields = ['assignment_submission_id','assignment_id','prn','submit_time','name','file_path',]
+    # def get_name(self,queryset):
+    #     for i in queryset:
+    #         print(type(i))
+    #         return i.prn.f_name+" "+i.prn.l_name
+    # def get_file_path(self,queryset):
+    #     for i in queryset:
+    #         print(type(i))
+    #         folder_path =str(BASE_DIR)+'\\studentdata\\0120190202\\assignments\\f6edf695-c46c-471c-92b1-99b010ff105b'
+    #         assignments = os.listdir(folder_path)
+    #         submission_file_path=[]
+    #         for j in assignments:
+    #             submission_file_path.append(folder_path+"\\"+j)
+    #         return submission_file_path
+        
 
 
