@@ -88,7 +88,7 @@ def submit_assignment(request):
             else:
                 serializer_class = Assignment_Submission_Serializer(data=request.POST)
                 if serializer_class.is_valid():
-                    files = list(request.FILES.getlist('f1'))
+                    files = request.FILES.getlist('f1')
                     assignment_folder = str(os.path.join(BASE_DIR,"studentdata",request.POST['prn'],"assignments",request.POST['assignment_id']))
                     if not os.path.isdir(assignment_folder):
                         os.makedirs(assignment_folder,mode=0o666)
