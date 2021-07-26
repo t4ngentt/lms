@@ -82,7 +82,7 @@ export default function TeacherCreateAssignment() {
 		postDate: new Date(),
 		maxMarks: 20,
 		minMarks: 0,
-		visibility: "submittable",
+		visibility: "Submitable",
 		redirect: false,
 	});
 	const performRedirect = () => {
@@ -131,7 +131,7 @@ export default function TeacherCreateAssignment() {
 					postDate: new Date(),
 					dueDate: new Date(),
 					maxMarks: 20,
-					visibility: "visible",
+					visibility: "Submitable",
 					redirect: true,
 				});
 				console.log(res);
@@ -336,9 +336,9 @@ export default function TeacherCreateAssignment() {
 												onChange={handleValueChange("visibility")}
 												label="Visibility"
 											>
-												<MenuItem value="hidden">Hidden</MenuItem>
-												<MenuItem value="visible">Visible</MenuItem>
-												<MenuItem value="submittable">Submittable</MenuItem>
+												<MenuItem value="Hidden">Hidden</MenuItem>
+												<MenuItem value="Visible">Visible</MenuItem>
+												<MenuItem value="Submitable">Submittable</MenuItem>
 											</Select>
 										</FormControl>
 									</Toolbar>
@@ -362,7 +362,7 @@ export default function TeacherCreateAssignment() {
 											<KeyboardTimePicker
 												margin="normal"
 												id="time-picker"
-												label="Set Due Date Time"
+												label="Set Post Date Time"
 												value={postDate}
 												onChange={handlePostDateTimeChange}
 												KeyboardButtonProps={{

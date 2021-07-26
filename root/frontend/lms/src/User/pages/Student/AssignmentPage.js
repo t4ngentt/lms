@@ -96,6 +96,13 @@ export default function AssignmentPage() {
 				{assignmentInfo.due_date &&
 					format(new Date(assignmentInfo.due_date), "dd-LL-yyyy HH:mm:ss")}
 			</Typography>
+			<Divider />
+			<Typography>
+				Resources :
+				<a href={`${AssignmentInfo.file}`} download>
+					Download Resources
+				</a>
+			</Typography>
 			{user.role === 0 ? (
 				<div className={classes.buttonContainer}>
 					<label>Submitted Files : {files !== undefined && files.name}</label>
