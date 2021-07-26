@@ -23,6 +23,9 @@ class Assignment_Detail_Serializer(serializers.ModelSerializer):
             for j in assignments:
                 submission_file_path.append(folder_path+"\\"+j)
             return submission_file_path
+
+
+            
 class Assignment_Submission_Serializer(serializers.ModelSerializer):
 
     file_path = serializers.SerializerMethodField()

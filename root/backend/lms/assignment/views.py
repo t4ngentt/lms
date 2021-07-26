@@ -23,7 +23,6 @@ class Student_Assignment_Names(APIView):
         for j in querylist:
             assignment_fk.append(j['assignment_id_id'])
         queryset = Assignment.objects.filter(Q(visibility = 'Visible') | Q(visibility = 'Submitable'),assignment_id__in=assignment_fk)
-        print(queryset)
         serializer_class = Assignment_Serializer(queryset, many=True)
 
         return Response(serializer_class.data)
@@ -33,6 +32,7 @@ class Assignment_Details(APIView):
     def get(self, request, pk=None, format=None):
         queryset=Assignment.objects.get(assignment_id=pk)
         serializer_class = Assignment_Serializer(queryset)
+
         return Response(serializer_class.data)
 
 class Teacher_Assignment_Names(APIView):
@@ -40,7 +40,6 @@ class Teacher_Assignment_Names(APIView):
         
         querylist = Group_Assignment.objects.filter(grp_course_id=pk).values()
         assignment_fk = []
-        print(querylist)
         for j in querylist:
             assignment_fk.append(j['assignment_id_id'])
         queryset = Assignment.objects.filter(assignment_id__in=assignment_fk)
@@ -52,7 +51,7 @@ def Create_Assignment(request):
     try:
         if request.method == 'POST':
             data = request.POST
-            files = request.FILES.getlist('f1')
+            files = list(request.FILES.getlist('f1'))
             print(files)
             assignment_object = Assignment(title = data['title'],description = data['description'],min_marks = data['min_marks'],max_marks = data['max_marks'],post_date = data['post_date'],due_date = data['due_date'],visibility=request.POST.get('visibility',None))
             assignment_object.save()
@@ -60,7 +59,7 @@ def Create_Assignment(request):
                 assignment_visibility_scheduler(data['post_date'],assignment_object.assignment_id)  
             grp_obj = Group_Course.objects.get(group_course_id = data['grp_course_id'])
             Group_Assignment(grp_course = grp_obj,assignment_id = assignment_object).save()
-            assignment_folder = str(os.path.join(BASE_DIR,"assignments",assignment_object.assignment_id))
+            assignment_folder = str(os.path.join(BASE_DIR,"assignments",str(assignment_object.assignment_id)))
             if not os.path.isdir(assignment_folder):
                 os.makedirs(assignment_folder,mode=0o666)
             fs = FileSystemStorage(location=assignment_folder)
@@ -89,7 +88,7 @@ def submit_assignment(request):
             else:
                 serializer_class = Assignment_Submission_Serializer(data=request.POST)
                 if serializer_class.is_valid():
-                    files = request.FILES.getlist('f1')
+                    files = list(request.FILES.getlist('f1'))
                     assignment_folder = str(os.path.join(BASE_DIR,"studentdata",request.POST['prn'],"assignments",request.POST['assignment_id']))
                     if not os.path.isdir(assignment_folder):
                         os.makedirs(assignment_folder,mode=0o666)
@@ -110,7 +109,6 @@ class Teacher_Assignment_Names(APIView):
         
         querylist = Group_Assignment.objects.filter(grp_course_id=pk).values()
         assignment_fk = []
-        print(querylist)
         for j in querylist:
             assignment_fk.append(j['assignment_id_id'])
         queryset = Assignment.objects.filter(assignment_id__in=assignment_fk)
