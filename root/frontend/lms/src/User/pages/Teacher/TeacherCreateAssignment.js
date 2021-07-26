@@ -82,7 +82,7 @@ export default function TeacherCreateAssignment() {
 		postDate: new Date(),
 		maxMarks: 20,
 		minMarks: 0,
-		visibility: "visible",
+		visibility: "submittable",
 		redirect: false,
 	});
 	const performRedirect = () => {
@@ -128,6 +128,7 @@ export default function TeacherCreateAssignment() {
 					title: "",
 					name: "",
 					description: "",
+					postDate: new Date(),
 					dueDate: new Date(),
 					maxMarks: 20,
 					visibility: "visible",
@@ -157,10 +158,16 @@ export default function TeacherCreateAssignment() {
 	const handleMarksChange = (event, newValue) => {
 		setAssignmentValues({ ...assignmentValues, maxMarks: newValue });
 	};
-	const handleDateTimeChange = (date) => {
+	const handleDueDateTimeChange = (date) => {
 		setAssignmentValues({
 			...assignmentValues,
 			dueDate: date,
+		});
+	};
+	const handlePostDateTimeChange = (date) => {
+		setAssignmentValues({
+			...assignmentValues,
+			postDate: date,
 		});
 	};
 	const handleValueChange = (name) => (event) => {
@@ -236,7 +243,7 @@ export default function TeacherCreateAssignment() {
 											label="Set Due Date"
 											format="dd/MM/yyyy"
 											value={dueDate}
-											onChange={handleDateTimeChange}
+											onChange={handleDueDateTimeChange}
 											KeyboardButtonProps={{
 												"aria-label": "change date",
 											}}
@@ -250,7 +257,7 @@ export default function TeacherCreateAssignment() {
 										id="time-picker"
 										label="Set Due Date Time"
 										value={dueDate}
-										onChange={handleDateTimeChange}
+										onChange={handleDueDateTimeChange}
 										KeyboardButtonProps={{
 											"aria-label": "change time",
 										}}
@@ -311,27 +318,63 @@ export default function TeacherCreateAssignment() {
 						</Toolbar>
 					</Grid>
 					<Grid item container>
-						<Grid item lg={6}>
-							<Toolbar>
-								<FormControl variant="outlined" className={classes.formControl}>
-									<InputLabel id="demo-simple-select-outlined-label">
-										Visibility
-									</InputLabel>
-									<Select
-										labelId="demo-simple-select-outlined-label"
-										id="demo-simple-select-outlined"
-										value={visibility}
-										onChange={handleValueChange("visibility")}
-										label="Visibility"
-									>
-										<MenuItem value="hidden">Hidden</MenuItem>
-										<MenuItem value="visible">Visible</MenuItem>
-										<MenuItem value="submittable">Submittable</MenuItem>
-									</Select>
-								</FormControl>
-							</Toolbar>
+						<Grid item lg={9} container>
+							<MuiPickersUtilsProvider utils={DateFnsUtils}>
+								<Grid item lg={4}>
+									<Toolbar>
+										<FormControl
+											variant="outlined"
+											className={classes.formControl}
+										>
+											<InputLabel id="demo-simple-select-outlined-label">
+												Visibility
+											</InputLabel>
+											<Select
+												labelId="demo-simple-select-outlined-label"
+												id="demo-simple-select-outlined"
+												value={visibility}
+												onChange={handleValueChange("visibility")}
+												label="Visibility"
+											>
+												<MenuItem value="hidden">Hidden</MenuItem>
+												<MenuItem value="visible">Visible</MenuItem>
+												<MenuItem value="submittable">Submittable</MenuItem>
+											</Select>
+										</FormControl>
+									</Toolbar>
+								</Grid>
+								{visibility !== "submittable" && (
+									<>
+										<Grid item lg={4}>
+											<KeyboardDatePicker
+												margin="normal"
+												id="date-picker-dialog"
+												label="Set Post Date"
+												format="dd/MM/yyyy"
+												value={postDate}
+												onChange={handlePostDateTimeChange}
+												KeyboardButtonProps={{
+													"aria-label": "change date",
+												}}
+											/>
+										</Grid>
+										<Grid item lg={4}>
+											<KeyboardTimePicker
+												margin="normal"
+												id="time-picker"
+												label="Set Due Date Time"
+												value={postDate}
+												onChange={handlePostDateTimeChange}
+												KeyboardButtonProps={{
+													"aria-label": "change time",
+												}}
+											/>
+										</Grid>
+									</>
+								)}
+							</MuiPickersUtilsProvider>
 						</Grid>
-						<Grid item lg={6}>
+						<Grid item lg={3}>
 							<Toolbar>
 								<div className={classes.createButton}>
 									<Button

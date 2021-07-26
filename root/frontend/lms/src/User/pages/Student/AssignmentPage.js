@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getUser } from "../../../Auth/helper/index";
 import { useParams, useLocation } from "react-router";
+import { Redirect } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { AssignmentInfo } from "../../helper/General";
 import { StudentSubmitAssignment } from "../../helper/Student";
@@ -34,10 +35,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function AssignmentPage() {
 	const classes = useStyles();
+	const location = useLocation();
 	const { user } = getUser();
+	const { group_id, course_id, group_course_id } = useParams();
 	const [files, setFiles] = useState();
 	const { assignment_id } = useParams();
+	const [redirect, setRedirect] = useState(false);
 	const [assignmentInfo, setAssignmentInfo] = useState({});
+	const performRedirect = () => {
+		return (
+			<Redirect
+				to={{
+					pathname: `/student/classroom/group/${group_id}/course/${course_id}/assignment`,
+					state: {
+						groupName: `${location.groupName}`,
+						courseName: `${location.courseName}`,
+						assignmentName: `${location.assignmentName}`,
+					},
+				}}
+			/>
+		);
+	};
 	const handleFileChange = (event) => {
 		console.log(event.target.files[0]);
 		setFiles(event.target.files[0]);
@@ -45,7 +63,10 @@ export default function AssignmentPage() {
 
 	const onSubmit = () => {
 		StudentSubmitAssignment(files, assignment_id)
-			.then((message) => console.log(message))
+			.then((message) => {
+				console.log(message);
+				setRedirect(true);
+			})
 			.catch((error) => {
 				console.log(error);
 			});
@@ -103,6 +124,7 @@ export default function AssignmentPage() {
 			) : (
 				<div></div>
 			)}
+			{redirect && performRedirect()}
 		</Course>
 	);
 }

@@ -140,3 +140,30 @@ export const TeacherCourseRescources = (group_course_id) => {
 		})
 		.catch((err) => console.log(err));
 };
+
+export const ViewSubmissions = (assignment_id) => {
+	return fetch(
+		`${API}/assignment/${assignment_id}/assignment_submitted_students`,
+		{
+			method: "GET",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${
+					JSON.parse(localStorage.getItem("jwt")).user.access
+				}`,
+			},
+		}
+	)
+		.then(async (res) => {
+			if (res.status === 401) {
+				await refreshAccess();
+				window.location.reload(true);
+			} else {
+				return res.json();
+			}
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+};
