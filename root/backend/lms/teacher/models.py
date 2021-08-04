@@ -1,5 +1,5 @@
 from django.db import models
-from User.models import User,School,Group_Course,Branch
+from User.models import User,School,Group_Course,Branch,Course_Unit
 import uuid
 # Create your models here.
 
@@ -52,6 +52,7 @@ class Teacher_Course(models.Model):
     teacher_course_id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     teacher = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='user_fk')
     group_course = models.ForeignKey(Group_Course,on_delete=models.CASCADE,verbose_name='group_course_fk')
+    course_unit  = models.ForeignKey(Course_Unit,on_delete=models.CASCADE,blank=True,null=True,verbose_name='course_unit_fk')
     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
     branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True,null=True)
     
@@ -63,3 +64,27 @@ class Teacher_Course(models.Model):
     def __str__(self):
         return f"{self.teacher_course_id}"
         
+class Lecture(models.Model):
+    lecture_number = models.IntegerField(default=None,blank=True,null=True)
+    group_course = models.ForeignKey(Group_Course,on_delete=models.CASCADE,blank=True,null=True)
+    topic = models.TextField(default=None,blank=True,null=True)
+    tlo_no = models.IntegerField(default=None,blank=True,null=True)
+    co_no = models.IntegerField(default=None,blank=True,null=True)
+    date_of_plan = models.DateField(default=None,blank=True,null=True)
+    date_of_conduction = models.DateField(default=None,blank=True,null=True)
+
+    def __str__(self):
+        return f"{self.topic}"
+
+class Attendance(models.Model):
+    lecture = models.ForeignKey(Lecture,on_delete=models.CASCADE,blank=True,null=True)
+    PRESENT = 1
+    ABSENT = 0
+
+    val={
+        (PRESENT,'PRESENT'),
+        (ABSENT,'ABSENT')
+    }
+    user = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='user_prn')
+    val = models.IntegerField(choices=val,default=ABSENT)
+

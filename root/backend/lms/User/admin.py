@@ -191,9 +191,9 @@ class Group_Course(admin.ModelAdmin):
 
 @admin.register(Course_Unit)
 class Course_Unit(admin.ModelAdmin):
-    raw_id_fields = ('course_id',)
-    ordering = ('course_id',)
-    list_display =['course_unit_id','course_id','name','desc','school','branch']
+    raw_id_fields = ('group_course',)
+    ordering = ('group_course',)
+    list_display =['course_unit_id','group_course','name','desc','school','branch']
     search_fields = ['course_unit_id','name']
     def get_form(self, request, obj=None, **kwargs):
         
@@ -203,10 +203,10 @@ class Course_Unit(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if not obj.school:
-            obj.school = obj.course_id.school
+            obj.school = obj.group_course.school
         if not obj.branch:
             
-            obj.branch = obj.course_id.branch
+            obj.branch = obj.group_course.branch
         obj.save()
 
 

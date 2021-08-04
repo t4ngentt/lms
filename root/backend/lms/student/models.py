@@ -1,4 +1,5 @@
 
+from User.models import Group_Course
 from django.db import models
 from User.models import User,Branch,user_group,Semester,Course,School
 from quiz.models import Quiz,Quiz_Data

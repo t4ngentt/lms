@@ -10,7 +10,7 @@ from User.models import Group_Course,User
 from rest_framework.generics import GenericAPIView
 from rest_framework.decorators import api_view
 from .models import Assignment_submission, Group_Assignment,Assignment
-from .serializers import Assignment_Serializer, Assignment_Submission_Serializer
+from .serializers import Assignment_Serializer, Assignment_Submission_Serializer,Assignment_Detail_Serializer
 from django.core.files.storage import FileSystemStorage
 from django.views.decorators.csrf import csrf_exempt
 from lms.settings import BASE_DIR
@@ -31,7 +31,7 @@ class Student_Assignment_Names(APIView):
 class Assignment_Details(APIView):
     def get(self, request, pk=None, format=None):
         queryset=Assignment.objects.get(assignment_id=pk)
-        serializer_class = Assignment_Serializer(queryset)
+        serializer_class = Assignment_Detail_Serializer(queryset)
 
         return Response(serializer_class.data)
 

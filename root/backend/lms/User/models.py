@@ -229,7 +229,7 @@ class Group_Course(models.Model):
 
 class Course_Unit(models.Model):
     course_unit_id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
-    course_id = models.ForeignKey(Course,on_delete=models.CASCADE,verbose_name='course_fk',blank=True,null=True)
+    group_course = models.ForeignKey(Group_Course,on_delete=models.CASCADE,verbose_name='group_course_fk',blank=True,null=True)
     name = models.CharField(max_length=500,null=True,blank=True,verbose_name="Unit Name")
     desc = models.TextField(null=True,blank=True,verbose_name="Unit Description")
     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk',blank=True,null=True)
