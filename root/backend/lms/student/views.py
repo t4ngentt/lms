@@ -54,8 +54,9 @@ class Student_Course(GenericAPIView, RetrieveModelMixin):
 
 
 class Student_Course_Unit_Api(APIView):
-    def get(self, request, pk=None, format=None):
-        queryset = Course_Unit.objects.filter(course_id=pk).values()
+    def get(self, request, group=None,course=None, format=None):
+        group_course= Group_Course.objects.get(group=group,course=course)
+        queryset = Course_Unit.objects.filter(group_course=group_course).values()
         serializer = Course_Unit_Serializer(queryset, many=True)
         return Response(serializer.data)
 
