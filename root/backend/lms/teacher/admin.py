@@ -1,7 +1,10 @@
 from django.contrib import admin
 # from .models import Teacher_Info,Skills,Teacher_Profile,Teacher_Course
-from .models import Teacher_Course, Teacher_Profile, Teacher_experience
+from .models import Attendance, Teacher_Course, Teacher_Profile, Teacher_experience, Lecture
 # # Register your models here.
+
+admin.site.register(Lecture)
+admin.site.register(Attendance)
 
 @admin.register(Teacher_experience)
 class Teacher_experience(admin.ModelAdmin):

@@ -66,7 +66,7 @@ class Teacher_Course(models.Model):
         
 class Lecture(models.Model):
     lecture_number = models.IntegerField(default=None,blank=True,null=True)
-    group_course = models.ForeignKey(Group_Course,on_delete=models.CASCADE,blank=True,null=True)
+    course_unit = models.ForeignKey(Course_Unit, default=None, on_delete=models.CASCADE, blank=True,null=True)
     topic = models.TextField(default=None,blank=True,null=True)
     tlo_no = models.IntegerField(default=None,blank=True,null=True)
     co_no = models.IntegerField(default=None,blank=True,null=True)
@@ -80,11 +80,10 @@ class Attendance(models.Model):
     lecture = models.ForeignKey(Lecture,on_delete=models.CASCADE,blank=True,null=True)
     PRESENT = 1
     ABSENT = 0
-
     val={
         (PRESENT,'PRESENT'),
         (ABSENT,'ABSENT')
     }
     user = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='user_prn')
-    val = models.IntegerField(choices=val,default=ABSENT)
+    val = models.IntegerField(choices=val,default=PRESENT)
 
