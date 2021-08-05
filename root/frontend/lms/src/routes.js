@@ -19,17 +19,21 @@ import Forums from "./User/pages/Common/Forums";
 import Resources from "./User/pages/Common/Resources";
 import Calendar from "./User/pages/Common/Calendar";
 import Events from "./User/pages/Common/Events";
-import Attendance from "./User/pages/Common/Attendance";
 import Settings from "./User/pages/Common/Settings";
 import PageNotFound from "./User/pages/Common/PageNotFound";
 
 //?importing Student Pages----------------------------------------------->
 import StudentClassroom from "./User/pages/Student/StudentClassroom";
 import AssignmentPage from "./User/pages/Student/AssignmentPage";
+import StudentAttendance from "./User/pages/Student/StudentAttendance";
+import StudentGroupCourseAttendance from "./User/pages/Student/StudentGroupCourseAttendance";
 //?importing Teacher Pages ---------------------------------------------->
 import TeacherClassroom from "./User/pages/Teacher/TeacherClassroom";
 import TeacherCreateAssignment from "./User/pages/Teacher/TeacherCreateAssignment";
 import TeacherViewSubmissions from "./User/pages/Teacher/TeacherViewSubmissions";
+import TeacherAttendance from "./User/pages/Teacher/TeacherAttendance";
+import TeacherCourseAttendance from "./User/pages/Teacher/TeacherCourseAttendance";
+import TeacherUnitLecture from "./User/pages/Teacher/TeacherUnitLecture";
 
 const Routes = () => {
 	const [popup, setPopup] = useState({
@@ -121,7 +125,19 @@ const Routes = () => {
 						path="/student/attendance"
 						exact
 						strict
-						component={Attendance}
+						component={StudentAttendance}
+					></StudentRoute>
+					<StudentRoute
+						path="/student/attendance/group/:group_id/course"
+						exact
+						strict
+						component={StudentGroupCourseAttendance}
+					></StudentRoute>
+					<StudentRoute
+						path="/student/attendance/group/:group_id/course/:course_id"
+						exact
+						strict
+						component={StudentAttendance}
 					></StudentRoute>
 					<StudentRoute
 						path="/student/settings"
@@ -213,7 +229,19 @@ const Routes = () => {
 						path="/teacher/attendance"
 						exact
 						strict
-						component={Attendance}
+						component={TeacherAttendance}
+					></TeacherRoute>
+					<TeacherRoute
+						path="/teacher/attendance/group_course/:group_course_id"
+						exact
+						strict
+						component={TeacherCourseAttendance}
+					></TeacherRoute>
+					<TeacherRoute
+						path="/teacher/attendance/group_course/:group_course_id/unit/:unit_id"
+						exact
+						strict
+						component={TeacherUnitLecture}
 					></TeacherRoute>
 					<Route to="*" component={PageNotFound}></Route>
 				</Switch>

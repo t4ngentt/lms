@@ -167,3 +167,29 @@ export const ViewSubmissions = (assignment_id) => {
 			console.log(err);
 		});
 };
+export const UnitLectures = (unit_id) => {
+	return fetch(
+		`${API}/teacher/classroom/group-course/units/${unit_id}/lectures`,
+		{
+			method: "GET",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${
+					JSON.parse(localStorage.getItem("jwt")).user.access
+				}`,
+			},
+		}
+	)
+		.then(async (res) => {
+			if (res.status === 401) {
+				await refreshAccess();
+				window.location.reload(true);
+			} else {
+				return res.json();
+			}
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+};

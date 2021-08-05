@@ -8,7 +8,7 @@ export default function ClassroomNavigator(props) {
 	const userRole = getUser().user.role;
 
 	return (
-		<Breadcrumbs aria-label="breadcrumb">
+		<Breadcrumbs aria-label="ClassRoom Navigation">
 			{userRole === 0 && (
 				<Link color="inherit" component={RouterLink} to="/student/classroom">
 					Groups
