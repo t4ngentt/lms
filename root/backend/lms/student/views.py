@@ -58,3 +58,10 @@ class Student_Course_Unit_Api(APIView):
         queryset = Course_Unit.objects.filter(course_id=pk).values()
         serializer = Course_Unit_Serializer(queryset, many=True)
         return Response(serializer.data)
+
+
+
+
+
+
+        

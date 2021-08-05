@@ -4,13 +4,13 @@ from django.db import models
 from User.models import User,Branch,user_group,Semester,Course,School
 from quiz.models import Quiz,Quiz_Data
 import uuid
+
 # class Student_Info(models.Model):
 #     prn = models.CharField(primary_key=True, max_length=100)
 #     name = models.CharField(max_length=200)
 #     user = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='user_fk')
 #     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk')
 #     branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk')
-    
 #     class Meta:
 #         db_table = 'STUDENT_INFO'
 #         verbose_name = 'student_info'
@@ -19,7 +19,7 @@ import uuid
 class Student_Group(models.Model):
     student_group_id = models.UUIDField(primary_key=True,default=uuid.uuid4,editable=False)
     student = models.ForeignKey(User,on_delete=models.CASCADE,verbose_name='User_fk')
-    group = models.ForeignKey(user_group,on_delete=models.CASCADE,verbose_name='group_fk')
+    group = models.ForeignKey(user_group, on_delete=models.CASCADE, verbose_name='group_fk')
     school = models.ForeignKey(School,on_delete=models.CASCADE,verbose_name='school_fk', blank=True, null=True)
     branch = models.ForeignKey(Branch,on_delete=models.CASCADE,verbose_name='branch_fk',blank=True, null=True)
     
