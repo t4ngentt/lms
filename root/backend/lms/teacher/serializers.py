@@ -19,7 +19,7 @@ class Attendence_Serializer(serializers.ModelSerializer):
         fields= '__all__'
 
 
-class Student_Group_Attendance_Serializer(serializers.ModelSerializer):
+class Student_Attendance_Serializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['user_id','f_name','l_name','email']

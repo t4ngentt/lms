@@ -5,7 +5,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from User.models import Group_Course , Course_Unit
 from User.serializers import Course_Unit_Serializer
-from .serializers import Attendence_Serializer, Lecture_Serializer, Student_Group_Attendance_Serializer, Teacher_Course_Serializer
+from .serializers import Attendence_Serializer, Lecture_Serializer, Student_Attendance_Serializer, Teacher_Course_Serializer
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
@@ -50,8 +50,7 @@ class Group_course_api(APIView):
 
 class Teacher_Course_Unit_Api(APIView):
     def get(self, request, pk=None, format=None):
-        obj= Group_Course.objects.get(group_course_id=pk)
-        queryset = Course_Unit.objects.filter(course_id=obj.course_id).values()
+        queryset = Course_Unit.objects.filter(group_course=pk).values()
         serializer = Course_Unit_Serializer(queryset, many=True)
         return Response(serializer.data)
 
@@ -90,7 +89,7 @@ class Teacher_Attendance(APIView):
             return Response({"status":str(e)})
 
 
-class Students_In_Group(APIView):
+class Students_Attendance_List(APIView):
 
     def get(self,request,pk):
         group = Group_Course.objects.get(group_course_id = pk).group
@@ -98,5 +97,6 @@ class Students_In_Group(APIView):
         print(queryset_list)
         queryset = User.objects.filter(user_id__in = queryset_list)
         
-        serializer = Student_Group_Attendance_Serializer(queryset,many=True)
+        serializer = Student_Attendance_Serializer(queryset,many=True)
         return Response(serializer.data)
+
