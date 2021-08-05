@@ -1,11 +1,11 @@
-import React from "react"
+import React from "react";
 
-import Base from "../../../Core/ui/Base"
+import Base from "../../../Core/ui/Base";
 
-export default function Profile(){
+export default function Profile() {
   return (
     <Base>
-      <div>Profile</div>
+      <div>Hello</div>
     </Base>
-  )
+  );
 }

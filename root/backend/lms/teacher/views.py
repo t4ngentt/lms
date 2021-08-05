@@ -1,9 +1,11 @@
+from student.models import Student_Course, Student_Group
 from django.shortcuts import render
 # from pandas.core.frame import DataFrame
+from rest_framework import viewsets
 from rest_framework.response import Response
 from User.models import Group_Course , Course_Unit
 from User.serializers import Course_Unit_Serializer
-from .serializers import Attendence_Serializer, Lecture_Serializer, Teacher_Course_Serializer
+from .serializers import Attendence_Serializer, Lecture_Serializer, Student_Group_Attendance_Serializer, Teacher_Course_Serializer
 from rest_framework.views import APIView
 from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin
@@ -72,11 +74,12 @@ class Teacher_Lecture(APIView):
 
 
 class Teacher_Attendance(APIView):
-    def get(self, request,pk=None):
+    def get(self, request,pk):
         queryset=   Attendance.objects.filter(lecture=pk)
         serializer = Attendence_Serializer(queryset, many=True)
         return Response(serializer.data)
-    def post(self, request, pk=None):
+
+    def post(self, request,pk):
         try:
             data= json.loads(request.body)
             for i in data:
@@ -87,3 +90,13 @@ class Teacher_Attendance(APIView):
             return Response({"status":str(e)})
 
 
+class Students_In_Group(APIView):
+
+    def get(self,request,pk):
+        group = Group_Course.objects.get(group_course_id = pk).group
+        queryset_list = Student_Group.objects.filter(group = group).values_list('student',flat=True)
+        print(queryset_list)
+        queryset = User.objects.filter(user_id__in = queryset_list)
+        
+        serializer = Student_Group_Attendance_Serializer(queryset,many=True)
+        return Response(serializer.data)
