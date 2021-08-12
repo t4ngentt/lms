@@ -6,7 +6,7 @@ import { UnitLectures } from "../../helper/Teacher";
 import NotFound from "../Common/NotFound";
 import AttendanceNavigator from "../../../Core/ui/Components/AttendanceNavigation";
 import Course from "../Common/Course";
-import UnitCard from "../../../Core/ui/Components/UnitCard";
+import LectureCard from "../../../Core/ui/Components/LectureCard";
 import { Grid, Typography } from "@material-ui/core";
 import Base from "../../../Core/ui/Base";
 import { makeStyles } from "@material-ui/core/styles";
@@ -24,7 +24,7 @@ export default function TeacherUnitLecture() {
 	const classes = useStyles();
 	const { user } = getUser();
 	const location = useLocation();
-	const { group_id, course_id, unit_id } = useParams();
+	const { group_course_id, unit_id } = useParams();
 	const [lectures, setLectures] = useState();
 	const [navigationDetails, setNavigationDetails] = useState({
 		groupName: "",
@@ -61,19 +61,11 @@ export default function TeacherUnitLecture() {
 		// }
 	};
 	const onLoad = async () => {
-		if (user.role === 0) {
-			await StudentCourseResources(group_id, course_id)
-				.then((data) => {
-					setLectures(data);
-				})
-				.catch(console.log("Settings Units Failed"));
-		} else if (user.role === 1) {
-			await UnitLectures(unit_id)
-				.then((data) => {
-					setLectures(data);
-				})
-				.catch(console.log("Settings Units Failed"));
-		}
+		await UnitLectures(unit_id)
+			.then((data) => {
+				setLectures(data);
+			})
+			.catch(console.log("Settings Units Failed"));
 	};
 	useEffect(() => {
 		handleNavigationDetails();
@@ -90,7 +82,25 @@ export default function TeacherUnitLecture() {
 					course_name={navigationDetails.courseName}
 				/>
 			</div>
-
+			{lectures !== undefined && (
+				<Grid container spacing={5} justifyContent="center" alignItems="center">
+					{lectures.map((lecture, index) => {
+						return (
+							<Grid item lg={12} md={12} sm={12} xs={12}>
+								<LectureCard
+									lecture_number={lecture.lecture_number}
+									topic={lecture.topic}
+									group_course_id={group_course_id}
+									unit_id={unit_id}
+									lecture_id={lecture.course_unit}
+									groupName={navigationDetails.groupName}
+									courseName={navigationDetails.courseName}
+								/>
+							</Grid>
+						);
+					})}
+				</Grid>
+			)}
 			{(lectures === undefined || lectures.length === 0) && (
 				<NotFound title="No Lectures" />
 			)}

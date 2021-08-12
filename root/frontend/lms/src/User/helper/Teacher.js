@@ -169,7 +169,7 @@ export const ViewSubmissions = (assignment_id) => {
 };
 export const UnitLectures = (unit_id) => {
 	return fetch(
-		`${API}/teacher/classroom/group-course/units/${unit_id}/lectures`,
+		`${API}/teacher/classroom/group_course/units/${unit_id}/lectures`,
 		{
 			method: "GET",
 			headers: {
@@ -179,6 +179,60 @@ export const UnitLectures = (unit_id) => {
 					JSON.parse(localStorage.getItem("jwt")).user.access
 				}`,
 			},
+		}
+	)
+		.then(async (res) => {
+			if (res.status === 401) {
+				await refreshAccess();
+				window.location.reload(true);
+			} else {
+				return res.json();
+			}
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+};
+export const GroupStudents = (group_course_id) => {
+	return fetch(
+		`${API}/teacher/classroom/group_course/${group_course_id}/lectures/attendance_students`,
+		{
+			method: "GET",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${
+					JSON.parse(localStorage.getItem("jwt")).user.access
+				}`,
+			},
+		}
+	)
+		.then(async (res) => {
+			if (res.status === 401) {
+				await refreshAccess();
+				window.location.reload(true);
+			} else {
+				return res.json();
+			}
+		})
+		.catch((err) => {
+			console.log(err);
+		});
+};
+
+export const LectureAttendanceAPI = (lecture_id, students) => {
+	return fetch(
+		`${API}/teacher/classroom/group_course/units/lecture/${lecture_id}/attendance`,
+		{
+			method: "POST",
+			headers: {
+				Accept: "application/json",
+				"Content-Type": "application/json",
+				Authorization: `Bearer ${
+					JSON.parse(localStorage.getItem("jwt")).user.access
+				}`,
+			},
+			body: JSON.stringify(students),
 		}
 	)
 		.then(async (res) => {

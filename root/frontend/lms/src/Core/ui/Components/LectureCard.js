@@ -24,18 +24,22 @@ export default function LectureCard(props) {
 	const classes = useStyles();
 	return (
 		<Card className={classes.cardContainer}>
-			<CardContent>
-				<Typography variant="h5" component="h2">
-					{props.title}
-				</Typography>
-				<Typography
-					className={classes.details}
-					color="textSecondary"
-					gutterBottom
-				>
-					{props.description}
-				</Typography>
-			</CardContent>
+			<CardActionArea
+				component={Link}
+				to={{
+					pathname: `/teacher/attendance/group_course/${props.group_course_id}/unit/${props.unit_id}/lecture/${props.lecture_id}`,
+					state: {
+						groupName: `${props.groupName}`,
+						courseName: `${props.courseName}`,
+					},
+				}}
+			>
+				<CardContent>
+					<Typography variant="h5" component="h2">
+						{props.lecture_number}. {props.topic}
+					</Typography>
+				</CardContent>
+			</CardActionArea>
 		</Card>
 	);
 }

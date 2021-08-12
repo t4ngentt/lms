@@ -34,6 +34,7 @@ import TeacherViewSubmissions from "./User/pages/Teacher/TeacherViewSubmissions"
 import TeacherAttendance from "./User/pages/Teacher/TeacherAttendance";
 import TeacherCourseAttendance from "./User/pages/Teacher/TeacherCourseAttendance";
 import TeacherUnitLecture from "./User/pages/Teacher/TeacherUnitLecture";
+import LectureAttendance from "./User/pages/Teacher/LectureAttendance";
 
 const Routes = () => {
 	const [popup, setPopup] = useState({
@@ -238,10 +239,16 @@ const Routes = () => {
 						component={TeacherCourseAttendance}
 					></TeacherRoute>
 					<TeacherRoute
-						path="/teacher/attendance/group_course/:group_course_id/unit/:unit_id"
+						path="/teacher/attendance/group_course/:group_course_id/unit/:unit_id/lecture"
 						exact
 						strict
 						component={TeacherUnitLecture}
+					></TeacherRoute>
+					<TeacherRoute
+						path="/teacher/attendance/group_course/:group_course_id/unit/:unit_id/lecture/:lecture_id"
+						exact
+						strict
+						component={LectureAttendance}
 					></TeacherRoute>
 					<Route to="*" component={PageNotFound}></Route>
 				</Switch>

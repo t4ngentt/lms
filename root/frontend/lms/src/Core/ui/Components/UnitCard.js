@@ -28,9 +28,10 @@ export default function UnitCard(props) {
 				className={classes.cardContainer}
 				component={Link}
 				to={{
-					pathname: ``,
+					pathname: `/teacher/attendance/group_course/${props.group_course_id}/unit/${props.unit_id}/lecture`,
 					state: {
-						groupName: `${props.unitName}`,
+						groupName: `${props.group_name}`,
+						courseName: `${props.course_name}`,
 					},
 				}}
 			>

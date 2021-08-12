@@ -96,6 +96,10 @@ export default function TeacherCourseAttendance() {
 						return (
 							<Grid item lg={12} md={12} sm={12} xs={12}>
 								<UnitCard
+									group_course_id={group_course_id}
+									group_name={navigationDetails.groupName}
+									course_name={navigationDetails.courseName}
+									unit_id={course.course_unit_id}
 									title={course.name}
 									description={course.desc}
 									dueDate={course.due_date}
